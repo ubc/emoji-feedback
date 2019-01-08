@@ -1,0 +1,17 @@
+.wrapper {
+  display: grid;
+  grid-gap: 10px;
+  width: 100px;
+  grid-template-columns: [col] 100px [col] 100px [col] 100px [col] 100px;
+  grid-template-rows: [row] auto [row] auto [row];
+}
+
+.feedback-text {
+  grid-column: col / span 4;
+  grid-row: row;
+}
+
+.button {
+  grid-column: col / span 2;
+  grid-row: row;
+} 
