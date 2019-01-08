@@ -1,7 +1,43 @@
 import css from './index.css'
 
-const feedback = () => {
-  const yesButton = document.getElementByID('yes-button')
-  const noButton = document.getElementByID('no-button')
-  
+const removeActive = b => {
+  if (b.classList.contains('active')) {
+    b.classList.remove('active')
+  }
 }
+
+const clearActive = btns => {
+  btns.forEach(b => removeActive(b))
+}
+
+const createSelectionState = () => {
+  let selection
+  return {
+    setSelection: (btn) => {
+      const id = btn.id
+      if (id === 'yes-button') {
+        selection = true
+      } else selection = false
+    },
+    getSelection: () => selection
+  }
+}
+
+const feedback = () => {
+  const yesButton = document.getElementById('yes-button')
+  const noButton = document.getElementById('no-button')
+
+  const buttons = [yesButton, noButton]
+
+  const selection = createSelectionState()
+
+  buttons.forEach(b => {
+    b.addEventListener('click', () => {
+      clearActive(buttons)
+      b.classList.add('active')
+      selection.setSelection(b)
+    })
+  })
+}
+
+feedback()
