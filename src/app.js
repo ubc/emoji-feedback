@@ -19,13 +19,13 @@ const removeActive = emoji => {
 }
 const clearActive = emojis => emojis.forEach(emoji => removeActive(emoji))
 
-const showFeedBackForm = () => {
-  const feedBackForm = document.getElementsByClassName('feedback-form')[0]
+const showByClassName = name => {
+  const feedBackForm = document.getElementsByClassName(name)[0]
   feedBackForm.style.display = 'block'
 }
 
-const hideFeedBackForm = () => {
-  const feedBackForm = document.getElementsByClassName('feedback-form')[0]
+const hideByClassName = name => {
+  const feedBackForm = document.getElementsByClassName(name)[0]
   feedBackForm.style.display = 'none'
 }
 
@@ -46,11 +46,13 @@ const controller = () => {
         emojis.find(e => e.id === emojiId).classList.add('active')
       })
       if (selectedEmojiIds.length > 0) {
-        showFeedBackForm()
+        showByClassName('feedback-form')
+        showByClassName('voted')
         textareaCharacterCounter()
       } else {
         // show form
-        hideFeedBackForm()
+        hideByClassName('feedback-form')
+        hideByClassName('voted')
       }
     },
     emojis

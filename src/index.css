@@ -35,16 +35,6 @@ span.emoji {
   font-size: 30px;
 }
 
-#yes-button {
-  grid-row: row 2;
-  grid-column: col 2/ span 2;
-}
-
-#no-button {
-  grid-row: row 2;
-  grid-column: col 4 / span 2;
-}
-
 #emoji-happy {
   grid-row: row 2;
   grid-column: col 1 / span 1;
@@ -69,8 +59,14 @@ span.emoji {
   grid-row: row 2;
   grid-column: col 5 / span 1;
 }
-.feedback-form {
+
+.voted {
   grid-row: row 3;
+  grid-column: col / span 6;
+}
+
+.feedback-form {
+  grid-row: row 4;
   grid-column: col / span 6;
 }
 
