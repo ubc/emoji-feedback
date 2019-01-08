@@ -6,9 +6,7 @@ const removeActive = b => {
   }
 }
 
-const clearActive = btns => {
-  btns.forEach(b => removeActive(b))
-}
+const clearActive = btns => btns.forEach(b => removeActive(b))
 
 const showFeedBackForm = () => {
   const feedBackForm = document.getElementsByClassName('feedback-form')[0]
@@ -23,14 +21,14 @@ const hideFeedBackForm = () => {
 const createSelectionState = () => {
   let selection
   return {
-    setSelection: (btn) => {
+    setSelection: btn => {
       const id = btn.id
       if (id === 'yes-button') {
         selection = true
       } else selection = false
     },
     getSelection: () => selection,
-    updateApp: () => {
+    update: () => {
       if (selection) {
         // make API call, the end.
         hideFeedBackForm()
@@ -65,7 +63,7 @@ const selection = createSelectionState();
       clearActive(buttons)
       b.classList.add('active')
       selection.setSelection(b)
-      selection.updateApp()
+      selection.update()
     })
   })
 }())
