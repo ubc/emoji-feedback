@@ -17,5 +17,8 @@ module.exports = {
       { test: /\.css$/, use: ['style-loader', 'css-loader'] }
     ]
   },
+  devServer: {
+    port: 8080
+  },
   plugins: [HtmlWebpackPluginConfig]
 }
