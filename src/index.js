@@ -23,14 +23,16 @@ const createSelectionState = () => {
   }
 }
 
-const feedback = () => {
+const getButtons = () => {
   const yesButton = document.getElementById('yes-button')
   const noButton = document.getElementById('no-button')
+  return [yesButton, noButton]
+}
 
-  const buttons = [yesButton, noButton]
+const selection = createSelectionState()
 
-  const selection = createSelectionState()
-
+const feedback = () => {  
+  const buttons = getButtons()
   buttons.forEach(b => {
     b.addEventListener('click', () => {
       clearActive(buttons)
