@@ -1,30 +1,6 @@
-/* global describe, test, beforeAll, afterAll */
+/* global describe, test */
+import controller from '../src/app'
 
-import puppeteer from 'puppeteer'
+describe('app', () => {
 
-const APP = 'http://localhost:8080/'
-
-const browser
-const page
-
-beforeAll(async () => {
-  const width = 1920
-  const height = 1080
-  browser = await puppeteer.launch({
-    headless: false,
-    slowMo: 80
-  })
-  page = await browser.newPage()
-  await page.setViewport({ width, height })
-})
-
-afterAll(() => {
-  browser.close();
-})
-
-describe('Buttons', () => {
-  test('exist', async () => {
-    await page.goto(APP)
-    await page.waitForSelector
-  })
 })
