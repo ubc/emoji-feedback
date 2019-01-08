@@ -29,15 +29,22 @@ const getButtons = () => {
   return [yesButton, noButton]
 }
 
+const textareaCharacterCounter = () => {
+  document.getElementById('feedback-textarea').onkeyup = function () {
+    document.getElementById('maxlength-enforcer').innerHTML = `${this.value.length}/500`
+  }
+}
+
 const selection = createSelectionState()
 
-const feedback = () => {  
+const feedback = () => {
   const buttons = getButtons()
   buttons.forEach(b => {
     b.addEventListener('click', () => {
       clearActive(buttons)
       b.classList.add('active')
       selection.setSelection(b)
+      textareaCharacterCounter()
     })
   })
 }
