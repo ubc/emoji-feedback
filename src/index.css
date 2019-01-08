@@ -1,17 +1,42 @@
 .wrapper {
   display: grid;
   grid-gap: 10px;
-  width: 100px;
-  grid-template-columns: [col] 100px [col] 100px [col] 100px [col] 100px;
+  width: 60px;
+  grid-template-columns: [col] 60px [col] 60px [col] 60px [col] 60px;
   grid-template-rows: [row] auto [row] auto [row];
 }
 
 .feedback-text {
   grid-column: col / span 4;
   grid-row: row;
+  text-align: center;
 }
 
 .button {
+  grid-row: row 2;
+  text-align: center;
+  background-color: white;
+  border: 2px solid #4CAF50;
+  -webkit-transition-duration: 0.2s; /* Safari */
+  transition-duration: 0.2s;
+  padding: 15px 32px;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+#yes-button {
   grid-column: col / span 2;
-  grid-row: row;
-} 
+}
+
+#no-button {
+  grid-column: col 3 / span 2;
+}
+
+.feedback-form {
+  grid-row: row 3;
+  grid-column: col / span 4;
+}
