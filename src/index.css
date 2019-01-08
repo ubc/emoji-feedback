@@ -1,13 +1,13 @@
 .wrapper {
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 20px;
   width: 60px;
-  grid-template-columns: [col] 60px [col] 60px [col] 60px [col] 60px;
+  grid-template-columns: [col] 60px [col] 60px [col] 60px [col] 60px [col] 60px [col] 60px;
   grid-template-rows: [row] auto [row] auto [row];
 }
 
 .feedback-text {
-  grid-column: col / span 4;
+  grid-column: col / span 6;
   grid-row: row;
   text-align: center;
 }
@@ -35,14 +35,14 @@
 }
 
 #yes-button {
-  grid-column: col / span 2;
+  grid-column: col 2/ span 2;
 }
 
 #no-button {
-  grid-column: col 3 / span 2;
+  grid-column: col 4 / span 2;
 }
 
 .feedback-form {
   grid-row: row 3;
-  grid-column: col / span 4;
+  grid-column: col / span 6;
 }
