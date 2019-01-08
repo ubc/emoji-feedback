@@ -4,8 +4,7 @@ import controller from './app'
 const app = controller();
 
 (function feedback () {
-  const emojis = app.emojis
-  emojis.forEach(emoji => {
+  app.emojis.forEach(emoji => {
     emoji.addEventListener('click', () => {
       app.setSelection(emoji)
       app.update()
