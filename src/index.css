@@ -50,6 +50,6 @@
 }
 
 #feedback-button {
-  grid-row: row 4;
-  grid-column: col 4 / span 3;
+  width: 150px;
+  float: right;
 }

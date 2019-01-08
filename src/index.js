@@ -31,7 +31,8 @@ const getButtons = () => {
 
 const textareaCharacterCounter = () => {
   document.getElementById('feedback-textarea').onkeyup = function () {
-    document.getElementById('maxlength-enforcer').innerHTML = `${this.value.length}/500`
+    const chars = this.value.length
+    document.getElementById('maxlength-enforcer').innerHTML = `<span>${chars}</span>/500`
   }
 }
 
