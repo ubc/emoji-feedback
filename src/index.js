@@ -19,13 +19,10 @@ const hideFeedBackForm = () => {
 }
 
 const createSelectionState = () => {
-  let selection
+  let selection = []
   return {
     setSelection: btn => {
-      const id = btn.id
-      if (id === 'yes-button') {
-        selection = true
-      } else selection = false
+      selection = btn.id
     },
     getSelection: () => selection,
     update: () => {
@@ -41,10 +38,13 @@ const createSelectionState = () => {
   }
 }
 
-const getButtons = () => {
-  const yesButton = document.getElementById('yes-button')
-  const noButton = document.getElementById('no-button')
-  return [yesButton, noButton]
+const getEmoji = () => {
+  const emojiHappy = document.getElementById('emoji-happy')
+  const emojiSad = document.getElementById('emoji-sad')
+  const emojiConfused = document.getElementById('emoji-confused')
+  const emojiThumbsup = document.getElementById('emoji-thumbsup')
+  const emojiThumbsdown = document.getElementById('emoji-thumbsdown')
+  return [emojiHappy, emojiSad, emojiConfused, emojiThumbsup, emojiThumbsdown]
 }
 
 const textareaCharacterCounter = () => {
@@ -57,10 +57,10 @@ const textareaCharacterCounter = () => {
 const selection = createSelectionState();
 
 (function feedback () {
-  const buttons = getButtons()
-  buttons.forEach(b => {
+  const emojis = getEmoji()
+  emojis.forEach(b => {
     b.addEventListener('click', () => {
-      clearActive(buttons)
+      clearActive(emojis)
       b.classList.add('active')
       selection.setSelection(b)
       selection.update()

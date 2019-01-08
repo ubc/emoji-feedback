@@ -16,8 +16,8 @@
   text-align: center;
   background-color: white;
   border: 1px solid #D3D3D3;
-  -webkit-transition-duration: 0.2s;
-  transition-duration: 0.2s;
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -27,7 +27,7 @@
 }
 
 .active {
-  border: #4CAF50;
+  border: 2px solid #4CAF50;
   font-style: bold;
 }
 
