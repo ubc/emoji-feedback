@@ -8,7 +8,6 @@ const app = controller();
   emojis.forEach(emoji => {
     emoji.addEventListener('click', () => {
       app.setSelection(emoji)
-      console.log(app.getSelection())
       app.update()
     })
   })

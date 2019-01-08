@@ -60,11 +60,6 @@ span.emoji {
   grid-column: col 5 / span 1;
 }
 
-.voted {
-  grid-row: row 3;
-  grid-column: col / span 6;
-}
-
 .feedback-form {
   grid-row: row 4;
   grid-column: col / span 6;

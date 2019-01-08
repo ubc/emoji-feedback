@@ -42,17 +42,14 @@ const controller = () => {
     getSelection: () => selectedEmojiIds,
     update: () => {
       clearActive(emojis)
-      selectedEmojiIds.forEach(emojiId => {
+      selectedEmojiIds.forEach(emojiId =>
         emojis.find(e => e.id === emojiId).classList.add('active')
-      })
+      )
       if (selectedEmojiIds.length > 0) {
         showByClassName('feedback-form')
-        showByClassName('voted')
         textareaCharacterCounter()
       } else {
-        // show form
         hideByClassName('feedback-form')
-        hideByClassName('voted')
       }
     },
     emojis
