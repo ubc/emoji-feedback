@@ -2,7 +2,7 @@
   display: grid;
   grid-gap: 15px;
   width: 60px;
-  grid-template-columns: [col] 60px [col] 60px [col] 60px [col] 60px [col] 60px [col] 60px;
+  grid-template-columns: [col] 60px [col] 60px [col] 60px [col] 60px [col] 60px;
   grid-template-rows: [row] auto [row] auto [row];
 }
 
@@ -15,25 +15,24 @@
 .button {
   text-align: center;
   background-color: white;
-  border: 2px solid #4CAF50;
+  border: 1px solid #D3D3D3;
   -webkit-transition-duration: 0.2s;
   transition-duration: 0.2s;
   border-radius: 5px;
   cursor: pointer;
 }
 
-span.emoji {
-  font-size: 30px;
-}
-
 .button:hover {
-  background-color: #4CAF50;
-  color: white;
+  border: 1px solid #4CAF50;
 }
 
 .active {
-  background-color: #4CAF50;
-  color: white;
+  border: #4CAF50;
+  font-style: bold;
+}
+
+span.emoji {
+  font-size: 30px;
 }
 
 #yes-button {
@@ -46,6 +45,30 @@ span.emoji {
   grid-column: col 4 / span 2;
 }
 
+#emoji-happy {
+  grid-row: row 2;
+  grid-column: col 1 / span 1;
+}
+
+#emoji-sad {
+  grid-row: row 2;
+  grid-column: col 2 / span 1;
+}
+
+#emoji-confused {
+  grid-row: row 2;
+  grid-column: col 3 / span 1;
+}
+
+#emoji-thumbsup {
+  grid-row: row 2;
+  grid-column: col 4 / span 1;
+}
+
+#emoji-thumbsdown {
+  grid-row: row 2;
+  grid-column: col 5 / span 1;
+}
 .feedback-form {
   grid-row: row 3;
   grid-column: col / span 6;
