@@ -22,6 +22,10 @@
   cursor: pointer;
 }
 
+span.emoji {
+  font-size: 30px;
+}
+
 .button:hover {
   background-color: #4CAF50;
   color: white;
