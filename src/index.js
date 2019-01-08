@@ -10,6 +10,16 @@ const clearActive = btns => {
   btns.forEach(b => removeActive(b))
 }
 
+const showFeedBackForm = () => {
+  const feedBackForm = document.getElementsByClassName('feedback-form')[0]
+  feedBackForm.style.display = 'block'
+}
+
+const hideFeedBackForm = () => {
+  const feedBackForm = document.getElementsByClassName('feedback-form')[0]
+  feedBackForm.style.display = 'none'
+}
+
 const createSelectionState = () => {
   let selection
   return {
@@ -19,7 +29,17 @@ const createSelectionState = () => {
         selection = true
       } else selection = false
     },
-    getSelection: () => selection
+    getSelection: () => selection,
+    updateApp: () => {
+      if (selection) {
+        // make API call, the end.
+        hideFeedBackForm()
+      } else {
+        // show form
+        showFeedBackForm()
+        textareaCharacterCounter()
+      }
+    }
   }
 }
 
@@ -36,18 +56,16 @@ const textareaCharacterCounter = () => {
   }
 }
 
-const selection = createSelectionState()
+const selection = createSelectionState();
 
-const feedback = () => {
+(function feedback () {
   const buttons = getButtons()
   buttons.forEach(b => {
     b.addEventListener('click', () => {
       clearActive(buttons)
       b.classList.add('active')
       selection.setSelection(b)
-      textareaCharacterCounter()
+      selection.updateApp()
     })
   })
-}
-
-feedback()
+}())

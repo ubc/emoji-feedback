@@ -1,21 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>feedback</title>
 </head>
+
 <body>
   <div class="wrapper">
     <div class="feedback-text">Is this graph helpful?</div>
-    <div class="button" id="yes-button">Yes</div>
-    <div class="button" id="no-button">No</div>
-    <div class="feedback-form" style="display: block;">
+    <div class="button" id="yes-button">
+      <p>
+        Yes
+      </p>
+    </div>
+    <div class="button" id="no-button">
+      <p>
+        No
+      </p>
+    </div>
+    <div class="yes-message" style="display: none;">
+
+    </div>
+    <div class="feedback-form" style="display: none;">
       <form action="">
         <textarea name="" id="feedback-textarea" cols="30" rows="10" maxlength="500" style="width: 100%;" placeholder="How can we make it better?"></textarea>
         <div id="maxlength-enforcer"><span>0</span>/500</div>
       </form>
-      <div class="button" id="feedback-button">Submit feedback</div>
+      <div class="button" id="feedback-button">
+        <p>Submit feedback</p>
+      </div>
+
     </div>
   </div>
 </body>
+
 </html>
