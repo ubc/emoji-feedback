@@ -2,6 +2,8 @@
 
 # Emoji-Feedback 😀 😞 😕 👍 👎 (in active development)
 
+[Working Prototype](https://jsfiddle.net/justin0022/pd4oczva/1/)
+
 A simple tool for eliciting feedback via emojis, featuring a feedback form.
 
 ## Getting Started
@@ -11,7 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 1. **Install [Node 8.0.0 or greater](https://nodejs.org)**.
-2. **Install [Git](https://git-scm.com/downloads)**. 
+2. **Install [Git](https://git-scm.com/downloads)**.
 
 ### Installing and Setup
 
