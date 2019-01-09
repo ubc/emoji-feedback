@@ -1,3 +1,4 @@
+/* global fetch */
 import attachMarkupToElementID from './setup'
 
 const textareaSetup = () => {
@@ -50,6 +51,7 @@ const controller = () => {
     )
     if (selectedEmojiIds.length > 0) {
       showByClassName('feedback-form')
+      submitSelectedEmojis(selectedEmojiIds)
       textareaSetup()
     } else {
       hideByClassName('feedback-form')
@@ -70,6 +72,14 @@ const controller = () => {
     endpoints.votes = votesEndpoint
   }
 
+  const submitSelectedEmojis = () => {
+    return fetch(endpoints.emoji, {
+      method: 'POST',
+      body: JSON.stringify(selectedEmojiIds),
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
+
   return {
     init: ({ entryID, emojis, endpoints }) => {
       attachMarkupToElementID(entryID, emojis)
@@ -84,7 +94,6 @@ const controller = () => {
     },
     getSelection: () => selectedEmojiIds,
     getUserId: () => { },
-    submitSelectedEmojis: () => { /* make api request here */ },
     submitForm: () => { }
   }
 }

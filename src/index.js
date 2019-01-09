@@ -15,8 +15,8 @@ app.init({
   entryID: 'entry',
   emojis,
   endpoints: {
-    emojiEndpoint: '',
-    formEndpoint: '',
-    votesEndpoint: ''
+    emojiEndpoint: 'https://api.github.com/users',
+    formEndpoint: 'https://api.github.com/users',
+    votesEndpoint: 'https://api.github.com/users'
   }
 })
