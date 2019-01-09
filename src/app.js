@@ -1,13 +1,13 @@
 /* global fetch */
 import attachMarkupToElementID from './setup'
 
-const textareaSetup = id => {
-  const textarea = document.getElementById(`${id}-feedback-textarea`)
+const textareaSetup = entryId => {
+  const textarea = document.getElementById(`${entryId}-feedback-textarea`)
   textarea.focus()
   textarea.onkeyup = function () {
     const chars = this.value.length
-    document.getElementById(`${id}-maxlength-enforcer`).innerHTML = `<span>${chars}</span>/500`
-    const feedbackButton = document.getElementById(`${id}-feedback-button`)
+    document.getElementById(`${entryId}-maxlength-enforcer`).innerHTML = `<span>${chars}</span>/500`
+    const feedbackButton = document.getElementById(`${entryId}-feedback-button`)
     if (chars > 0) {
       feedbackButton.classList.add('ready')
     } else {
@@ -24,13 +24,13 @@ const removeActive = emoji => {
 
 const clearActive = emojis => emojis.forEach(emoji => removeActive(emoji))
 
-const showByClassName = name => {
-  const feedBackForm = document.getElementsByClassName(name)[0]
+const showById = id => {
+  const feedBackForm = document.getElementById(id)
   feedBackForm.style.display = 'block'
 }
 
-const hideByClassName = name => {
-  const feedBackForm = document.getElementsByClassName(name)[0]
+const hideById = id => {
+  const feedBackForm = document.getElementById(id)
   feedBackForm.style.display = 'none'
 }
 
@@ -53,11 +53,11 @@ const controller = () => {
       emojis.find(e => e.id === emojiId).classList.add('active')
     )
     if (state.selectedEmojiIds.length > 0) {
-      showByClassName('feedback-form')
+      showById(`${state.entryId}-feedback-form`)
       submitSelectedEmojis(state.selectedEmojiIds)
       textareaSetup(state.entryId)
     } else {
-      hideByClassName('feedback-form')
+      hideById(`${state.entryId}-feedback-form`)
     }
   }
 

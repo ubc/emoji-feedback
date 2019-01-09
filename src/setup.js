@@ -49,6 +49,7 @@ const createTextAreaCounter = entryId => {
 const createFeedbackForm = entryId => {
   const feedbackForm = document.createElement('div')
   feedbackForm.className = 'feedback-form'
+  feedbackForm.id = `${entryId}-feedback-form`
   const feedbackText = createText('Thank you for your feedback')
   const feedbackTextOptional = createText("You can give us written feedback below if you'd like")
   feedbackTextOptional.style.color = '#757575'
@@ -74,15 +75,15 @@ const createFeedbackForm = entryId => {
   return feedbackForm
 }
 
-const attachMarkupToElementID = (id, emojis) => {
-  const entry = document.getElementById(id)
+const attachMarkupToElementID = (entryId, emojis) => {
+  const entry = document.getElementById(entryId)
   const wrapper = createWrapper()
   const introText = createText('How do you feel about this graph?')
 
   wrapper.appendChild(introText)
 
   emojis.forEach(({ icon, response }, i) => {
-    const emojiButton = createButtonWithId(id, response)
+    const emojiButton = createButtonWithId(entryId, response)
     emojiButton.style.gridRow = 'row 2'
     emojiButton.style.gridColumn = `col ${i + 1} / span 1`
     const emojiSpan = createEmojiSpan(icon, response)
@@ -90,7 +91,7 @@ const attachMarkupToElementID = (id, emojis) => {
     wrapper.appendChild(emojiButton)
   })
 
-  wrapper.appendChild(createFeedbackForm(id))
+  wrapper.appendChild(createFeedbackForm(entryId))
 
   entry.appendChild(wrapper)
 }
