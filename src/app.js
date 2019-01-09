@@ -37,6 +37,11 @@ const getEmojisFromDOM = emojis => emojis.map(({ response }) => document.getElem
 
 const controller = () => {
   let selectedEmojiIds = []
+  const endpoints = {
+    emoji: '',
+    form: '',
+    votes: ''
+  }
 
   const update = emojis => {
     clearActive(emojis)
@@ -59,21 +64,28 @@ const controller = () => {
     }
   }
 
+  const setEndpoints = ({ emojiEndpoint, formEndpoint, votesEndpoint }) => {
+    endpoints.emoji = emojiEndpoint
+    endpoints.form = formEndpoint
+    endpoints.votes = votesEndpoint
+  }
+
   return {
-    init: (entryID, emojies) => {
-      attachMarkupToElementID(entryID, emojies)
-      const domEmojis = getEmojisFromDOM(emojies)
+    init: ({ entryID, emojis, endpoints }) => {
+      attachMarkupToElementID(entryID, emojis)
+      const domEmojis = getEmojisFromDOM(emojis)
       domEmojis.forEach(emoji => {
         emoji.addEventListener('click', () => {
           setSelection(emoji)
           update(domEmojis)
         })
       })
+      setEndpoints(endpoints)
     },
     getSelection: () => selectedEmojiIds,
-    getUserId: () => {},
+    getUserId: () => { },
     submitSelectedEmojis: () => { /* make api request here */ },
-    submitForm: () => {}
+    submitForm: () => { }
   }
 }
 

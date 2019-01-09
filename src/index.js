@@ -11,4 +11,12 @@ const emojis = [
   { icon: '👎', response: 'emoji-thumbsdown' }
 ]
 
-app.init('entry', emojis)
+app.init({
+  entryID: 'entry',
+  emojis,
+  endpoints: {
+    emojiEndpoint: '',
+    formEndpoint: '',
+    votesEndpoint: ''
+  }
+})
