@@ -23,6 +23,7 @@ const removeActive = emoji => {
     emoji.classList.remove('active')
   }
 }
+
 const clearActive = emojis => emojis.forEach(emoji => removeActive(emoji))
 
 const showByClassName = name => {
@@ -58,6 +59,8 @@ const controller = () => {
         hideByClassName('feedback-form')
       }
     },
+    getUserId: () => {},
+    sendSelectedEmojis: () => { /* make api request here */ },
     emojis
   }
 }
