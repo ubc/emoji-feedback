@@ -10,6 +10,7 @@
   grid-column: col / span 6;
   grid-row: row;
   text-align: center;
+  font-weight: bold;
 }
 
 .button {

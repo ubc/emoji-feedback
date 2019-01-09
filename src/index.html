@@ -8,9 +8,9 @@
 
 <body>
   <div class="wrapper">
-    <div class="feedback-text"><p>
-      How do you feel about this graph?
-    </p></div>
+    <div class="feedback-text">
+      <p>How do you feel about this graph?</p>
+    </div>
     <div class="button" id="emoji-happy">
       <span class="emoji" alt="emoji-happy">😀</span>
     </div>
@@ -27,7 +27,8 @@
       <span class="emoji" alt="emoji-thumbsdown">👎</span>
     </div>
     <div class="feedback-form">
-      <p style="margin-top:0;">Thank you for your feedback! You're welcome to select more than one emoji, and you can give us written feedback below if you'd like.</p>
+      <p class="feedback-text">Thank you for your feedback</p>
+      <p style="color: #757575; text-align:center; font-size: 14px;">You can give us written feedback below if you'd like</p>
       <form action="">
         <textarea name="" id="feedback-textarea" cols="30" rows="10" maxlength="500" style="width: 100%;" placeholder="How can we make it better?"></textarea>
         <div id="maxlength-enforcer"><span>0</span>/500</div>
