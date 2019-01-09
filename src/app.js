@@ -1,9 +1,9 @@
-const emojiHappy = document.getElementById('emoji-happy')
-const emojiSad = document.getElementById('emoji-sad')
-const emojiConfused = document.getElementById('emoji-confused')
-const emojiThumbsup = document.getElementById('emoji-thumbsup')
-const emojiThumbsdown = document.getElementById('emoji-thumbsdown')
-const emojis = [emojiHappy, emojiSad, emojiConfused, emojiThumbsup, emojiThumbsdown]
+// const emojiHappy = document.getElementById('emoji-happy')
+// const emojiSad = document.getElementById('emoji-sad')
+// const emojiConfused = document.getElementById('emoji-confused')
+// const emojiThumbsup = document.getElementById('emoji-thumbsup')
+// const emojiThumbsdown = document.getElementById('emoji-thumbsdown')
+// const emojis = [emojiHappy, emojiSad, emojiConfused, emojiThumbsup, emojiThumbsdown]
 
 const textareaSetup = () => {
   const textarea = document.getElementById('feedback-textarea')
@@ -49,7 +49,7 @@ const controller = () => {
       }
     },
     getSelection: () => selectedEmojiIds,
-    update: () => {
+    update: (emojis) => {
       clearActive(emojis)
       selectedEmojiIds.forEach(emojiId =>
         emojis.find(e => e.id === emojiId).classList.add('active')
@@ -64,7 +64,7 @@ const controller = () => {
     getUserId: () => {},
     submitSelectedEmojis: () => { /* make api request here */ },
     submitForm: () => {},
-    emojis
+    getEmojisFromDom: emojis => emojis.map(({ response }) => document.getElementById(response))
   }
 }
 

@@ -7,6 +7,7 @@ const createWrapper = () => {
 const createText = text => {
   const p = document.createElement('p')
   p.innerHTML = text
+  p.className = 'feedback-text'
   return p
 }
 
@@ -17,13 +18,78 @@ const createButtonWithId = id => {
   return button
 }
 
-const attachFeedback = id => {
-  const entry = document.getElementById(id)
+const createEmojiSpan = (icon, alt) => {
+  const span = document.createElement('span')
+  span.alt = alt
+  span.className = 'emoji'
+  span.innerHTML = icon
+  return span
+}
 
+const createTextArea = () => {
+  const textarea = document.createElement('textarea')
+  textarea.id = 'feedback-textarea'
+  textarea.cols = '30'
+  textarea.rows = '10'
+  textarea.maxLength = '500'
+  textarea.style.width = '100%'
+  return textarea
+}
+
+const createTextAreaCounter = () => {
+  const charCounter = document.createElement('div')
+  const span = document.createElement('span')
+  charCounter.appendChild(span).innerHTML += '0/500'
+  charCounter.id = 'maxlength-enforcer'
+  charCounter.style.color = '#757575'
+  charCounter.style.fontSize = '14px'
+  return charCounter
+}
+
+const createFeedbackForm = () => {
+  const feedbackForm = document.createElement('div')
+  feedbackForm.className = 'feedback-form'
+  const feedbackText = createText('Thank you for your feedback')
+  const feedbackTextOptional = createText("You can give us written feedback below if you'd like")
+  feedbackTextOptional.style.color = '#757575'
+  feedbackTextOptional.style.textAlign = 'center'
+  feedbackTextOptional.style.fontSize = '14px'
+
+  const form = document.createElement('form')
+  const textarea = createTextArea()
+  const charCounter = createTextAreaCounter()
+
+  form.appendChild(textarea)
+  form.appendChild(charCounter)
+
+  const submitButton = createButtonWithId('feedback-button')
+  submitButton.appendChild(createText('Submit feedback'))
+
+  feedbackForm.appendChild(feedbackText)
+  feedbackForm.appendChild(feedbackTextOptional)
+  feedbackForm.appendChild(form)
+  feedbackForm.appendChild(submitButton)
+
+  return feedbackForm
+}
+
+const attachFeedback = (id, emojis) => {
+  const entry = document.getElementById(id)
   const wrapper = createWrapper()
   const introText = createText('How do you feel about this graph?')
   wrapper
     .appendChild(introText)
+
+  emojis.forEach(({ icon, response }) => {
+    const emojiButton = createButtonWithId(response)
+    const emojiSpan = createEmojiSpan(icon, response)
+    emojiButton.appendChild(emojiSpan)
+    wrapper.appendChild(emojiButton)
+  })
+
+  wrapper.appendChild(createFeedbackForm())
+
+  entry.appendChild(wrapper)
 }
 
 export default attachFeedback
