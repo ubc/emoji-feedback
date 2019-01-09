@@ -36,7 +36,7 @@ span.emoji {
   font-size: 30px;
 }
 
-#emoji-happy {
+/* #emoji-happy {
   grid-row: row 2;
   grid-column: col 1 / span 1;
 }
@@ -59,7 +59,7 @@ span.emoji {
 #emoji-thumbsdown {
   grid-row: row 2;
   grid-column: col 5 / span 1;
-}
+} */
 
 .feedback-form {
   grid-row: row 4;
@@ -69,18 +69,18 @@ span.emoji {
   -moz-animation: slide-down .3s ease-out;
 }
 
-#feedback-button {
+.feedback-button {
   width: 150px;
   float: right;
   color: #757575;
 }
 
-#feedback-button:hover {
+.feedback-button:hover {
   background-color: #4CAF50;
   color: white !important;
 }
 
-#feedback-button.ready {
+.feedback-button.ready {
   background-color: #4CAF50;
   color: white;
 }

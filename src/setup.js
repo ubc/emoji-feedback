@@ -11,9 +11,9 @@ const createText = text => {
   return p
 }
 
-const createButtonWithId = id => {
+const createButtonWithId = (entryId, id) => {
   const button = document.createElement('div')
-  button.id = id
+  button.id = `${entryId}-${id}`
   button.className = 'button'
   return button
 }
@@ -26,9 +26,9 @@ const createEmojiSpan = (icon, alt) => {
   return span
 }
 
-const createTextArea = () => {
+const createTextArea = entryId => {
   const textarea = document.createElement('textarea')
-  textarea.id = 'feedback-textarea'
+  textarea.id = `${entryId}-feedback-textarea`
   textarea.cols = '30'
   textarea.rows = '10'
   textarea.maxLength = '500'
@@ -36,17 +36,17 @@ const createTextArea = () => {
   return textarea
 }
 
-const createTextAreaCounter = () => {
+const createTextAreaCounter = entryId => {
   const charCounter = document.createElement('div')
   const span = document.createElement('span')
   charCounter.appendChild(span).innerHTML += '0/500'
-  charCounter.id = 'maxlength-enforcer'
+  charCounter.id = `${entryId}-maxlength-enforcer`
   charCounter.style.color = '#757575'
   charCounter.style.fontSize = '14px'
   return charCounter
 }
 
-const createFeedbackForm = () => {
+const createFeedbackForm = entryId => {
   const feedbackForm = document.createElement('div')
   feedbackForm.className = 'feedback-form'
   const feedbackText = createText('Thank you for your feedback')
@@ -56,13 +56,14 @@ const createFeedbackForm = () => {
   feedbackTextOptional.style.fontSize = '14px'
 
   const form = document.createElement('form')
-  const textarea = createTextArea()
-  const charCounter = createTextAreaCounter()
+  const textarea = createTextArea(entryId)
+  const charCounter = createTextAreaCounter(entryId)
 
   form.appendChild(textarea)
   form.appendChild(charCounter)
 
-  const submitButton = createButtonWithId('feedback-button')
+  const submitButton = createButtonWithId(entryId, 'feedback-button')
+  submitButton.classList.add('feedback-button')
   submitButton.appendChild(createText('Submit feedback'))
 
   feedbackForm.appendChild(feedbackText)
@@ -80,14 +81,16 @@ const attachMarkupToElementID = (id, emojis) => {
 
   wrapper.appendChild(introText)
 
-  emojis.forEach(({ icon, response }) => {
-    const emojiButton = createButtonWithId(response)
+  emojis.forEach(({ icon, response }, i) => {
+    const emojiButton = createButtonWithId(id, response)
+    emojiButton.style.gridRow = 'row 2'
+    emojiButton.style.gridColumn = `col ${i + 1} / span 1`
     const emojiSpan = createEmojiSpan(icon, response)
     emojiButton.appendChild(emojiSpan)
     wrapper.appendChild(emojiButton)
   })
 
-  wrapper.appendChild(createFeedbackForm())
+  wrapper.appendChild(createFeedbackForm(id))
 
   entry.appendChild(wrapper)
 }

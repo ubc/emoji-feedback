@@ -12,11 +12,11 @@ const emojis = [
 ]
 
 app.init({
-  entryID: 'entry',
+  entryId: 'entry',
   emojis,
   endpoints: {
-    emojiEndpoint: 'https://api.github.com/users',
-    formEndpoint: 'https://api.github.com/users',
-    votesEndpoint: 'https://api.github.com/users'
+    emojiEndpoint: 'http://localhost:8080/',
+    formEndpoint: 'http://localhost:8080/',
+    votesEndpoint: 'http://localhost:8080/'
   }
 })
