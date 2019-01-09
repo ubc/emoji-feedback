@@ -5,8 +5,10 @@ const emojiThumbsup = document.getElementById('emoji-thumbsup')
 const emojiThumbsdown = document.getElementById('emoji-thumbsdown')
 const emojis = [emojiHappy, emojiSad, emojiConfused, emojiThumbsup, emojiThumbsdown]
 
-const textareaCharacterCounter = () => {
-  document.getElementById('feedback-textarea').onkeyup = function () {
+const textareaSetup = () => {
+  const textarea = document.getElementById('feedback-textarea')
+  textarea.focus()
+  textarea.onkeyup = function () {
     const chars = this.value.length
     document.getElementById('maxlength-enforcer').innerHTML = `<span>${chars}</span>/500`
     const feedbackButton = document.getElementById('feedback-button')
@@ -54,7 +56,7 @@ const controller = () => {
       )
       if (selectedEmojiIds.length > 0) {
         showByClassName('feedback-form')
-        textareaCharacterCounter()
+        textareaSetup()
       } else {
         hideByClassName('feedback-form')
       }

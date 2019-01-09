@@ -72,11 +72,12 @@ span.emoji {
 #feedback-button {
   width: 150px;
   float: right;
+  color: #757575;
 }
 
 #feedback-button:hover {
   background-color: #4CAF50;
-  color: white;
+  color: white !important;
 }
 
 #feedback-button.ready {
