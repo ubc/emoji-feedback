@@ -1,6 +1,6 @@
 .wrapper {
   display: grid;
-  grid-gap: 5px;
+  grid-gap: 2px;
   width: 60px;
   grid-template-columns: [col] 60px [col] 60px [col] 60px [col] 60px [col] 60px;
   grid-template-rows: [row] auto [row] auto [row];
@@ -94,6 +94,8 @@ span.emoji {
 100% { opacity: 1; -moz-transform: translateY(0); }
 }
 
-#feedback-textarea {
+textarea#feedback-textarea {
   border: 1px solid #D3D3D3;
+  font-size: 14px;
+  height: 130px;
 }

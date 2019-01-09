@@ -62,7 +62,8 @@ const controller = () => {
       }
     },
     getUserId: () => {},
-    sendSelectedEmojis: () => { /* make api request here */ },
+    submitSelectedEmojis: () => { /* make api request here */ },
+    submitForm: () => {},
     emojis
   }
 }
