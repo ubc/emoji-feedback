@@ -9,6 +9,12 @@ const textareaCharacterCounter = () => {
   document.getElementById('feedback-textarea').onkeyup = function () {
     const chars = this.value.length
     document.getElementById('maxlength-enforcer').innerHTML = `<span>${chars}</span>/500`
+    const feedbackButton = document.getElementById('feedback-button')
+    if (chars > 0) {
+      feedbackButton.classList.add('ready')
+    } else {
+      feedbackButton.classList.remove('ready')
+    }
   }
 }
 

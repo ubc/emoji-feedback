@@ -73,6 +73,16 @@ span.emoji {
   float: right;
 }
 
+#feedback-button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#feedback-button.ready {
+  background-color: #4CAF50;
+  color: white;
+}
+
 @-webkit-keyframes slide-down {
   0% { opacity: 0; -webkit-transform: translateY(-5%); }
 100% { opacity: 1; -webkit-transform: translateY(0); }
@@ -80,4 +90,8 @@ span.emoji {
 @-moz-keyframes slide-down {
   0% { opacity: 0; -moz-transform: translateY(-5%); }
 100% { opacity: 1; -moz-transform: translateY(0); }
+}
+
+#feedback-textarea {
+  border: 1px solid #D3D3D3;
 }
