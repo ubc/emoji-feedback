@@ -98,4 +98,7 @@ textarea#feedback-textarea {
   border: 1px solid #D3D3D3;
   font-size: 14px;
   height: 130px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
