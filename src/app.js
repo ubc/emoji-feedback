@@ -1,9 +1,4 @@
-// const emojiHappy = document.getElementById('emoji-happy')
-// const emojiSad = document.getElementById('emoji-sad')
-// const emojiConfused = document.getElementById('emoji-confused')
-// const emojiThumbsup = document.getElementById('emoji-thumbsup')
-// const emojiThumbsdown = document.getElementById('emoji-thumbsdown')
-// const emojis = [emojiHappy, emojiSad, emojiConfused, emojiThumbsup, emojiThumbsdown]
+import attachMarkupToElementID from './setup'
 
 const textareaSetup = () => {
   const textarea = document.getElementById('feedback-textarea')
@@ -38,33 +33,47 @@ const hideByClassName = name => {
   feedBackForm.style.display = 'none'
 }
 
+const getEmojisFromDOM = emojis => emojis.map(({ response }) => document.getElementById(response))
+
 const controller = () => {
   let selectedEmojiIds = []
+
+  const update = emojis => {
+    clearActive(emojis)
+    selectedEmojiIds.forEach(emojiId =>
+      emojis.find(e => e.id === emojiId).classList.add('active')
+    )
+    if (selectedEmojiIds.length > 0) {
+      showByClassName('feedback-form')
+      textareaSetup()
+    } else {
+      hideByClassName('feedback-form')
+    }
+  }
+
+  const setSelection = emoji => {
+    if (selectedEmojiIds.includes(emoji.id)) {
+      selectedEmojiIds = selectedEmojiIds.filter(e => e !== emoji.id)
+    } else {
+      selectedEmojiIds.push(emoji.id)
+    }
+  }
+
   return {
-    setSelection: emoji => {
-      if (selectedEmojiIds.includes(emoji.id)) {
-        selectedEmojiIds = selectedEmojiIds.filter(e => e !== emoji.id)
-      } else {
-        selectedEmojiIds.push(emoji.id)
-      }
+    init: (entryID, emojies) => {
+      attachMarkupToElementID(entryID, emojies)
+      const domEmojis = getEmojisFromDOM(emojies)
+      domEmojis.forEach(emoji => {
+        emoji.addEventListener('click', () => {
+          setSelection(emoji)
+          update(domEmojis)
+        })
+      })
     },
     getSelection: () => selectedEmojiIds,
-    update: (emojis) => {
-      clearActive(emojis)
-      selectedEmojiIds.forEach(emojiId =>
-        emojis.find(e => e.id === emojiId).classList.add('active')
-      )
-      if (selectedEmojiIds.length > 0) {
-        showByClassName('feedback-form')
-        textareaSetup()
-      } else {
-        hideByClassName('feedback-form')
-      }
-    },
     getUserId: () => {},
     submitSelectedEmojis: () => { /* make api request here */ },
-    submitForm: () => {},
-    getEmojisFromDom: emojis => emojis.map(({ response }) => document.getElementById(response))
+    submitForm: () => {}
   }
 }
 

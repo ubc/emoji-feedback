@@ -73,12 +73,12 @@ const createFeedbackForm = () => {
   return feedbackForm
 }
 
-const attachFeedback = (id, emojis) => {
+const attachMarkupToElementID = (id, emojis) => {
   const entry = document.getElementById(id)
   const wrapper = createWrapper()
   const introText = createText('How do you feel about this graph?')
-  wrapper
-    .appendChild(introText)
+
+  wrapper.appendChild(introText)
 
   emojis.forEach(({ icon, response }) => {
     const emojiButton = createButtonWithId(response)
@@ -92,4 +92,4 @@ const attachFeedback = (id, emojis) => {
   entry.appendChild(wrapper)
 }
 
-export default attachFeedback
+export default attachMarkupToElementID
