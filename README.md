@@ -1,10 +1,12 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![gzipped_size](https://img.shields.io/badge/gzip%20size-5.4kB-green.svg)](https://img.shields.io/badge/gzip%20size-5.4kB-green.svg)
+[![javascript](https://img.shields.io/badge/javascript-vanilla-green.svg)](http://vanilla-js.com/)
 
 # Emoji-Feedback 😀 😞 😕 👍 👎 (in active development)
 
 [Working Prototype](https://jsfiddle.net/justin0022/pd4oczva/13/)
 
-A simple tool for eliciting feedback via emojis, featuring a feedback form.
+A simple tool for eliciting feedback via emojis, featuring a feedback form. 0 dependencies, written in pure vanilla JavaScript.
 
 ## Getting Started
 
