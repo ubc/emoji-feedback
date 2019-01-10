@@ -17,10 +17,9 @@ const formTextAreaSetup = entryId => {
   }
 }
 
-const createSubmitButtonHandler = entryId => {
+const createFormHandler = entryId => {
   const submitButton = document.getElementById(`${entryId}-feedback-button`)
   const handleSubmitButton = () => {
-    const form = document.getElementById(`${entryId}-feedback-form`)
     const textarea = getTextArea(entryId)
     const text = textarea.value
     if (text.length > 0) {
@@ -30,16 +29,7 @@ const createSubmitButtonHandler = entryId => {
       // show message that there should be some text before submission can occur
     }
   }
-
-  return {
-    attachSubmitButtonHandler: () => submitButton.addEventListener('click', handleSubmitButton)
-    // detachSubmitButtonHandler: () => submitButton.removeEventListener('click', handleSubmitButton)
-  }
-}
-
-const createFormHandler = entryId => {
-  const submitButtonHandler = createSubmitButtonHandler(entryId)
-  submitButtonHandler.attachSubmitButtonHandler()
+  submitButton.addEventListener('click', handleSubmitButton)
 }
 
 export {
