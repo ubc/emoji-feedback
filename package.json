@@ -1,14 +1,14 @@
 {
-  "name": "feedback",
+  "name": "emoji-feedback",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple tool for eliciting feedback via emojis, featuring a feedback form.",
   "main": "index.js",
   "scripts": {
     "test": "jest --watch",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
   },
-  "author": "",
+  "author": "Justin Lee",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
