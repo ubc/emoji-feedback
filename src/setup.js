@@ -48,7 +48,9 @@ const createTextAreaCounter = entryId => {
 
 const createFeedbackForm = entryId => {
   const feedbackForm = document.createElement('div')
-  feedbackForm.className = 'feedback-form'
+  feedbackForm.classList.add('feedback-form')
+  feedbackForm.classList.add('hidden')
+
   feedbackForm.id = `${entryId}-feedback-form`
   const feedbackText = createText('Thank you for your feedback')
   const feedbackTextOptional = createText("You can give us written feedback below if you'd like")

@@ -2,11 +2,11 @@
 import attachMarkupToElementID from './setup'
 import {
   clearActive,
-  showById,
-  hideById,
   getEmojisFromDOM,
   getTextArea,
-  setTextAreaMaxLength
+  setTextAreaMaxLength,
+  addToClass,
+  removeFromClass
 } from './util'
 
 const controller = () => {
@@ -28,11 +28,10 @@ const controller = () => {
       const chars = this.value.length
       state.feedbackText = textarea.value
       setTextAreaMaxLength(entryId, chars)
-      const feedbackButton = document.getElementById(`${entryId}-feedback-button`)
       if (chars > 0) {
-        feedbackButton.classList.add('ready')
+        addToClass(`${entryId}-feedback-button`, 'ready')
       } else {
-        feedbackButton.classList.remove('ready')
+        removeFromClass(`${entryId}-feedback-button`, 'ready')
       }
     }
   }
@@ -41,9 +40,12 @@ const controller = () => {
     const submitButton = document.getElementById(`${entryId}-feedback-button`)
     const handleSubmitButton = () => {
       if (state.feedbackText.length > 0) {
-        hideById(`${entryId}-feedback-form`)
+        addToClass(`${entryId}-feedback-form`, 'hidden')
+        // show spinner
         submitFeedback(state.feedbackText)
+
       } else {
+        // removeFromClass(`${entryId}-feedback-form`, 'submitted')
         // show message that there should be some text before submission can occur
       }
     }
@@ -56,11 +58,11 @@ const controller = () => {
       emojis.find(e => e.id === emojiId).classList.add('active')
     )
     if (state.selectedEmojiIds.length > 0) {
-      showById(`${state.entryId}-feedback-form`)
+      removeFromClass(`${state.entryId}-feedback-form`, 'hidden')
       submitSelectedEmojis(state.selectedEmojiIds)
       formTextAreaSetup(state.entryId)
     } else {
-      hideById(`${state.entryId}-feedback-form`)
+      addToClass(`${state.entryId}-feedback-form`, 'hidden')
     }
   }
 

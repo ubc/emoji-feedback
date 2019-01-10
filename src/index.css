@@ -36,12 +36,19 @@ span.emoji {
   font-size: 30px;
 }
 
+.feedback-form.hidden {
+  display: none;
+}
+
 .feedback-form {
   grid-row: row 4;
   grid-column: col / span 6;
-  display: none;
   -webkit-animation: slide-down .3s ease-out;
   -moz-animation: slide-down .3s ease-out;
+}
+
+.feedback-thank-you {
+  grid-row: row 4;
 }
 
 @-webkit-keyframes slide-down {
@@ -76,3 +83,4 @@ textarea#feedback-textarea {
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
+
