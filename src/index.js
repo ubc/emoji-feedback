@@ -1,5 +1,6 @@
 import css from './index.css'
 import controller from './app'
+import '@babel/polyfill'
 
 const app = controller()
 // const app1 = controller()

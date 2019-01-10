@@ -1,6 +1,7 @@
-const createWrapper = () => {
+const createWrapper = entryId => {
   const wrapper = document.createElement('div')
   wrapper.className = 'wrapper'
+  wrapper.id = `${entryId}-wrapper`
   return wrapper
 }
 
@@ -77,12 +78,12 @@ const createFeedbackForm = entryId => {
   return feedbackForm
 }
 
-const attachMarkupToElementID = (entryId, emojis) => {
+const attachEmojiFeedback = (entryId, emojis) => {
   const entry = document.getElementById(entryId)
-  const wrapper = createWrapper()
+  const emojiFeedbackWrapper = createWrapper(entryId)
   const introText = createText('How do you feel about this graph?')
 
-  wrapper.appendChild(introText)
+  emojiFeedbackWrapper.appendChild(introText)
 
   emojis.forEach(({ emojicon, emotion }, i) => {
     const emojiButton = createButtonWithId(entryId, emotion)
@@ -90,12 +91,58 @@ const attachMarkupToElementID = (entryId, emojis) => {
     emojiButton.style.gridColumn = `col ${i + 1} / span 1`
     const emojiSpan = createEmojiSpan(emojicon, emotion)
     emojiButton.appendChild(emojiSpan)
-    wrapper.appendChild(emojiButton)
+    emojiFeedbackWrapper.appendChild(emojiButton)
   })
 
-  wrapper.appendChild(createFeedbackForm(entryId))
+  emojiFeedbackWrapper.appendChild(createFeedbackForm(entryId))
 
-  entry.appendChild(wrapper)
+  const spinner = document.createElement('div')
+  spinner.id = `${entryId}-spinner`
+  spinner.className = 'sk-circle'
+  spinner.classList.add('hidden')
+
+  for (let i = 0; i < 12; ++i) {
+    const circle = document.createElement('div')
+    circle.classList.add('sk-child')
+    circle.classList.add(`sk-circle${i}`)
+    spinner.appendChild(circle)
+  }
+
+  emojiFeedbackWrapper.appendChild(spinner)
+
+  entry.appendChild(emojiFeedbackWrapper)
 }
 
-export default attachMarkupToElementID
+const createThankYouWrapper = entryId => {
+  const thankYouWrapper = document.createElement('div')
+  thankYouWrapper.className = 'feedback-thank-you'
+  thankYouWrapper.classList.add('hidden')
+  thankYouWrapper.id = `${entryId}-thank-you`
+
+  const hiFive = createText('🙌 ')
+  hiFive.className = 'hiFive'
+  const thankYou = createText('Your feedback has been recorded')
+  thankYou.className = 'thankYou'
+  thankYouWrapper.appendChild(hiFive)
+  thankYouWrapper.appendChild(thankYou)
+
+  return thankYouWrapper
+}
+
+const attachThankYouMessage = entryId => {
+  const thankYouWrapper = createThankYouWrapper(entryId)
+  const entry = document.getElementById(entryId)
+  entry.appendChild(thankYouWrapper)
+}
+
+const detachEmojiFeedback = entryId => {
+  const entry = document.getElementById(entryId)
+  const emojiFeedbackWrapper = document.getElementById(`${entryId}-wrapper`)
+  entry.removeChild(emojiFeedbackWrapper)
+}
+
+export {
+  attachEmojiFeedback,
+  attachThankYouMessage,
+  detachEmojiFeedback
+}

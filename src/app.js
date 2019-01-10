@@ -1,5 +1,9 @@
 /* global fetch */
-import attachMarkupToElementID from './setup'
+import {
+  attachEmojiFeedback,
+  attachThankYouMessage,
+  detachEmojiFeedback
+} from './domSetup'
 import {
   clearActive,
   getEmojisFromDOM,
@@ -41,8 +45,12 @@ const controller = () => {
     const handleSubmitButton = async () => {
       if (state.feedbackText.length > 0) {
         addToClass(`${entryId}-feedback-form`, 'hidden')
-        // show spinner
+        removeFromClass(`${entryId}-spinner`, 'hidden')
         await submitFeedback(state.feedbackText)
+        // if success, hide spinner, show thank you message
+        addToClass(`${entryId}-spinner`, 'hidden')
+        detachEmojiFeedback(entryId)
+        attachThankYouMessage(entryId)
       } else {
         // removeFromClass(`${entryId}-feedback-form`, 'submitted')
         // show message that there should be some text before submission can occur
@@ -100,7 +108,7 @@ const controller = () => {
   return {
     init: ({ entryId, emojis, endpoints }) => {
       setEndpoints(endpoints)
-      attachMarkupToElementID(entryId, emojis)
+      attachEmojiFeedback(entryId, emojis)
       setEntryId(entryId)
       createFormHandler(entryId)
 
