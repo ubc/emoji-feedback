@@ -28,7 +28,7 @@
 }
 
 .active {
-  background-color: #DCDCDC;
+  background-color: #40B4E5;
   font-style: bold;
 }
 
@@ -57,11 +57,6 @@ span.emoji {
   width: 150px;
   float: right;
   color: #757575;
-}
-
-.feedback-button:hover {
-  background-color: #40B4E5;
-  color: white !important;
 }
 
 .feedback-button.ready {
