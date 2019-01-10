@@ -82,11 +82,11 @@ const attachMarkupToElementID = (entryId, emojis) => {
 
   wrapper.appendChild(introText)
 
-  emojis.forEach(({ icon, response }, i) => {
-    const emojiButton = createButtonWithId(entryId, response)
+  emojis.forEach(({ emojicon, emotion }, i) => {
+    const emojiButton = createButtonWithId(entryId, emotion)
     emojiButton.style.gridRow = 'row 2'
     emojiButton.style.gridColumn = `col ${i + 1} / span 1`
-    const emojiSpan = createEmojiSpan(icon, response)
+    const emojiSpan = createEmojiSpan(emojicon, emotion)
     emojiButton.appendChild(emojiSpan)
     wrapper.appendChild(emojiButton)
   })

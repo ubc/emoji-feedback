@@ -24,7 +24,7 @@
 }
 
 .button:hover {
-  border: 1px solid #4CAF50;
+  border: 1px solid #40B4E5;
 }
 
 .active {
@@ -36,53 +36,12 @@ span.emoji {
   font-size: 30px;
 }
 
-/* #emoji-happy {
-  grid-row: row 2;
-  grid-column: col 1 / span 1;
-}
-
-#emoji-sad {
-  grid-row: row 2;
-  grid-column: col 2 / span 1;
-}
-
-#emoji-confused {
-  grid-row: row 2;
-  grid-column: col 3 / span 1;
-}
-
-#emoji-thumbsup {
-  grid-row: row 2;
-  grid-column: col 4 / span 1;
-}
-
-#emoji-thumbsdown {
-  grid-row: row 2;
-  grid-column: col 5 / span 1;
-} */
-
 .feedback-form {
   grid-row: row 4;
   grid-column: col / span 6;
   display: none;
   -webkit-animation: slide-down .3s ease-out;
   -moz-animation: slide-down .3s ease-out;
-}
-
-.feedback-button {
-  width: 150px;
-  float: right;
-  color: #757575;
-}
-
-.feedback-button:hover {
-  background-color: #4CAF50;
-  color: white !important;
-}
-
-.feedback-button.ready {
-  background-color: #4CAF50;
-  color: white;
 }
 
 @-webkit-keyframes slide-down {
@@ -92,6 +51,26 @@ span.emoji {
 @-moz-keyframes slide-down {
   0% { opacity: 0; -moz-transform: translateY(-5%); }
 100% { opacity: 1; -moz-transform: translateY(0); }
+}
+
+.feedback-button {
+  width: 150px;
+  float: right;
+  color: #757575;
+}
+
+.feedback-button:hover {
+  background-color: #40B4E5;
+  color: white !important;
+}
+
+.feedback-button.ready {
+  background-color: #40B4E5;
+  color: white;
+}
+
+.feedback-button:active {
+  background: #002145;
 }
 
 textarea#feedback-textarea {

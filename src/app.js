@@ -1,50 +1,12 @@
 /* global fetch */
 import attachMarkupToElementID from './setup'
-
-const textareaSetup = entryId => {
-  const textarea = document.getElementById(`${entryId}-feedback-textarea`)
-  textarea.focus()
-  textarea.onkeyup = function () {
-    const chars = this.value.length
-    document.getElementById(`${entryId}-maxlength-enforcer`).innerHTML = `<span>${chars}</span>/500`
-    const feedbackButton = document.getElementById(`${entryId}-feedback-button`)
-    if (chars > 0) {
-      feedbackButton.classList.add('ready')
-    } else {
-      feedbackButton.classList.remove('ready')
-    }
-  }
-}
-
-const removeActive = emoji => {
-  if (emoji.classList.contains('active')) {
-    emoji.classList.remove('active')
-  }
-}
-
-const clearActive = emojis => emojis.forEach(emoji => removeActive(emoji))
-
-const showById = id => {
-  const feedBackForm = document.getElementById(id)
-  feedBackForm.style.display = 'block'
-}
-
-const hideById = id => {
-  const feedBackForm = document.getElementById(id)
-  feedBackForm.style.display = 'none'
-}
-
-const getEmojisFromDOM = (entryId, emojis) =>
-  emojis.map(({ response }) => document.getElementById(`${entryId}-${response}`))
-
-const submitForm = entryId => {
-  document.getElementById(`${entryId}-feedback-form`)
-}
-
-const attachSubmitButtonHandler = entryId => {
-  const submitButton = document.getElementById(`${entryId}-feedback-button`)
-  submitButton.addEventListener('click', () => submitForm())
-}
+import { formTextAreaSetup, createFormHandler } from './form'
+import {
+  clearActive,
+  showById,
+  hideById,
+  getEmojisFromDOM
+} from './util'
 
 const controller = () => {
   const state = {
@@ -65,7 +27,7 @@ const controller = () => {
     if (state.selectedEmojiIds.length > 0) {
       showById(`${state.entryId}-feedback-form`)
       submitSelectedEmojis(state.selectedEmojiIds)
-      textareaSetup(state.entryId)
+      formTextAreaSetup(state.entryId)
     } else {
       hideById(`${state.entryId}-feedback-form`)
     }
@@ -85,30 +47,30 @@ const controller = () => {
     state.endpoints.votes = votesEndpoint
   }
 
-  const submitSelectedEmojis = () => {
+  const submitSelectedEmojis = selectedEmojiIds => {
     return fetch(state.endpoints.emoji, {
       method: 'POST',
-      body: JSON.stringify(state.selectedEmojiIds),
+      body: JSON.stringify(selectedEmojiIds),
       headers: { 'Content-Type': 'application/json' }
     })
   }
 
+  const setEntryId = entryId => (state.entryId = entryId)
+
   return {
     init: ({ entryId, emojis, endpoints }) => {
       attachMarkupToElementID(entryId, emojis)
+      setEndpoints(endpoints)
+      setEntryId(entryId)
+      createFormHandler(entryId)
+
       const domEmojis = getEmojisFromDOM(entryId, emojis)
-      state.entryId = entryId
       domEmojis.forEach(emoji => {
         emoji.addEventListener('click', () => {
           setSelection(emoji)
           update(domEmojis)
         })
       })
-      attachSubmitButtonHandler(entryId)
-      setEndpoints(endpoints)
-    },
-    submitForm: () => {
-
     }
   }
 }
