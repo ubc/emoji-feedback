@@ -34,7 +34,17 @@ const hideById = id => {
   feedBackForm.style.display = 'none'
 }
 
-const getEmojisFromDOM = (entryId, emojis) => emojis.map(({ response }) => document.getElementById(`${entryId}-${response}`))
+const getEmojisFromDOM = (entryId, emojis) =>
+  emojis.map(({ response }) => document.getElementById(`${entryId}-${response}`))
+
+const submitForm = entryId => {
+  document.getElementById(`${entryId}-feedback-form`)
+}
+
+const attachSubmitButtonHandler = entryId => {
+  const submitButton = document.getElementById(`${entryId}-feedback-button`)
+  submitButton.addEventListener('click', () => submitForm())
+}
 
 const controller = () => {
   const state = {
@@ -87,16 +97,16 @@ const controller = () => {
     init: ({ entryId, emojis, endpoints }) => {
       attachMarkupToElementID(entryId, emojis)
       const domEmojis = getEmojisFromDOM(entryId, emojis)
+      state.entryId = entryId
       domEmojis.forEach(emoji => {
         emoji.addEventListener('click', () => {
           setSelection(emoji)
           update(domEmojis)
         })
       })
+      attachSubmitButtonHandler(entryId)
       setEndpoints(endpoints)
-      state.entryId = entryId
     },
-    getUserId: () => { },
     submitForm: () => {
 
     }
