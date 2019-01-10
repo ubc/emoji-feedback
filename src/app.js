@@ -1,22 +1,53 @@
 /* global fetch */
 import attachMarkupToElementID from './setup'
-import { formTextAreaSetup, createFormHandler } from './form'
 import {
   clearActive,
   showById,
   hideById,
-  getEmojisFromDOM
+  getEmojisFromDOM,
+  getTextArea,
+  setTextAreaMaxLength
 } from './util'
 
 const controller = () => {
   const state = {
     selectedEmojiIds: [],
+    feedbackText: '',
     endpoints: {
       emoji: '',
       form: '',
       votes: ''
     },
     entryId: ''
+  }
+
+  const formTextAreaSetup = entryId => {
+    const textarea = getTextArea(entryId)
+    textarea.focus()
+    textarea.onkeyup = function () {
+      const chars = this.value.length
+      state.feedbackText = textarea.value
+      setTextAreaMaxLength(entryId, chars)
+      const feedbackButton = document.getElementById(`${entryId}-feedback-button`)
+      if (chars > 0) {
+        feedbackButton.classList.add('ready')
+      } else {
+        feedbackButton.classList.remove('ready')
+      }
+    }
+  }
+
+  const createFormHandler = entryId => {
+    const submitButton = document.getElementById(`${entryId}-feedback-button`)
+    const handleSubmitButton = () => {
+      if (state.feedbackText.length > 0) {
+        hideById(`${entryId}-feedback-form`)
+        submitFeedback(state.feedbackText)
+      } else {
+        // show message that there should be some text before submission can occur
+      }
+    }
+    submitButton.addEventListener('click', handleSubmitButton)
   }
 
   const update = emojis => {
@@ -55,12 +86,20 @@ const controller = () => {
     })
   }
 
+  const submitFeedback = text => {
+    return fetch(state.endpoints.form, {
+      method: 'POST',
+      body: JSON.stringify(text),
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
+
   const setEntryId = entryId => (state.entryId = entryId)
 
   return {
     init: ({ entryId, emojis, endpoints }) => {
-      attachMarkupToElementID(entryId, emojis)
       setEndpoints(endpoints)
+      attachMarkupToElementID(entryId, emojis)
       setEntryId(entryId)
       createFormHandler(entryId)
 
