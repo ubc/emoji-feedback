@@ -2,7 +2,7 @@
 
 # Emoji-Feedback 😀 😞 😕 👍 👎 (in active development)
 
-[Working Prototype](https://jsfiddle.net/justin0022/pd4oczva/1/)
+[Working Prototype](https://jsfiddle.net/justin0022/pd4oczva/13/)
 
 A simple tool for eliciting feedback via emojis, featuring a feedback form.
 
