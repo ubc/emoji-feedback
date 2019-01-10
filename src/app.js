@@ -38,12 +38,11 @@ const controller = () => {
 
   const createFormHandler = entryId => {
     const submitButton = document.getElementById(`${entryId}-feedback-button`)
-    const handleSubmitButton = () => {
+    const handleSubmitButton = async () => {
       if (state.feedbackText.length > 0) {
         addToClass(`${entryId}-feedback-form`, 'hidden')
         // show spinner
-        submitFeedback(state.feedbackText)
-
+        await submitFeedback(state.feedbackText)
       } else {
         // removeFromClass(`${entryId}-feedback-form`, 'submitted')
         // show message that there should be some text before submission can occur
