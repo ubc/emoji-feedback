@@ -54,7 +54,7 @@ const createFeedbackForm = entryId => {
 
   feedbackForm.id = `${entryId}-feedback-form`
   const feedbackText = createText('Thank you for your feedback')
-  const feedbackTextOptional = createText("You can give us written feedback below if you'd like")
+  const feedbackTextOptional = createText('Let us know if you have ideas for new features or improvements below!')
   feedbackTextOptional.style.color = '#757575'
   feedbackTextOptional.style.textAlign = 'center'
   feedbackTextOptional.style.fontSize = '14px'
