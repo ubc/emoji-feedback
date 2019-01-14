@@ -95,7 +95,13 @@ const attachEmojiFeedback = (entryId, emojis) => {
   })
 
   emojiFeedbackWrapper.appendChild(createFeedbackForm(entryId))
+  const spinner = createSpinner(entryId)
+  emojiFeedbackWrapper.appendChild(spinner)
 
+  entry.appendChild(emojiFeedbackWrapper)
+}
+
+const createSpinner = entryId => {
   const spinner = document.createElement('div')
   spinner.id = `${entryId}-spinner`
   spinner.className = 'sk-circle'
@@ -107,10 +113,7 @@ const attachEmojiFeedback = (entryId, emojis) => {
     circle.classList.add(`sk-circle${i}`)
     spinner.appendChild(circle)
   }
-
-  emojiFeedbackWrapper.appendChild(spinner)
-
-  entry.appendChild(emojiFeedbackWrapper)
+  return spinner
 }
 
 const createThankYouWrapper = entryId => {
