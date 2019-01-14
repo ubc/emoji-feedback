@@ -125,6 +125,8 @@ const controller = () => {
       feedbackTextPrompt = c.feedbackTextPrompt,
       feedbackThankYou = c.feedbackThankYou
     } = {}) => {
+      if (entryId == null) throw new Error('entryId must be specified')
+      if (endpoints == null) throw new Error('endpoints must be specified')
       const text = { introText, feedbackTextPrompt, feedbackThankYou }
       setEndpoints(endpoints)
       attachEmojiFeedback(entryId, emojis, text)
@@ -138,7 +140,8 @@ const controller = () => {
           update(domEmojis)
         })
       })
-    }
+    },
+    getState: () => state
   }
 }
 

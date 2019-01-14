@@ -4,6 +4,8 @@
   "description": "A simple tool for eliciting feedback via emojis, featuring a feedback form.",
   "main": "index.js",
   "scripts": {
+    "test:app": "jest --watch -t 'app'",
+    "test:ui": "jest --watch -t 'ui",
     "test": "jest --watch",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"

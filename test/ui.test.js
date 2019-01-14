@@ -4,8 +4,8 @@ import puppeteer from 'puppeteer'
 
 const APP = 'http://localhost:8080/'
 
-const browser
-const page
+let browser
+let page
 
 beforeAll(async () => {
   const width = 1920
@@ -19,7 +19,7 @@ beforeAll(async () => {
 })
 
 afterAll(() => {
-  browser.close();
+  browser.close()
 })
 
 describe('Buttons', () => {
