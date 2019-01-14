@@ -12,6 +12,7 @@ import {
   addToClass,
   removeFromClass
 } from './util'
+import * as c from './constants'
 
 const controller = () => {
   const state = {
@@ -52,8 +53,11 @@ const controller = () => {
             detachEmojiFeedback(entryId)
             attachThankYouMessage(entryId)
           })
-          .catch(e => console.log(e))
-        // if success, hide spinner, show thank you message
+          .catch(e => {
+            // this is temp, probably display error message to user
+            detachEmojiFeedback(entryId)
+            attachThankYouMessage(entryId)
+          })
       } else {
         // removeFromClass(`${entryId}-feedback-form`, 'submitted')
         // show message that there should be some text before submission can occur
@@ -109,9 +113,15 @@ const controller = () => {
   const setEntryId = entryId => (state.entryId = entryId)
 
   return {
-    init: ({ entryId, emojis, endpoints }) => {
+    init: (entryId, endpoints, {
+      emojis = c.defaultEmojis,
+      introText = c.introText,
+      feedbackTextPrompt = c.feedbackTextPrompt,
+      feedbackThankYou = c.feedbackThankYou
+    } = {}) => {
+      const text = { introText, feedbackTextPrompt, feedbackThankYou }
       setEndpoints(endpoints)
-      attachEmojiFeedback(entryId, emojis)
+      attachEmojiFeedback(entryId, emojis, text)
       setEntryId(entryId)
       createFormHandler(entryId)
 

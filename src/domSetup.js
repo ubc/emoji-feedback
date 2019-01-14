@@ -47,14 +47,14 @@ const createTextAreaCounter = entryId => {
   return charCounter
 }
 
-const createFeedbackForm = entryId => {
+const createFeedbackForm = (entryId, text) => {
   const feedbackForm = document.createElement('div')
   feedbackForm.classList.add('feedback-form')
   feedbackForm.classList.add('hidden')
 
   feedbackForm.id = `${entryId}-feedback-form`
-  const feedbackText = createText('Thank you for your feedback')
-  const feedbackTextOptional = createText('Let us know if you have ideas for new features or improvements below!')
+  const feedbackText = createText(text.feedbackThankYou)
+  const feedbackTextOptional = createText(text.feedbackTextPrompt)
   feedbackTextOptional.style.color = '#757575'
   feedbackTextOptional.style.textAlign = 'center'
   feedbackTextOptional.style.fontSize = '14px'
@@ -78,10 +78,10 @@ const createFeedbackForm = entryId => {
   return feedbackForm
 }
 
-const attachEmojiFeedback = (entryId, emojis) => {
+const attachEmojiFeedback = (entryId, emojis, text) => {
   const entry = document.getElementById(entryId)
   const emojiFeedbackWrapper = createWrapper(entryId)
-  const introText = createText('How do you feel about this graph?')
+  const introText = createText(text.introText)
 
   emojiFeedbackWrapper.appendChild(introText)
 
@@ -96,7 +96,7 @@ const attachEmojiFeedback = (entryId, emojis) => {
     emojiFeedbackWrapper.appendChild(emojiButton)
   })
 
-  emojiFeedbackWrapper.appendChild(createFeedbackForm(entryId))
+  emojiFeedbackWrapper.appendChild(createFeedbackForm(entryId, text))
   emojiFeedbackWrapper.appendChild(createSpinner(entryId))
 
   entry.appendChild(emojiFeedbackWrapper)
