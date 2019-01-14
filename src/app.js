@@ -16,7 +16,7 @@ import * as c from './constants'
 
 const controller = () => {
   const state = {
-    selectedEmojiIds: [],
+    selectedEmojis: [],
     feedbackText: '',
     endpoints: {
       emoji: '',
@@ -67,13 +67,14 @@ const controller = () => {
   }
 
   const update = emojis => {
+    console.log(emojis)
     clearActive(emojis)
-    state.selectedEmojiIds.forEach(emojiId =>
+    state.selectedEmojis.forEach(({ emojiId }) =>
       emojis.find(e => e.id === emojiId).classList.add('active')
     )
-    if (state.selectedEmojiIds.length > 0) {
+    if (state.selectedEmojis.length > 0) {
       removeFromClass(`${state.entryId}-feedback-form`, 'hidden')
-      submitSelectedEmojis(state.selectedEmojiIds)
+      submitSelectedEmojis(state.selectedEmojis)
       formTextAreaSetup(state.entryId)
     } else {
       addToClass(`${state.entryId}-feedback-form`, 'hidden')
@@ -81,10 +82,15 @@ const controller = () => {
   }
 
   const setSelection = emoji => {
-    if (state.selectedEmojiIds.includes(emoji.id)) {
-      state.selectedEmojiIds = state.selectedEmojiIds.filter(e => e !== emoji.id)
+    if (state.selectedEmojis.map(e => e.emojiId).includes(emoji.id)) {
+      state.selectedEmojis = state.selectedEmojis.filter(e => e.emojiId !== emoji.id)
     } else {
-      state.selectedEmojiIds.push(emoji.id)
+      const emojiElem = document.getElementById(emoji.id)
+      const icon = emojiElem.childNodes[0].innerHTML
+      state.selectedEmojis.push({
+        emojiId: emoji.id,
+        emojicon: icon
+      })
     }
   }
 
