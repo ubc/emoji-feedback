@@ -12,13 +12,21 @@ const emojis = [
   { emojicon: '👎', emotion: 'dislike' }
 ]
 
+const emojis1 = [
+  { emojicon: '😁', emotion: 'superhappy' },
+  { emojicon: '😀', emotion: 'happy' },
+  { emojicon: '😐', emotion: 'indifferent' },
+  { emojicon: '😕', emotion: 'unhappy' },
+  { emojicon: '😞', emotion: 'disappointed' }
+]
+
 app.init({
   entryId: 'entry',
-  emojis,
+  emojis: emojis1,
   endpoints: {
-    emojiEndpoint: 'http://localhost:8080/',
-    formEndpoint: 'http://localhost:8080/',
-    votesEndpoint: 'http://localhost:8080/'
+    emojiEndpoint: 'http://localhost:8080/emoji',
+    formEndpoint: 'http://localhost:8080/form',
+    votesEndpoint: 'http://localhost:8080/votes'
   }
 })
 
