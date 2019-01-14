@@ -89,14 +89,15 @@ const attachEmojiFeedback = (entryId, emojis) => {
     const emojiButton = createButtonWithId(entryId, emotion)
     emojiButton.style.gridRow = 'row 2'
     emojiButton.style.gridColumn = `col ${i + 1} / span 1`
+    emojiButton.dataset.balloon = emotion
+    emojiButton.dataset.balloonPos = 'down'
     const emojiSpan = createEmojiSpan(emojicon, emotion)
     emojiButton.appendChild(emojiSpan)
     emojiFeedbackWrapper.appendChild(emojiButton)
   })
 
   emojiFeedbackWrapper.appendChild(createFeedbackForm(entryId))
-  const spinner = createSpinner(entryId)
-  emojiFeedbackWrapper.appendChild(spinner)
+  emojiFeedbackWrapper.appendChild(createSpinner(entryId))
 
   entry.appendChild(emojiFeedbackWrapper)
 }
