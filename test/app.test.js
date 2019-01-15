@@ -71,4 +71,45 @@ describe('app state', () => {
 
     expect(appState).toEqual(expectedState)
   })
+
+  test('multiple instances of app should not impact each app state', () => {
+    const entrypoint1 = 'myEntryId1'
+    const entrypoint2 = 'myEntryId2'
+    const endpoints1 = {
+      emoji: 'http://localhost:8080/emoji',
+      form: 'http://localhost:8080/form',
+      votes: 'http://localhost:8080/votes'
+    }
+    const endpoints2 = {
+      emoji: 'http://localhost:8080/emoji1',
+      form: 'http://localhost:8080/form2',
+      votes: 'http://localhost:8080/votes3'
+    }
+    document.body.innerHTML = `<div id=${entrypoint1}></div><div id=${entrypoint2}></div>`
+
+    const app1 = controller()
+    const app2 = controller()
+
+    app1.init(entrypoint1, endpoints1)
+    app2.init(entrypoint2, endpoints2)
+
+    const app1State = app1.getState()
+    const app2State = app2.getState()
+
+    const app1ExpectedState = {
+      selectedEmojis: [],
+      feedbackText: '',
+      endpoints: endpoints1,
+      entryId: 'myEntryId1'
+    }
+
+    const app2ExpectedState = {
+      selectedEmojis: [],
+      feedbackText: '',
+      endpoints: endpoints2,
+      entryId: 'myEntryId2'
+    }
+    expect(app1ExpectedState).toEqual(app1State)
+    expect(app2ExpectedState).toEqual(app2State)
+  })
 })
