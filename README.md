@@ -1,5 +1,6 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![gzipped_size](https://img.shields.io/badge/gzip%20size-5.4kB-green.svg)](https://img.shields.io/badge/gzip%20size-5.4kB-green.svg)
+[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+[![gzipped_size](https://img.shields.io/badge/gzip%20size-6.4kB-green.svg)](https://img.shields.io/badge/gzip%20size-6.4kB-green.svg)
 [![javascript](https://img.shields.io/badge/javascript-vanilla-green.svg)](http://vanilla-js.com/)
 
 # Emoji-Feedback 😀 😞 😕 👍 👎 (in active development)
