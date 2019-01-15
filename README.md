@@ -26,7 +26,6 @@ These instructions will get you a copy of the project up and running on your loc
 1. To build for production, `npm run build` will output the production-ready, minified, tree-shaken bundle in `/dist`.
 
 ### Usage
-
 Emoji-Feedback can be configured in `index.js` by importing `app.js` and instantiating it.
 A very basic config is outlined below:
 ```javascript
@@ -49,3 +48,6 @@ It takes 3 arguments: (`entry`, `endpoints`, `options`)
 * `endpoints` is an object that contains 3 endpoints `emojiEndpoint`, `formEndpoint` and `votesEndpoint`.
 * `options` is an optional object that contains `introText`, `feedbackTextPrompt` and `feedbackThankYou`, which allow for configurations of the text.
 
+### Tests
+To run the tests, first ensure that the application is running locally (`npm start`), then `npm test` will run the Jest unit and UI tests (in Puppeteer's headless mode).
+Code coverage is ~85%, and more will be added over time.
