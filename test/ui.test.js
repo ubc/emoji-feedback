@@ -11,8 +11,8 @@ beforeAll(async () => {
   const width = 1920
   const height = 1080
   browser = await puppeteer.launch({
-    headless: false,
-    slowMo: 300
+    // headless: false,
+    // slowMo: 300
   })
   page = await browser.newPage()
   await page.setViewport({ width, height })
@@ -32,13 +32,26 @@ describe('Emoji buttons', () => {
     expect(buttons.length).toBe(5)
     expect(buttons).toEqual(buttonIds)
   })
-  test('on click, background turns blue and form appears', async () => {
+  test('on click, active class added to emoji button and form appears', async () => {
     await page.goto(APP)
     const happyButton = await page.$('#entry-superhappy')
-    let className = await page.evaluate(button => button.getAttribute('class'), happyButton)
-    expect(className).toBe('button')
+    const form = await page.$('#entry-feedback-form')
+    let buttonClass = await page.evaluate(button => button.getAttribute('class'), happyButton)
+    let formClass = await page.evaluate(form => form.getAttribute('class'), form)
+    expect(buttonClass).toBe('button')
+    expect(formClass).toBe('feedback-form hidden')
+
     await happyButton.click()
-    className = await page.evaluate(button => button.getAttribute('class'), happyButton)
-    expect(className).toBe('button active')
+    buttonClass = await page.evaluate(button => button.getAttribute('class'), happyButton)
+    formClass = await page.evaluate(form => form.getAttribute('class'), form)
+    expect(buttonClass).toBe('button active')
+    expect(formClass).toBe('feedback-form')
+
+    await happyButton.click()
+    buttonClass = await page.evaluate(button => button.getAttribute('class'), happyButton)
+    formClass = await page.evaluate(form => form.getAttribute('class'), form)
+    expect(buttonClass).toBe('button')
+    expect(formClass).toBe('feedback-form hidden')
   })
+  test('')
 })
