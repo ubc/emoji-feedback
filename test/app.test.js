@@ -156,3 +156,26 @@ describe('emoji', () => {
 })
 
 // todo: make sure feedbackText gets properly updated when textarea is filled out
+describe('form', () => {
+  const app = controller()
+  const entrypoint = 'entry'
+  const endpoints = {
+    emoji: 'http://localhost:8080/emoji',
+    form: 'http://localhost:8080/form',
+    votes: 'http://localhost:8080/votes'
+  }
+
+  test('when textarea is filled out, the application state changes accordingly as well as char counter', () => {
+    document.body.innerHTML = `<div id=${entrypoint}></div>`
+    app.init(entrypoint, endpoints, { emojis })
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
+    emojiButtonId1.click()
+    const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
+    const sampleText = 'Adding text in here should update state and char counter accordingly'
+    textarea.value = sampleText
+    textarea.dispatchEvent(new Event('keyup'))
+    expect(app.getState().feedbackText).toEqual(sampleText)
+    const charCounter = document.getElementById(`${entrypoint}-maxlength-enforcer`)
+    expect(charCounter.innerHTML).toEqual(`<span>${sampleText.length}</span>/500`)
+  })
+})

@@ -124,3 +124,9 @@ describe('Emoji buttons', () => {
     await page.close()
   })
 })
+
+describe('form', () => {
+  test('can be filled out', () => {
+
+  })
+})
