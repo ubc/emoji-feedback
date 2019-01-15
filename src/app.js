@@ -67,7 +67,6 @@ const controller = () => {
   }
 
   const update = emojis => {
-    console.log(emojis)
     clearActive(emojis)
     state.selectedEmojis.forEach(({ emojiId }) =>
       emojis.find(e => e.id === emojiId).classList.add('active')

@@ -12,9 +12,9 @@ const app = controller()
 // ]
 
 const endpoints = {
-  emojiEndpoint: 'http://localhost:8080/emoji',
-  formEndpoint: 'http://localhost:8080/form',
-  votesEndpoint: 'http://localhost:8080/votes'
+  emoji: 'http://localhost:8080/emoji',
+  form: 'http://localhost:8080/form',
+  votes: 'http://localhost:8080/votes'
 }
 
 app.init('entry', endpoints, {

@@ -1,6 +1,14 @@
 /* global describe, test, expect */
 import controller from '../src/app'
 
+const emojis = [
+  { emojicon: '😁', emotion: 'superhappy' },
+  { emojicon: '😀', emotion: 'happy' },
+  { emojicon: '😐', emotion: 'indifferent' },
+  { emojicon: '😕', emotion: 'unhappy' },
+  { emojicon: '😞', emotion: 'disappointed' }
+]
+
 describe('app', () => {
   test('should have method: init', () => {
     const app = controller()
@@ -93,23 +101,45 @@ describe('app state', () => {
     app1.init(entrypoint1, endpoints1)
     app2.init(entrypoint2, endpoints2)
 
-    const app1State = app1.getState()
-    const app2State = app2.getState()
-
     const app1ExpectedState = {
       selectedEmojis: [],
       feedbackText: '',
       endpoints: endpoints1,
-      entryId: 'myEntryId1'
+      entryId: entrypoint1
     }
 
     const app2ExpectedState = {
       selectedEmojis: [],
       feedbackText: '',
       endpoints: endpoints2,
-      entryId: 'myEntryId2'
+      entryId: entrypoint2
     }
-    expect(app1ExpectedState).toEqual(app1State)
-    expect(app2ExpectedState).toEqual(app2State)
+    expect(app1ExpectedState).toEqual(app1.getState())
+    expect(app2ExpectedState).toEqual(app2.getState())
+  })
+})
+
+describe('emoji', () => {
+  test('clicking an emoji updates the state correctly', () => {
+    const app = controller()
+    const entrypoint = 'entry'
+    const endpoints = {
+      emoji: 'http://localhost:8080/emoji',
+      form: 'http://localhost:8080/form',
+      votes: 'http://localhost:8080/votes'
+    }
+    document.body.innerHTML = `<div id=${entrypoint}></div>`
+    app.init(entrypoint, endpoints, { emojis })
+
+    const emojiButtonId = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
+    emojiButtonId.click()
+
+    const expectedState = {
+      selectedEmojis: [{ emojiId: 'entry-superhappy', emojicon: '😁' }],
+      feedbackText: '',
+      endpoints: endpoints,
+      entryId: entrypoint
+    }
+    expect(app.getState()).toEqual(expectedState)
   })
 })
