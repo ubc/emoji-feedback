@@ -120,22 +120,33 @@ describe('app state', () => {
 })
 
 describe('emoji', () => {
-  test('clicking an emoji updates the state correctly', () => {
-    const app = controller()
-    const entrypoint = 'entry'
-    const endpoints = {
-      emoji: 'http://localhost:8080/emoji',
-      form: 'http://localhost:8080/form',
-      votes: 'http://localhost:8080/votes'
-    }
+  const app = controller()
+  const entrypoint = 'entry'
+  const endpoints = {
+    emoji: 'http://localhost:8080/emoji',
+    form: 'http://localhost:8080/form',
+    votes: 'http://localhost:8080/votes'
+  }
+  const setupButton = () => {
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints, { emojis })
-
-    const emojiButtonId = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
-    emojiButtonId.click()
-
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
+    return emojiButtonId1
+  }
+  test('clicking an emoji updates the state correctly', () => {
+    setupButton().click()
     const expectedState = {
-      selectedEmojis: [{ emojiId: 'entry-superhappy', emojicon: '😁' }],
+      selectedEmojis: [{ emojiId: `${entrypoint}-${emojis[0].emotion}`, emojicon: emojis[0].emojicon }],
+      feedbackText: '',
+      endpoints: endpoints,
+      entryId: entrypoint
+    }
+    expect(app.getState()).toEqual(expectedState)
+  })
+  test('clicking the same emoji again removes it from selectedEmojis', () => {
+    setupButton().click()
+    const expectedState = {
+      selectedEmojis: [],
       feedbackText: '',
       endpoints: endpoints,
       entryId: entrypoint
