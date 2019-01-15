@@ -94,10 +94,10 @@ const controller = () => {
     }
   }
 
-  const setEndpoints = ({ emojiEndpoint, formEndpoint, votesEndpoint }) => {
-    state.endpoints.emoji = emojiEndpoint
-    state.endpoints.form = formEndpoint
-    state.endpoints.votes = votesEndpoint
+  const setEndpoints = ({ emoji, form, votes }) => {
+    state.endpoints.emoji = emoji
+    state.endpoints.form = form
+    state.endpoints.votes = votes
   }
 
   const submitSelectedEmojis = selectedEmojiIds => {

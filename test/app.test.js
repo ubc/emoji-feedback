@@ -32,12 +32,6 @@ describe('app', () => {
 })
 
 describe('app state', () => {
-  const endpoints = {
-    emojiEndpoint: 'http://localhost:8080/emoji',
-    formEndpoint: 'http://localhost:8080/form',
-    votesEndpoint: 'http://localhost:8080/votes'
-  }
-
   test('getState should return default state', () => {
     const app = controller()
     const state = app.getState()
@@ -54,19 +48,27 @@ describe('app state', () => {
     expect(state).toEqual(defaultState)
   })
 
-  // test('entry state should set correctly', () => {
-  //   const app = controller()
-  //   app.init('myEntryId', endpoints, {})
+  test('entry state should set correctly', () => {
+    const entrypoint = 'myEntryId'
+    const endpoints = {
+      emoji: 'http://localhost:8080/emoji',
+      form: 'http://localhost:8080/form',
+      votes: 'http://localhost:8080/votes'
+    }
+    document.body.innerHTML = `<div id=${entrypoint}></div>`
 
-  //   // const appState = app.getState()
+    const app = controller()
+    app.init(entrypoint, endpoints, {})
 
-  //   // const expectedState = {
-  //   //   selectedEmojis: [],
-  //   //   feedbackText: '',
-  //   //   endpoints,
-  //   //   entryId: 'myEntryId'
-  //   // }
+    const appState = app.getState()
 
-  //   // expect(appState).toEqual(expectedState)
-  // })
+    const expectedState = {
+      selectedEmojis: [],
+      feedbackText: '',
+      endpoints,
+      entryId: 'myEntryId'
+    }
+
+    expect(appState).toEqual(expectedState)
+  })
 })
