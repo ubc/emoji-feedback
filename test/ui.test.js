@@ -7,9 +7,9 @@ const APP = 'http://localhost:8080/'
 let browser
 let page
 
+const width = 1920
+const height = 1080
 beforeAll(async () => {
-  const width = 1920
-  const height = 1080
   browser = await puppeteer.launch({
     // headless: false,
     // slowMo: 300
@@ -82,12 +82,45 @@ describe('Emoji buttons', () => {
   })
   test('clicking emoji creates API request', async () => {
     await page.goto(APP)
-    await page.setRequestInterception(true)
     const happyButton = await page.$('#entry-superhappy')
+    await happyButton.click()
     page.on('request', req => {
       expect(req.url()).toEqual('http://localhost:8080/emoji')
       expect(req.postData()).toEqual(JSON.stringify([{ emojiId: 'entry-superhappy', emojicon: '😁' }]))
+      expect(req.method()).toEqual('POST')
     })
+    await page.close()
+  })
+  test('clicking multiple emojis create correct API request', async () => {
+    // have to create a new page because the page.on('request') can't be programmatically destroyed
+    page = await browser.newPage()
+    await page.setViewport({ width, height })
+    await page.goto(APP)
+    const happyButton = await page.$('#entry-superhappy')
+    const disappointedButton = await page.$('#entry-disappointed')
     await happyButton.click()
+    await disappointedButton.click()
+    page.on('request', req => {
+      expect(req.url()).toEqual('http://localhost:8080/emoji')
+      expect(req.postData()).toEqual(JSON.stringify([{ emojiId: 'entry-superhappy', emojicon: '😁' }, { emojiId: 'entry-disappointed', emojicon: '😞' }]))
+      expect(req.method()).toEqual('POST')
+    })
+    await page.close()
+  })
+  test('clicking an emoji that was already clicked previously removes it from POST payload', async () => {
+    page = await browser.newPage()
+    await page.setViewport({ width, height })
+    await page.goto(APP)
+    const happyButton = await page.$('#entry-superhappy')
+    const disappointedButton = await page.$('#entry-disappointed')
+    await happyButton.click()
+    await disappointedButton.click()
+    await disappointedButton.click()
+    page.on('request', req => {
+      expect(req.url()).toEqual('http://localhost:8080/emoji')
+      expect(req.postData()).toEqual(JSON.stringify([{ emojiId: 'entry-superhappy', emojicon: '😁' }]))
+      expect(req.method()).toEqual('POST')
+    })
+    await page.close()
   })
 })
