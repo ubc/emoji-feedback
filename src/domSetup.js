@@ -123,7 +123,7 @@ const createThankYouWrapper = entryId => {
   thankYouWrapper.classList.add('hidden')
   thankYouWrapper.id = `${entryId}-thank-you`
 
-  const hiFive = createText('🙌 ')
+  const hiFive = createText('🙌')
   hiFive.className = 'hiFive'
   const thankYou = createText('Your feedback has been recorded')
   thankYou.className = 'thankYou'

@@ -1,4 +1,4 @@
-/* global describe, test, expect */
+/* global describe, test, expect, Event */
 import controller from '../src/app'
 
 const emojis = [
@@ -23,7 +23,7 @@ describe('app', () => {
   test('should throw error if entryId (first param) is not specified', () => {
     const app = controller()
 
-    function expectedError() {
+    const expectedError = () => {
       app.init()
     }
     expect(expectedError).toThrowError('entryId must be specified')
@@ -32,7 +32,7 @@ describe('app', () => {
   test('should throw error if endpoints (second param) is not specified', () => {
     const app = controller()
 
-    function expectedError() {
+    const expectedError = () => {
       app.init('entryId')
     }
     expect(expectedError).toThrowError('endpoints must be specified')
@@ -173,9 +173,11 @@ describe('form', () => {
     const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
     const sampleText = 'Adding text in here should update state and char counter accordingly'
     const charCounter = document.getElementById(`${entrypoint}-maxlength-enforcer`)
+
     expect(submitButton.classList.contains('ready')).toEqual(false)
     textarea.value = sampleText
     textarea.dispatchEvent(new Event('keyup'))
+
     expect(app.getState().feedbackText).toEqual(sampleText)
     expect(charCounter.innerHTML).toEqual(`<span>${sampleText.length}</span>/500`)
     expect(submitButton.classList.contains('ready')).toEqual(true)

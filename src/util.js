@@ -11,7 +11,8 @@ const clearActive = emojis => emojis.forEach(emoji => removeActive(emoji))
 const getEmojisFromDOM = (entryId, emojis) =>
   emojis.map(({ emotion }) => document.getElementById(`${entryId}-${emotion}`))
 
-const setTextAreaMaxLength = (entryId, chars) => (document.getElementById(`${entryId}-maxlength-enforcer`).innerHTML = `<span>${chars}</span>/500`)
+const setTextAreaMaxLength = (entryId, chars) =>
+  (document.getElementById(`${entryId}-maxlength-enforcer`).innerHTML = `<span>${chars}</span>/500`)
 
 const addToClass = (elemId, className) => {
   const element = document.getElementById(elemId)
