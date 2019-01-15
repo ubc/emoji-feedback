@@ -126,7 +126,13 @@ describe('Emoji buttons', () => {
 })
 
 describe('form', () => {
-  test('can be filled out', () => {
+  test('can be filled out', async () => {
+    page = await browser.newPage()
+    await page.setViewport({ width, height })
+    await page.goto(APP)
+  })
+
+  test('submits properly, making correct POST request', async () => {
 
   })
 })

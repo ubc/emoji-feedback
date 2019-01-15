@@ -12,7 +12,7 @@ import {
   addToClass,
   removeFromClass
 } from './util'
-import * as c from './constants'
+import * as c from './defaults'
 
 const controller = () => {
   const state = {
