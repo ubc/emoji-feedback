@@ -154,3 +154,5 @@ describe('emoji', () => {
     expect(app.getState()).toEqual(expectedState)
   })
 })
+
+// todo: make sure feedbackText gets properly updated when textarea is filled out
