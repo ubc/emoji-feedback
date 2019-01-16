@@ -54,7 +54,7 @@ describe('app state', () => {
       feedbackText: '',
       endpoints: {
         emoji: '',
-        form: '',
+        feedback: '',
         votes: ''
       },
       entryId: ''
@@ -66,7 +66,7 @@ describe('app state', () => {
     const entrypoint = 'myEntryId'
     const endpoints = {
       emoji: 'http://localhost:8080/emoji',
-      form: 'http://localhost:8080/form',
+      feedback: 'http://localhost:8080/form',
       votes: 'http://localhost:8080/votes'
     }
     document.body.innerHTML = `<div id=${entrypoint}></div>`
@@ -91,12 +91,12 @@ describe('app state', () => {
     const entrypoint2 = 'myEntryId2'
     const endpoints1 = {
       emoji: 'http://localhost:8080/emoji',
-      form: 'http://localhost:8080/form',
+      feedback: 'http://localhost:8080/form',
       votes: 'http://localhost:8080/votes'
     }
     const endpoints2 = {
       emoji: 'http://localhost:8080/emoji1',
-      form: 'http://localhost:8080/form2',
+      feedback: 'http://localhost:8080/form2',
       votes: 'http://localhost:8080/votes3'
     }
     document.body.innerHTML = `<div id=${entrypoint1}></div><div id=${entrypoint2}></div>`
@@ -130,7 +130,7 @@ describe('emoji', () => {
   const entrypoint = 'entry'
   const endpoints = {
     emoji: 'http://localhost:8080/emoji',
-    form: 'http://localhost:8080/form',
+    feedback: 'http://localhost:8080/form',
     votes: 'http://localhost:8080/votes'
   }
   const setupButton = () => {

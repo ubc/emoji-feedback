@@ -20,7 +20,7 @@ const controller = () => {
     feedbackText: '',
     endpoints: {
       emoji: '',
-      form: '',
+      feedback: '',
       votes: ''
     },
     entryId: ''
@@ -94,9 +94,9 @@ const controller = () => {
     }
   }
 
-  const setEndpoints = ({ emoji, form, votes }) => {
+  const setEndpoints = ({ emoji, feedback, votes }) => {
     state.endpoints.emoji = emoji
-    state.endpoints.form = form
+    state.endpoints.feedback = feedback
     state.endpoints.votes = votes
   }
 

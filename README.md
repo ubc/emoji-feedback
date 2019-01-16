@@ -44,7 +44,7 @@ const endpoints = {
 emojiFeedback.init('entry', endpoints)
 ```
 `emojiFeedback` has one method, `init`.
-It takes 3 arguments: (`entry`, `endpoints`, `options`)
+It takes 3 arguments: `entry`, `endpoints`, `options`
 * `entry` is the HTML id attribute that should be unique to the document. This is the entry point of Emoji Feedback.
 * `endpoints` is an object that contains 3 endpoints `emojiEndpoint`, `formEndpoint` and `votesEndpoint`.
 * `options` is an optional object that contains `introText`, `feedbackTextPrompt` and `feedbackThankYou`, which allow for configurations of the text.
