@@ -114,7 +114,7 @@ const controller = () => {
     return fetch(state.endpoints.feedback, {
       method: 'POST',
       mode: 'cors',
-      body: JSON.stringify(text),
+      body: JSON.stringify({ feedback: text }),
       headers: {
         'Content-Type': 'application/json'
       }

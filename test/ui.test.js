@@ -78,6 +78,7 @@ describe('Emoji buttons', () => {
     const happyButton = await page.$('#entry-superhappy')
     await happyButton.click()
     page.on('request', req => {
+      if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
       expect(req.postData()).toEqual(JSON.stringify({ emojis: [{ emojiId: 'entry-superhappy', emojicon: '😁' }] }))
       expect(req.method()).toEqual('POST')
@@ -94,6 +95,7 @@ describe('Emoji buttons', () => {
     await happyButton.click()
     await disappointedButton.click()
     page.on('request', req => {
+      if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
       expect(req.postData())
         .toEqual(JSON.stringify({ emojis: [{ emojiId: 'entry-superhappy', emojicon: '😁' }, { emojiId: 'entry-disappointed', emojicon: '😞' }] }))
@@ -111,6 +113,7 @@ describe('Emoji buttons', () => {
     await disappointedButton.click()
     await disappointedButton.click()
     page.on('request', req => {
+      if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
       expect(req.postData()).toEqual(JSON.stringify({ emojis: [{ emojiId: 'entry-superhappy', emojicon: '😁' }] }))
       expect(req.method()).toEqual('POST')
@@ -142,12 +145,13 @@ describe('form', () => {
     const form = await page.$('#entry-feedback-textarea')
     const submitButton = await page.$('#entry-feedback-button')
     await form.type('hello')
+    await submitButton.click()
     page.on('request', req => {
+      if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}feedback`)
-      expect(req.postData()).toEqual(JSON.stringify('hello'))
+      expect(req.postData()).toEqual(JSON.stringify({ feedback: 'hello' }))
       expect(req.method()).toEqual('POST')
     })
-    await submitButton.click()
     await page.waitFor('.thankYou')
     const thankYouMessage = await page.evaluate(() => document.getElementsByClassName('thankYou')[0].innerHTML)
     expect(thankYouMessage).toBe('Your feedback has been recorded')
