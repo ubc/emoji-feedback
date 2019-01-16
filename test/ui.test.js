@@ -130,6 +130,12 @@ describe('form', () => {
     page = await browser.newPage()
     await page.setViewport({ width, height })
     await page.goto(APP)
+    const happyButton = await page.$('#entry-superhappy')
+    await happyButton.click()
+    const form = await page.$('#entry-feedback-textarea')
+    await form.type('hello')
+    const charCounter = await page.evaluate(() => document.querySelector('#entry-maxlength-enforcer > span').innerHTML)
+    expect(charCounter).toEqual('5')
   })
 
   test('submits properly, making correct POST request', async () => {
