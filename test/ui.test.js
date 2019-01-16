@@ -1,12 +1,12 @@
 /* global describe, test, beforeAll, afterAll, expect */
 
 import puppeteer from 'puppeteer'
-import { ENETDOWN } from 'constants';
 
 const APP = 'http://localhost:8080/'
 
 let browser
 let page
+const API_BASE_URL = 'http://127.0.0.1:5000/'
 
 const width = 1920
 const height = 1080
@@ -32,7 +32,7 @@ describe('Emoji buttons', () => {
     const buttons = await page
       .evaluate(buttonIds =>
         buttonIds.map(id => document.getElementById(id).id),
-        buttonIds)
+      buttonIds)
     expect(buttons.length).toBe(5)
     expect(buttons).toEqual(buttonIds)
   })
@@ -78,7 +78,7 @@ describe('Emoji buttons', () => {
     const happyButton = await page.$('#entry-superhappy')
     await happyButton.click()
     page.on('request', req => {
-      expect(req.url()).toEqual('http://localhost:8080/emoji')
+      expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
       expect(req.postData()).toEqual(JSON.stringify([{ emojiId: 'entry-superhappy', emojicon: '😁' }]))
       expect(req.method()).toEqual('POST')
     })
@@ -94,7 +94,7 @@ describe('Emoji buttons', () => {
     await happyButton.click()
     await disappointedButton.click()
     page.on('request', req => {
-      expect(req.url()).toEqual('http://localhost:8080/emoji')
+      expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
       expect(req.postData()).toEqual(JSON.stringify([{ emojiId: 'entry-superhappy', emojicon: '😁' }, { emojiId: 'entry-disappointed', emojicon: '😞' }]))
       expect(req.method()).toEqual('POST')
     })
@@ -110,7 +110,7 @@ describe('Emoji buttons', () => {
     await disappointedButton.click()
     await disappointedButton.click()
     page.on('request', req => {
-      expect(req.url()).toEqual('http://localhost:8080/emoji')
+      expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
       expect(req.postData()).toEqual(JSON.stringify([{ emojiId: 'entry-superhappy', emojicon: '😁' }]))
       expect(req.method()).toEqual('POST')
     })
@@ -142,11 +142,12 @@ describe('form', () => {
     const submitButton = await page.$('#entry-feedback-button')
     await form.type('hello')
     page.on('request', req => {
-      expect(req.url()).toEqual('http://localhost:8080/form')
+      expect(req.url()).toEqual(`${API_BASE_URL}feedback`)
       expect(req.postData()).toEqual(JSON.stringify('hello'))
       expect(req.method()).toEqual('POST')
     })
     await submitButton.click()
+    await page.waitFor('.thankYou')
     const thankYouMessage = await page.evaluate(() => document.getElementsByClassName('thankYou')[0].innerHTML)
     expect(thankYouMessage).toBe('Your feedback has been recorded')
     expect(await page.evaluate(() => document.getElementById('entry-wrapper'))).toBeNull()

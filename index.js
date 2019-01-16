@@ -5,8 +5,8 @@ const app = controller()
 
 const endpoints = {
   emoji: 'http://127.0.0.1:5000/emoji',
-  feedback: 'http://localhost:8080/feedback',
-  votes: 'http://localhost:8080/votes'
+  feedback: 'http://127.0.0.1:5000/feedback',
+  votes: 'http://127.0.0.1:5000/votes'
 }
 
 app.init('entry', endpoints, {

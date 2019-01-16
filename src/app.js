@@ -103,14 +103,16 @@ const controller = () => {
   const submitSelectedEmojis = selectedEmojiIds => {
     return fetch(state.endpoints.emoji, {
       method: 'POST',
+      mode: 'no-cors',
       body: JSON.stringify(selectedEmojiIds),
       headers: { 'Content-Type': 'application/json' }
     })
   }
 
   const submitFeedback = text => {
-    return fetch(state.endpoints.form, {
+    return fetch(state.endpoints.feedback, {
       method: 'POST',
+      mode: 'no-cors',
       body: JSON.stringify(text),
       headers: { 'Content-Type': 'application/json' }
     })
