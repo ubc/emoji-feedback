@@ -51,4 +51,4 @@ It takes 3 arguments: (`entry`, `endpoints`, `options`)
 
 ### Tests
 To run the tests, first ensure that the application is running locally (`npm start`), then `npm test` will run the Jest unit and UI tests (in Puppeteer's headless mode).
-Code coverage is ~85%, and more will be added over time.
+Code coverage is >90%, and more tests will be added over time.
