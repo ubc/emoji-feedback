@@ -46,7 +46,7 @@ emojiFeedback.init('entry', endpoints)
 `emojiFeedback` has one method, `init`.
 It takes 3 arguments: `entry`, `endpoints`, `options`
 * `entry` is the HTML id attribute that should be unique to the document. This is the entry point of Emoji Feedback.
-* `endpoints` is an object that contains 3 endpoints `emojiEndpoint`, `formEndpoint` and `votesEndpoint`.
+* `endpoints` is an object that contains 3 endpoints `emoji`, `feedback` and `votes`. `emoji` and `feedback` send POST requests that contain the selected emoji(s) and the written feedback in the body of the request, respectively. `votes` sends a GET request for retrieving the number of times students have voted.
 * `options` is an optional object that contains `introText`, `feedbackTextPrompt` and `feedbackThankYou`, which allow for configurations of the text.
 
 ### Tests

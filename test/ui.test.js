@@ -30,9 +30,7 @@ describe('Emoji buttons', () => {
     await page.goto(APP)
     let buttonIds = ['entry-superhappy', 'entry-happy', 'entry-indifferent', 'entry-unhappy', 'entry-disappointed']
     const buttons = await page
-      .evaluate(buttonIds =>
-        buttonIds.map(id => document.getElementById(id).id),
-        buttonIds)
+      .evaluate(buttonIds => buttonIds.map(id => document.getElementById(id).id), buttonIds)
     expect(buttons.length).toBe(5)
     expect(buttons).toEqual(buttonIds)
   })
@@ -115,7 +113,7 @@ describe('Emoji buttons', () => {
     page.on('request', req => {
       if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
-      expect(req.postData()).toEqual(JSON.stringify({ emojis: [{ emojiId: 'entry-superhappy', emojicon: '😁' }] }))
+      expect(req.postData()).toEqual(JSON.stringify({ emojis: [{ emojiId: 'entry-\superhappy', emojicon: '😁' }] }))
       expect(req.method()).toEqual('POST')
     })
     await page.close()
