@@ -162,7 +162,6 @@ describe('emoji', () => {
 })
 
 describe('form', () => {
-  const app = controller()
   const entrypoint = 'entry'
   const endpoints = {
     emoji: 'http://localhost:8080/emoji',
@@ -171,6 +170,7 @@ describe('form', () => {
   }
 
   test('when textarea is filled out, the application state changes accordingly as well as char counter', async () => {
+    const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints, { emojis })
     const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
@@ -189,7 +189,30 @@ describe('form', () => {
     expect(submitButton.classList.contains('ready')).toEqual(true)
   })
 
+  test('when textarea is filled out, then textarea is deleted, the submit button ready class should be removed', async () => {
+    const app = controller()
+    document.body.innerHTML = `<div id=${entrypoint}></div>`
+    app.init(entrypoint, endpoints, { emojis })
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
+    await emojiButtonId1.click()
+    const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
+    const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
+    const sampleText = 'hello'
+    const charCounter = document.getElementById(`${entrypoint}-maxlength-enforcer`)
+
+    expect(submitButton.classList.contains('ready')).toEqual(false)
+    textarea.value = sampleText
+    textarea.dispatchEvent(new Event('keyup'))
+
+    textarea.value = ''
+    textarea.dispatchEvent(new Event('keyup'))
+    expect(app.getState().feedbackText).toEqual('')
+    expect(charCounter.innerHTML).toEqual(`<span>0</span>/500`)
+    expect(submitButton.classList.contains('ready')).toEqual(false)
+  })
+
   test('when submit button is pressed, the thank you message shows up', async () => {
+    const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints, { emojis })
     const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)

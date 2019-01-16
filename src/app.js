@@ -32,6 +32,7 @@ const controller = () => {
     textarea.onkeyup = function () {
       const chars = this.value.length
       state.feedbackText = textarea.value
+      // console.log(state.feedbackText)
       setTextAreaMaxLength(entryId, chars)
       if (chars > 0) {
         addToClass(`${entryId}-feedback-button`, 'ready')
