@@ -50,7 +50,7 @@ describe('app state', () => {
     const app = controller()
     const state = app.getState()
     const defaultState = {
-      selectedEmojis: [],
+      emojis: [],
       feedbackText: '',
       endpoints: {
         emoji: '',
@@ -77,7 +77,7 @@ describe('app state', () => {
     const appState = app.getState()
 
     const expectedState = {
-      selectedEmojis: [],
+      emojis: [],
       feedbackText: '',
       endpoints,
       entryId: 'myEntryId'
@@ -108,14 +108,14 @@ describe('app state', () => {
     app2.init(entrypoint2, endpoints2)
 
     const app1ExpectedState = {
-      selectedEmojis: [],
+      emojis: [],
       feedbackText: '',
       endpoints: endpoints1,
       entryId: entrypoint1
     }
 
     const app2ExpectedState = {
-      selectedEmojis: [],
+      emojis: [],
       feedbackText: '',
       endpoints: endpoints2,
       entryId: entrypoint2
@@ -142,7 +142,7 @@ describe('emoji', () => {
   test('clicking an emoji updates the state correctly', async () => {
     await setupButton().click()
     const expectedState = {
-      selectedEmojis: [{ emojiId: `${entrypoint}-${emojis[0].emotion}`, emojicon: emojis[0].emojicon }],
+      emojis: [{ emojiId: `${entrypoint}-${emojis[0].emotion}`, emojicon: emojis[0].emojicon }],
       feedbackText: '',
       endpoints: endpoints,
       entryId: entrypoint
@@ -152,7 +152,7 @@ describe('emoji', () => {
   test('clicking the same emoji again removes it from selectedEmojis', async () => {
     await setupButton().click()
     const expectedState = {
-      selectedEmojis: [],
+      emojis: [],
       feedbackText: '',
       endpoints: endpoints,
       entryId: entrypoint

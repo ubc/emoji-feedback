@@ -16,7 +16,7 @@ import * as c from './defaults'
 
 const controller = () => {
   const state = {
-    selectedEmojis: [],
+    emojis: [],
     feedbackText: '',
     endpoints: {
       emoji: '',
@@ -69,12 +69,12 @@ const controller = () => {
 
   const update = emojis => {
     clearActive(emojis)
-    state.selectedEmojis.forEach(({ emojiId }) =>
+    state.emojis.forEach(({ emojiId }) =>
       emojis.find(e => e.id === emojiId).classList.add('active')
     )
-    if (state.selectedEmojis.length > 0) {
+    if (state.emojis.length > 0) {
       removeFromClass(`${state.entryId}-feedback-form`, 'hidden')
-      submitSelectedEmojis(state.selectedEmojis)
+      submitSelectedEmojis(state.emojis)
       formTextAreaSetup(state.entryId)
     } else {
       addToClass(`${state.entryId}-feedback-form`, 'hidden')
@@ -82,12 +82,12 @@ const controller = () => {
   }
 
   const setSelection = emoji => {
-    if (state.selectedEmojis.map(e => e.emojiId).includes(emoji.id)) {
-      state.selectedEmojis = state.selectedEmojis.filter(e => e.emojiId !== emoji.id)
+    if (state.emojis.map(e => e.emojiId).includes(emoji.id)) {
+      state.emojis = state.emojis.filter(e => e.emojiId !== emoji.id)
     } else {
       const emojiElem = document.getElementById(emoji.id)
       const icon = emojiElem.childNodes[0].innerHTML
-      state.selectedEmojis.push({
+      state.emojis.push({
         emojiId: emoji.id,
         emojicon: icon
       })
@@ -100,11 +100,11 @@ const controller = () => {
     state.endpoints.votes = votes
   }
 
-  const submitSelectedEmojis = selectedEmojiIds => {
+  const submitSelectedEmojis = emojis => {
     return fetch(state.endpoints.emoji, {
       method: 'POST',
       mode: 'no-cors',
-      body: JSON.stringify(selectedEmojiIds),
+      body: JSON.stringify({ emojis: emojis }),
       headers: { 'Content-Type': 'application/json' }
     })
   }
