@@ -49,12 +49,17 @@ const controller = () => {
         removeFromClass(`${entryId}-spinner`, 'hidden')
         submitFeedback(state.feedbackText)
           .then(res => {
-            console.log(res)
             addToClass(`${entryId}-spinner`, 'hidden')
-            detachEmojiFeedback(entryId)
-            attachThankYouMessage(entryId)
+            if (res.status === 200) {
+              detachEmojiFeedback(entryId)
+              attachThankYouMessage(entryId)
+            } else if (res.status === 404) {
+              console.log('oops, 404')
+              // attach error message
+            }
           })
           .catch(e => {
+            // attach error message
             throw new Error(e)
           })
       } else {
