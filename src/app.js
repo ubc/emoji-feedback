@@ -49,14 +49,13 @@ const controller = () => {
         removeFromClass(`${entryId}-spinner`, 'hidden')
         submitFeedback(state.feedbackText)
           .then(res => {
+            console.log(res)
             addToClass(`${entryId}-spinner`, 'hidden')
             detachEmojiFeedback(entryId)
             attachThankYouMessage(entryId)
           })
           .catch(e => {
-            // this is temp, probably display error message to user
-            detachEmojiFeedback(entryId)
-            attachThankYouMessage(entryId)
+            throw new Error(e)
           })
       } else {
         // removeFromClass(`${entryId}-feedback-form`, 'submitted')

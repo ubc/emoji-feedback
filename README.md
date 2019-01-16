@@ -6,6 +6,7 @@
 # Emoji-Feedback 😀 😞 😕 👍 👎 (in active development)
 
 [Working Prototype](https://jsfiddle.net/justin0022/pd4oczva/18/)
+![GIF of App](emoji-feedback.gif)
 
 A simple tool for eliciting feedback via emojis, featuring a feedback form. 0 dependencies, written in pure vanilla JavaScript.
 
