@@ -32,7 +32,6 @@ const controller = () => {
     textarea.onkeyup = function () {
       const chars = this.value.length
       state.feedbackText = textarea.value
-      // console.log(state.feedbackText)
       setTextAreaMaxLength(entryId, chars)
       if (chars > 0) {
         addToClass(`${entryId}-feedback-button`, 'ready')
@@ -103,18 +102,22 @@ const controller = () => {
   const submitSelectedEmojis = emojis => {
     return fetch(state.endpoints.emoji, {
       method: 'POST',
-      mode: 'no-cors',
+      mode: 'cors',
       body: JSON.stringify({ emojis: emojis }),
-      headers: { 'Content-Type': 'application/json' }
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
   }
 
   const submitFeedback = text => {
     return fetch(state.endpoints.feedback, {
       method: 'POST',
-      mode: 'no-cors',
+      mode: 'cors',
       body: JSON.stringify(text),
-      headers: { 'Content-Type': 'application/json' }
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
   }
 
