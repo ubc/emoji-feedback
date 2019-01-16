@@ -12,9 +12,16 @@ const feedbackTextPrompt = 'Let us know if you have ideas for new features or im
 
 const feedbackThankYou = 'Thank you for your feedback'
 
+const fetchOptions = {
+  method: 'POST',
+  mode: 'cors',
+  headers: { 'Content-Type': 'application/json' }
+}
+
 export {
   defaultEmojis,
   introText,
   feedbackTextPrompt,
-  feedbackThankYou
+  feedbackThankYou,
+  fetchOptions
 }

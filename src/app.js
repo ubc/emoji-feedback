@@ -99,23 +99,23 @@ const controller = () => {
     state.endpoints.votes = votes
   }
 
-  const submitSelectedEmojis = emojis => {
-    return fetch(state.endpoints.emoji, {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify({ emojis: emojis }),
-      headers: { 'Content-Type': 'application/json' }
+  const submitSelectedEmojis = emojis =>
+    fetch(state.endpoints.emoji, {
+      ...c.fetchOptions,
+      body: JSON.stringify({ emojis: emojis })
     })
-  }
 
-  const submitFeedback = text => {
-    return fetch(state.endpoints.feedback, {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify({ feedback: text }),
-      headers: { 'Content-Type': 'application/json' }
+  const submitFeedback = text =>
+    fetch(state.endpoints.feedback, {
+      ...c.fetchOptions,
+      body: JSON.stringify({ feedback: text })
     })
-  }
+
+  const getVotes = () =>
+    fetch(state.endpoints.votes, {
+      ...c.fetchOptions,
+      method: 'GET'
+    })
 
   const setEntryId = entryId => (state.entryId = entryId)
 
