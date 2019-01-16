@@ -6,7 +6,6 @@
 # Emoji-Feedback 😀 😞 😕 👍 👎 (in active development)
 
 [Working Prototype](https://jsfiddle.net/justin0022/pd4oczva/18/)
-![GIF of App](./_assets/emoji-feedback.gif)
 
 A simple tool for eliciting feedback via emojis, featuring a feedback form. 0 dependencies, written in pure vanilla JavaScript.
 
@@ -53,3 +52,5 @@ It takes 3 arguments: `entry`, `endpoints`, `options`
 ### Tests
 To run the tests, first ensure that the application is running locally (`npm start`), then `npm test` will run the Jest unit and UI tests (in Puppeteer's headless mode).
 Code coverage is >90%, and more tests will be added over time.
+
+![GIF of App](./_assets/emoji-feedback.gif)
