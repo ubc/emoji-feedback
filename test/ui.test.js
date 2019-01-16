@@ -1,6 +1,7 @@
 /* global describe, test, beforeAll, afterAll, expect */
 
 import puppeteer from 'puppeteer'
+import { ENETDOWN } from 'constants';
 
 const APP = 'http://localhost:8080/'
 
@@ -31,7 +32,7 @@ describe('Emoji buttons', () => {
     const buttons = await page
       .evaluate(buttonIds =>
         buttonIds.map(id => document.getElementById(id).id),
-      buttonIds)
+        buttonIds)
     expect(buttons.length).toBe(5)
     expect(buttons).toEqual(buttonIds)
   })
@@ -134,6 +135,21 @@ describe('form', () => {
   })
 
   test('submits properly, making correct POST request', async () => {
-
+    await page.goto(APP)
+    const happyButton = await page.$('#entry-superhappy')
+    await happyButton.click()
+    const form = await page.$('#entry-feedback-textarea')
+    const submitButton = await page.$('#entry-feedback-button')
+    await form.type('hello')
+    page.on('request', req => {
+      expect(req.url()).toEqual('http://localhost:8080/form')
+      expect(req.postData()).toEqual(JSON.stringify('hello'))
+      expect(req.method()).toEqual('POST')
+    })
+    await submitButton.click()
+    const thankYouMessage = await page.evaluate(() => document.getElementsByClassName('thankYou')[0].innerHTML)
+    expect(thankYouMessage).toBe('Your feedback has been recorded')
+    expect(await page.evaluate(() => document.getElementById('entry-wrapper'))).toBeNull()
+    await page.close()
   })
 })
