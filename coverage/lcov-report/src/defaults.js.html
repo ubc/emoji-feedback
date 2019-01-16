@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/util.js</title>
+    <title>Code coverage report for src/defaults.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">All files</a> / <a href="index.html">src</a> util.js
+      <a href="../index.html">All files</a> / <a href="index.html">src</a> defaults.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">94.74% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>18/19</span>
+        <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>1/2</span>
+        <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>9/9</span>
+        <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">93.33% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>14/15</span>
+        <span class='fraction'>4/4</span>
       </div>
     </div>
   </div>
@@ -63,44 +63,19 @@
 18
 19
 20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+21</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -108,42 +83,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
-const getTextArea = entryId =&gt; document.getElementById(`${entryId}-feedback-textarea`)
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const defaultEmojis = [
+  { emojicon: '😁', emotion: 'superhappy' },
+  { emojicon: '😀', emotion: 'happy' },
+  { emojicon: '😐', emotion: 'indifferent' },
+  { emojicon: '😕', emotion: 'unhappy' },
+  { emojicon: '😞', emotion: 'disappointed' }
+]
 &nbsp;
-const removeActive = emoji =&gt; {
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (emoji.classList.contains('active')) {
-<span class="cstat-no" title="statement not covered" >    emoji.classList.remove('active')</span>
-  }
-}
-const clearActive = emojis =&gt; emojis.forEach(emoji =&gt; removeActive(emoji))
+const introText = 'How do you feel about this graph?'
 &nbsp;
-const getEmojisFromDOM = (entryId, emojis) =&gt;
-  emojis.map(({ emotion }) =&gt; document.getElementById(`${entryId}-${emotion}`))
+const feedbackTextPrompt = 'Let us know if you have ideas for new features or improvements below!'
 &nbsp;
-const setTextAreaMaxLength = (entryId, chars) =&gt;
-  (document.getElementById(`${entryId}-maxlength-enforcer`).innerHTML = `&lt;span&gt;${chars}&lt;/span&gt;/500`)
-&nbsp;
-const addToClass = (elemId, className) =&gt; {
-  const element = document.getElementById(elemId)
-  element.classList.add(className)
-}
-&nbsp;
-const removeFromClass = (elemId, className) =&gt; {
-  const element = document.getElementById(elemId)
-  element.classList.remove(className)
-}
+const feedbackThankYou = 'Thank you for your feedback'
 &nbsp;
 export {
-  clearActive,
-  getEmojisFromDOM,
-  getTextArea,
-  setTextAreaMaxLength,
-  removeFromClass,
-  addToClass
+  defaultEmojis,
+  introText,
+  feedbackTextPrompt,
+  feedbackThankYou
 }
 &nbsp;</pre></td></tr>
 </table></pre>

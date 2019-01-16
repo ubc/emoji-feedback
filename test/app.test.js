@@ -22,7 +22,6 @@ describe('app', () => {
 
   test('should throw error if entryId (first param) is not specified', () => {
     const app = controller()
-
     const expectedError = () => {
       app.init()
     }
@@ -31,11 +30,18 @@ describe('app', () => {
 
   test('should throw error if endpoints (second param) is not specified', () => {
     const app = controller()
-
     const expectedError = () => {
       app.init('entryId')
     }
     expect(expectedError).toThrowError('endpoints must be specified')
+  })
+
+  test('should throw error if element with ID (entry point of app) does not exist', () => {
+    const app = controller()
+    const expectedError = () => {
+      app.init('entry', {})
+    }
+    expect(expectedError).toThrowError('The specified element with id does not exist')
   })
 })
 

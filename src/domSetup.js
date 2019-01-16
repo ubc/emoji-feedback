@@ -80,6 +80,7 @@ const createFeedbackForm = (entryId, text) => {
 
 const attachEmojiFeedback = (entryId, emojis, text) => {
   const entry = document.getElementById(entryId)
+  if (!entry) throw new Error('The specified element with id does not exist')
   const emojiFeedbackWrapper = createWrapper(entryId)
   const introText = createText(text.introText)
 
