@@ -36,9 +36,9 @@ import controller from './app'
 const emojiFeedback = controller()
 
 const endpoints = {
-  emojiEndpoint: 'http://localhost:8080/emoji',
-  formEndpoint: 'http://localhost:8080/form',
-  votesEndpoint: 'http://localhost:8080/votes'
+  emoji: 'http://127.0.0.1:5000/emoji',
+  feedback: 'http://127.0.0.1:5000/feedback',
+  votes: 'http://127.0.0.1:5000/votes'
 }
 
 emojiFeedback.init('entry', endpoints)

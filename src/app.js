@@ -104,9 +104,7 @@ const controller = () => {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({ emojis: emojis }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      headers: { 'Content-Type': 'application/json' }
     })
   }
 
@@ -115,9 +113,7 @@ const controller = () => {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({ feedback: text }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      headers: { 'Content-Type': 'application/json' }
     })
   }
 
