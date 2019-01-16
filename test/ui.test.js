@@ -22,6 +22,8 @@ afterAll(() => {
   browser.close()
 })
 
+const getClass = elementHandle => page.evaluate(elem => elem.getAttribute('class'), elementHandle)
+
 describe('Emoji buttons', () => {
   test('exist', async () => {
     await page.goto(APP)
@@ -34,27 +36,20 @@ describe('Emoji buttons', () => {
     expect(buttons).toEqual(buttonIds)
   })
 
-  const getClass = elementHandle => page.evaluate(elem => elem.getAttribute('class'), elementHandle)
   test('on click, active class added to emoji button and form appears', async () => {
     await page.goto(APP)
     const happyButton = await page.$('#entry-superhappy')
     const form = await page.$('#entry-feedback-form')
-    let buttonClass = await getClass(happyButton)
-    let formClass = await getClass(form)
-    expect(buttonClass).toBe('button')
-    expect(formClass).toBe('feedback-form hidden')
+    expect(await getClass(happyButton)).toBe('button')
+    expect(await getClass(form)).toBe('feedback-form hidden')
 
     await happyButton.click()
-    buttonClass = await getClass(happyButton)
-    formClass = await getClass(form)
-    expect(buttonClass).toBe('button active')
-    expect(formClass).toBe('feedback-form')
+    expect(await getClass(happyButton)).toBe('button active')
+    expect(await getClass(form)).toBe('feedback-form')
 
     await happyButton.click()
-    buttonClass = await getClass(happyButton)
-    formClass = await getClass(form)
-    expect(buttonClass).toBe('button')
-    expect(formClass).toBe('feedback-form hidden')
+    expect(await getClass(happyButton)).toBe('button')
+    expect(await getClass(form)).toBe('feedback-form hidden')
   })
   test('clicking multiple emoji buttons work as expected', async () => {
     await page.goto(APP)
@@ -63,22 +58,19 @@ describe('Emoji buttons', () => {
     let buttonClasses = await Promise.all(buttons.map(button => getClass(button)))
     const unclickedButtonClasses = ['button', 'button', 'button', 'button', 'button']
     const form = await page.$('#entry-feedback-form')
-    let formClass = await getClass(form)
     expect(buttonClasses).toEqual(unclickedButtonClasses)
-    expect(formClass).toBe('feedback-form hidden')
+    expect(await getClass(form)).toBe('feedback-form hidden')
 
     await Promise.all(buttons.map(btn => btn.click()))
     buttonClasses = await Promise.all(buttons.map(button => getClass(button)))
     const clickedButtonClasses = ['button active', 'button active', 'button active', 'button active', 'button active']
-    formClass = await getClass(form)
     expect(buttonClasses).toEqual(clickedButtonClasses)
-    expect(formClass).toBe('feedback-form')
+    expect(await getClass(form)).toBe('feedback-form')
 
     await Promise.all(buttons.map(btn => btn.click()))
     buttonClasses = await Promise.all(buttons.map(button => getClass(button)))
-    formClass = await getClass(form)
     expect(buttonClasses).toEqual(unclickedButtonClasses)
-    expect(formClass).toBe('feedback-form hidden')
+    expect(await getClass(form)).toBe('feedback-form hidden')
   })
   test('clicking emoji creates API request', async () => {
     await page.goto(APP)
@@ -133,7 +125,10 @@ describe('form', () => {
     const happyButton = await page.$('#entry-superhappy')
     await happyButton.click()
     const form = await page.$('#entry-feedback-textarea')
+    const submitButton = await page.$('#entry-feedback-button')
+    expect(await getClass(submitButton)).toBe('button feedback-button')
     await form.type('hello')
+    expect(await getClass(submitButton)).toBe('button feedback-button ready')
     const charCounter = await page.evaluate(() => document.querySelector('#entry-maxlength-enforcer > span').innerHTML)
     expect(charCounter).toEqual('5')
   })
