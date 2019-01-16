@@ -139,8 +139,8 @@ describe('emoji', () => {
     const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
     return emojiButtonId1
   }
-  test('clicking an emoji updates the state correctly', () => {
-    setupButton().click()
+  test('clicking an emoji updates the state correctly', async () => {
+    await setupButton().click()
     const expectedState = {
       selectedEmojis: [{ emojiId: `${entrypoint}-${emojis[0].emotion}`, emojicon: emojis[0].emojicon }],
       feedbackText: '',
@@ -149,8 +149,8 @@ describe('emoji', () => {
     }
     expect(app.getState()).toEqual(expectedState)
   })
-  test('clicking the same emoji again removes it from selectedEmojis', () => {
-    setupButton().click()
+  test('clicking the same emoji again removes it from selectedEmojis', async () => {
+    await setupButton().click()
     const expectedState = {
       selectedEmojis: [],
       feedbackText: '',
@@ -170,11 +170,11 @@ describe('form', () => {
     votes: 'http://localhost:8080/votes'
   }
 
-  test('when textarea is filled out, the application state changes accordingly as well as char counter', () => {
+  test('when textarea is filled out, the application state changes accordingly as well as char counter', async () => {
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints, { emojis })
     const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
-    emojiButtonId1.click()
+    await emojiButtonId1.click()
     const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
     const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
     const sampleText = 'Adding text in here should update state and char counter accordingly'
@@ -187,5 +187,19 @@ describe('form', () => {
     expect(app.getState().feedbackText).toEqual(sampleText)
     expect(charCounter.innerHTML).toEqual(`<span>${sampleText.length}</span>/500`)
     expect(submitButton.classList.contains('ready')).toEqual(true)
+  })
+
+  test('when submit button is pressed, the thank you message shows up', async () => {
+    document.body.innerHTML = `<div id=${entrypoint}></div>`
+    app.init(entrypoint, endpoints, { emojis })
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
+    await emojiButtonId1.click()
+    const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
+    const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
+    const sampleText = 'Adding text in here should update state and char counter accordingly'
+    textarea.value = sampleText
+    textarea.dispatchEvent(new Event('keyup'))
+    await submitButton.click()
+    expect(document.getElementsByClassName('thankYou')[0].innerHTML).toBe('Your feedback has been recorded')
   })
 })
