@@ -65,7 +65,7 @@ app.init('entry', endpoints, {
 })
 ```
 
-![Custom Emoji](./_assets/custom-emojis.png | width=200)
+![Custom Emoji](./_assets/custom-emojis.png)
 
 ### Tests
 To run the tests, first ensure that the application is running locally (`npm start`), then `npm test` will run the Jest unit and UI tests (in Puppeteer's headless mode).
