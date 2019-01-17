@@ -62,7 +62,8 @@ const controller = () => {
             }
           })
           .catch(e => {
-            throw new Error(e)
+            detachEmojiFeedback(entryId)
+            attachErrorMessage(entryId)
           })
       }
     }
