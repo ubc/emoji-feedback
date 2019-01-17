@@ -1,6 +1,6 @@
 {
   "name": "@justin0022/emoji-feedback",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple tool for eliciting feedback via emojis, featuring a feedback form.",
   "main": "dist/bundle.js",
   "scripts": {
