@@ -6,10 +6,13 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 })
 module.exports = {
-  entry: './index.js',
+  entry: './src/app.js',
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    library: 'emojiFeedback',
+    libraryTarget: 'umd',
+    globalObject: 'this'
   },
   module: {
     rules: [

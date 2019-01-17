@@ -1,4 +1,3 @@
-import css from './index.css'
 import controller from './src/app'
 
 const app = controller()
