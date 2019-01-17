@@ -3,7 +3,7 @@
 [![gzipped_size](https://img.shields.io/badge/gzip%20size-6.4kB-green.svg)](https://img.shields.io/badge/gzip%20size-6.4kB-green.svg)
 [![javascript](https://img.shields.io/badge/javascript-vanilla-green.svg)](http://vanilla-js.com/)
 
-# Emoji-Feedback 😀 😞 😕 👍 👎 (in active development)
+# Emoji-Feedback 💀 👻 👽 🤖 💩 (in active development)
 
 [Working Prototype](https://jsfiddle.net/justin0022/pd4oczva/18/)
 ![GIF of App](./_assets/emoji-feedback.gif)
