@@ -137,7 +137,7 @@ const createSpinner = entryId => {
 
 const createThankYouWrapper = entryId => {
   const thankYouWrapper = document.createElement('div')
-  thankYouWrapper.className = 'feedback-thank-you'
+  thankYouWrapper.className = 'feedback-submitted-message'
   thankYouWrapper.classList.add('hidden')
   thankYouWrapper.id = `${entryId}-thank-you`
 
@@ -160,6 +160,31 @@ const attachThankYouMessage = entryId => {
   entry.appendChild(thankYouWrapper)
 }
 
+const createErrorMessageWrapper = entryId => {
+  const errorMessageWrapper = document.createElement('div')
+  errorMessageWrapper.className = 'feedback-submitted-message'
+  errorMessageWrapper.classList.add('hidden')
+  errorMessageWrapper.id = `${entryId}-error-message`
+
+  const facePalm = createText('🤦')
+  facePalm.style.fontSize = '30px'
+  facePalm.style.gridRow = 'row'
+  facePalm.style.gridColumn = 'col / span 6'
+  const error = createText('Our servers are having some issues. Please vote again later.')
+  error.id = 'error-message'
+  error.style.gridRow = 'row 2'
+  errorMessageWrapper.appendChild(facePalm)
+  errorMessageWrapper.appendChild(error)
+
+  return errorMessageWrapper
+}
+
+const attachErrorMessage = entryId => {
+  const errorMessageWrapper = createErrorMessageWrapper(entryId)
+  const entry = document.getElementById(entryId)
+  entry.appendChild(errorMessageWrapper)
+}
+
 const detachEmojiFeedback = entryId => {
   const entry = document.getElementById(entryId)
   const emojiFeedbackWrapper = document.getElementById(`${entryId}-wrapper`)
@@ -169,5 +194,6 @@ const detachEmojiFeedback = entryId => {
 export {
   attachEmojiFeedback,
   attachThankYouMessage,
-  detachEmojiFeedback
+  detachEmojiFeedback,
+  attachErrorMessage
 }
