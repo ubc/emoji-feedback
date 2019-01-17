@@ -1,3 +1,5 @@
+import { convertOver1000 } from './util'
+
 const createWrapper = entryId => {
   const wrapper = document.createElement('div')
   wrapper.className = 'wrapper'
@@ -203,7 +205,7 @@ const createTotalVotes = entryId => {
 
 const displayVotes = (entryId, votes) => {
   const totalVotes = document.getElementById(`${entryId}-total-votes`)
-  totalVotes.innerHTML = `total votes: ${votes}`
+  totalVotes.innerHTML = `total votes: ${votes > 999 ? convertOver1000(votes) : votes}`
 }
 
 export {

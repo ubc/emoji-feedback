@@ -1,4 +1,3 @@
-
 const getTextArea = entryId => document.getElementById(`${entryId}-feedback-textarea`)
 
 const removeActive = emoji => {
@@ -24,11 +23,18 @@ const removeFromClass = (elemId, className) => {
   element.classList.remove(className)
 }
 
+const convertOver1000 = votes => {
+  const multipleOfThousand = Math.floor(votes / 1000)
+  const roundedToNearestHundred = Math.round((votes - multipleOfThousand * 1000) / 100)
+  return `${multipleOfThousand}.${roundedToNearestHundred}k`
+}
+
 export {
   clearActive,
   getEmojisFromDOM,
   getTextArea,
   setTextAreaMaxLength,
   removeFromClass,
-  addToClass
+  addToClass,
+  convertOver1000
 }
