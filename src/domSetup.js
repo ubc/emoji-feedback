@@ -2,6 +2,11 @@ const createWrapper = entryId => {
   const wrapper = document.createElement('div')
   wrapper.className = 'wrapper'
   wrapper.id = `${entryId}-wrapper`
+  wrapper.style.display = 'grid'
+  wrapper.style.gridGap = '2px'
+  wrapper.style.width = '60px'
+  wrapper.style.gridTemplateColumns = '[col] 60px [col] 60px [col] 60px [col] 60px [col] 60px'
+  wrapper.style.gridTemplateRows = '[row] auto [row] auto [row]'
   return wrapper
 }
 
@@ -42,7 +47,7 @@ const createTextAreaCounter = entryId => {
   const span = document.createElement('span')
   charCounter.appendChild(span).innerHTML += '0/500'
   charCounter.id = `${entryId}-maxlength-enforcer`
-  charCounter.style.color = '#757575'
+  charCounter.style.color = '#576574'
   charCounter.style.fontSize = '14px'
   return charCounter
 }
@@ -54,8 +59,11 @@ const createFeedbackForm = (entryId, text) => {
 
   feedbackForm.id = `${entryId}-feedback-form`
   const feedbackText = createText(text.feedbackThankYou)
+  feedbackText.style.fontWeight = 'bold'
+  feedbackText.style.gridRow = 'row 2'
+  feedbackText.style.gridColumn = 'col / span 6'
   const feedbackTextOptional = createText(text.feedbackTextPrompt)
-  feedbackTextOptional.style.color = '#757575'
+  feedbackTextOptional.style.color = '#576574'
   feedbackTextOptional.style.textAlign = 'center'
   feedbackTextOptional.style.fontSize = '14px'
 
@@ -125,9 +133,8 @@ const createThankYouWrapper = entryId => {
   thankYouWrapper.id = `${entryId}-thank-you`
 
   const hiFive = createText('🙌')
-  hiFive.className = 'hiFive'
   const thankYou = createText('Your feedback has been recorded')
-  thankYou.className = 'thankYou'
+  thankYou.id = 'thank-you-message'
   thankYouWrapper.appendChild(hiFive)
   thankYouWrapper.appendChild(thankYou)
 
