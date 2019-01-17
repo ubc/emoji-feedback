@@ -31,7 +31,7 @@ These instructions will get you a copy of the project up and running on your loc
 Emoji-Feedback can be installed via `npm`.
 `npm install emoji-feedback-tool`
 ```javascript
-const emojiFeedback = require(`emoji-feedback-tool`)
+const emojiFeedback = require('emoji-feedback-tool')
 const app = emojiFeedback()
 
 const endpoints = {
