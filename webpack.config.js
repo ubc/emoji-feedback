@@ -1,4 +1,3 @@
-const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: 'index.html',
@@ -6,14 +5,6 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 })
 module.exports = {
-  entry: './src/app.js',
-  output: {
-    path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js',
-    library: 'emojiFeedback',
-    libraryTarget: 'umd',
-    globalObject: 'this'
-  },
   module: {
     rules: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
