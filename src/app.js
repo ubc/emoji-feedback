@@ -55,7 +55,9 @@ const controller = () => {
               attachThankYouMessage(entryId)
             } else if (res.status === 404) {
               console.log('oops, 404')
-              // attach error message
+              // attach error message, remove the two lines of code below
+              detachEmojiFeedback(entryId)
+              attachThankYouMessage(entryId)
             }
           })
           .catch(e => {
