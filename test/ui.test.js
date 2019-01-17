@@ -78,7 +78,10 @@ describe('Emoji buttons', () => {
     page.on('request', req => {
       if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
-      expect(JSON.parse(req.postData()).emojis).toEqual([{ emojiId: 'entry-superhappy', emojicon: '😁' }])
+      const jsonRes = JSON.parse(req.postData())
+      expect(jsonRes.emojis).toEqual([{ emojiId: 'entry-superhappy', emojicon: '😁' }])
+      expect(jsonRes.pageUrl).toBeDefined()
+      expect(req.method()).toEqual('POST')
       expect(req.method()).toEqual('POST')
     })
     await page.close()
@@ -95,11 +98,14 @@ describe('Emoji buttons', () => {
     page.on('request', req => {
       if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
-      expect(JSON.parse(req.postData()).emojis)
+      const jsonRes = JSON.parse(req.postData())
+      expect(jsonRes.emojis)
         .toEqual([
           { emojiId: 'entry-superhappy', emojicon: '😁' },
           { emojiId: 'entry-disappointed', emojicon: '😞' }
         ])
+      expect(jsonRes.timestamp).toBeDefined()
+      expect(jsonRes.pageUrl).toBeDefined()
       expect(req.method()).toEqual('POST')
     })
     await page.close()
@@ -116,8 +122,11 @@ describe('Emoji buttons', () => {
     page.on('request', req => {
       if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
-      expect(JSON.parse(req.postData()).emojis)
+      const jsonRes = JSON.parse(req.postData())
+      expect(jsonRes.emojis)
         .toEqual([{ emojiId: 'entry-superhappy', emojicon: '😁' }])
+      expect(jsonRes.pageUrl).toBeDefined()
+      expect(req.method()).toEqual('POST')
       expect(req.method()).toEqual('POST')
     })
     await page.close()
@@ -141,6 +150,13 @@ describe('form', () => {
   })
 
   test('submits properly, making correct POST request', async () => {
+    page.on('request', req => {
+      if (req.method() === 'OPTIONS') return
+      if (req.url() === `${API_BASE_URL}feedback`) {
+        expect(JSON.parse(req.postData()).feedback).toEqual('hello')
+        expect(req.method()).toEqual('POST')
+      }
+    })
     await page.goto(APP)
     const happyButton = await page.$('#entry-superhappy')
     await happyButton.click()
@@ -148,16 +164,10 @@ describe('form', () => {
     const submitButton = await page.$('#entry-feedback-button')
     await form.type('hello')
     await submitButton.click()
-    page.on('request', req => {
-      if (req.method() === 'OPTIONS') return
-      expect(req.url()).toEqual(`${API_BASE_URL}feedback`)
-      expect(req.postData()).toEqual(JSON.stringify({ feedback: 'hello' }))
-      expect(req.method()).toEqual('POST')
-    })
-    // await Promise.race([
-    //   page.waitFor('#entry-thank-you-message'),
-    //   page.waitFor('#entry-error-message')
-    // ])
+    await Promise.race([
+      page.waitFor('#entry-thank-you-message'),
+      page.waitFor('#entry-error-message')
+    ])
     // const thankYouMessage = await page.evaluate(() => {
     //   const msg = document.getElementById('entry-thank-you-message')
     //   return msg ? msg.innerHTML : false

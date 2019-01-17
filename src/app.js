@@ -105,7 +105,7 @@ const controller = () => {
   const submitSelectedEmojis = emojis => {
     const date = new Date()
     const timestamp = date.getTime()
-    fetch(state.endpoints.emoji, {
+    return fetch(state.endpoints.emoji, {
       ...c.fetchOptions,
       body: JSON.stringify({
         timestamp,
@@ -115,11 +115,18 @@ const controller = () => {
     })
   }
 
-  const submitFeedback = text =>
-    fetch(state.endpoints.feedback, {
+  const submitFeedback = text => {
+    const date = new Date()
+    const timestamp = date.getTime()
+    return fetch(state.endpoints.feedback, {
       ...c.fetchOptions,
-      body: JSON.stringify({ feedback: text })
+      body: JSON.stringify({
+        timestamp,
+        pageUrl: window.location.href,
+        feedback: text
+      })
     })
+  }
 
   const getVotes = () =>
     fetch(state.endpoints.votes, {
