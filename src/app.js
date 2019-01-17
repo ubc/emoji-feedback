@@ -53,11 +53,10 @@ const controller = () => {
         submitFeedback(state.feedbackText)
           .then(res => {
             addToClass(`${entryId}-spinner`, 'hidden')
+            detachEmojiFeedback(entryId)
             if (res.status === 200) {
-              detachEmojiFeedback(entryId)
               attachThankYouMessage(entryId)
             } else if (res.status === 404) {
-              detachEmojiFeedback(entryId)
               attachErrorMessage(entryId)
             }
           })

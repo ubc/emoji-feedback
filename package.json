@@ -1,5 +1,5 @@
 {
-  "name": "emoji-feedback",
+  "name": "emoji-feedback-tool",
   "version": "1.0.0",
   "description": "A simple tool for eliciting feedback via emojis, featuring a feedback form.",
   "main": "index.js",
@@ -32,6 +32,10 @@
     "webpack-cli": "^3.2.0",
     "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ubc/emoji-feedback.git"
   },
   "jest": {
     "automock": false,

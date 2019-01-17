@@ -28,13 +28,11 @@ These instructions will get you a copy of the project up and running on your loc
 1. To build for production, `npm run build` will output the production-ready, minified, tree-shaken bundle in `/dist`.
 
 ### Usage
-Emoji-Feedback can be configured in `index.js` by importing `app.js` and instantiating it.
-A very basic config is outlined below:
+Emoji-Feedback can be installed via `npm`.
+`npm install emoji-feedback-tool`
 ```javascript
-import css from './index.css'
-import controller from './app'
-
-const emojiFeedback = controller()
+const emojiFeedback = require(`emoji-feedback-tool`)
+const app = emojiFeedback()
 
 const endpoints = {
   emoji: 'http://127.0.0.1:5000/emoji',
@@ -42,7 +40,11 @@ const endpoints = {
   votes: 'http://127.0.0.1:5000/votes'
 }
 
-emojiFeedback.init('entry', endpoints)
+app.init('entry', endpoints, {
+  // introText: 'I can customize this!',
+  // feedbackTextPrompt: 'Please write down below',
+  // feedbackThankYou: 'Thanks again!'
+})
 ```
 `emojiFeedback` has one method, `init`.
 It takes 3 arguments: `entry`, `endpoints`, `options`
