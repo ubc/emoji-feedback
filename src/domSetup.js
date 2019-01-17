@@ -146,7 +146,7 @@ const createThankYouWrapper = entryId => {
   hiFive.style.gridRow = 'row'
   hiFive.style.gridColumn = 'col / span 6'
   const thankYou = createText('Your feedback has been recorded')
-  thankYou.id = 'thank-you-message'
+  thankYou.id = `${entryId}-thank-you-message`
   thankYou.style.gridRow = 'row 2'
   thankYouWrapper.appendChild(hiFive)
   thankYouWrapper.appendChild(thankYou)
@@ -171,7 +171,7 @@ const createErrorMessageWrapper = entryId => {
   facePalm.style.gridRow = 'row'
   facePalm.style.gridColumn = 'col / span 6'
   const error = createText('Our servers are having some issues. Please vote again later.')
-  error.id = 'error-message'
+  error.id = `${entryId}-error-message`
   error.style.gridRow = 'row 2'
   errorMessageWrapper.appendChild(facePalm)
   errorMessageWrapper.appendChild(error)

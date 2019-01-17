@@ -229,6 +229,6 @@ describe('form', () => {
     textarea.value = sampleText
     textarea.dispatchEvent(new Event('keyup'))
     await submitButton.click()
-    expect(document.getElementById('thank-you-message').innerHTML).toBe('Your feedback has been recorded')
+    expect(document.getElementById('entry-thank-you-message').innerHTML).toBe('Your feedback has been recorded')
   })
 })

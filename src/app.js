@@ -61,12 +61,8 @@ const controller = () => {
             }
           })
           .catch(e => {
-            // attach error message
             throw new Error(e)
           })
-      } else {
-        // removeFromClass(`${entryId}-feedback-form`, 'submitted')
-        // show message that there should be some text before submission can occur
       }
     }
     submitButton.addEventListener('click', handleSubmitButton)
