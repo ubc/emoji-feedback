@@ -13,7 +13,10 @@ const createWrapper = entryId => {
 const createText = text => {
   const p = document.createElement('p')
   p.innerHTML = text
-  p.className = 'feedback-text'
+  p.style.gridColumn = 'col / span 6'
+  p.style.gridRow = 'row'
+  p.style.textAlign = 'center'
+  p.style.fontWeight = 'bold'
   return p
 }
 
@@ -39,6 +42,12 @@ const createTextArea = entryId => {
   textarea.rows = '10'
   textarea.maxLength = '500'
   textarea.style.width = '100%'
+  textarea.style.border = '1px solid #c8d6e5'
+  textarea.style.fontSize = '14px;'
+  textarea.style.height = '130px'
+  textarea.style.webkitBorderRadius = '5px'
+  textarea.style.MozBorderRadius = '5px'
+  textarea.style.borderRadius = '5px'
   return textarea
 }
 
@@ -133,8 +142,12 @@ const createThankYouWrapper = entryId => {
   thankYouWrapper.id = `${entryId}-thank-you`
 
   const hiFive = createText('🙌')
+  hiFive.style.fontSize = '30px'
+  hiFive.style.gridRow = 'row'
+  hiFive.style.gridColumn = 'col / span 6'
   const thankYou = createText('Your feedback has been recorded')
   thankYou.id = 'thank-you-message'
+  thankYou.style.gridRow = 'row 2'
   thankYouWrapper.appendChild(hiFive)
   thankYouWrapper.appendChild(thankYou)
 
