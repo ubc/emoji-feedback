@@ -68,8 +68,6 @@ const createFeedbackForm = (entryId, text) => {
 
   feedbackForm.id = `${entryId}-feedback-form`
   const feedbackText = createText(text.feedbackThankYou)
-  feedbackText.style.fontWeight = 'bold'
-  feedbackText.style.gridRow = 'row 2'
   feedbackText.style.gridColumn = 'col / span 6'
   const feedbackTextOptional = createText(text.feedbackTextPrompt)
   feedbackTextOptional.style.color = '#576574'
@@ -113,6 +111,8 @@ const attachEmojiFeedback = (entryId, emojis, text) => {
     emojiButton.appendChild(emojiSpan)
     emojiFeedbackWrapper.appendChild(emojiButton)
   })
+
+  emojiFeedbackWrapper.appendChild(createTotalVotes(entryId))
 
   emojiFeedbackWrapper.appendChild(createFeedbackForm(entryId, text))
   emojiFeedbackWrapper.appendChild(createSpinner(entryId))
@@ -191,9 +191,25 @@ const detachEmojiFeedback = entryId => {
   entry.removeChild(emojiFeedbackWrapper)
 }
 
+const createTotalVotes = entryId => {
+  const totalVotes = document.createElement('div')
+  totalVotes.id = `${entryId}-total-votes`
+  totalVotes.style.gridRow = 'row 3'
+  totalVotes.style.gridColumn = 'col / span 6'
+  totalVotes.style.color = '#576574'
+  totalVotes.style.textAlign = 'right'
+  return totalVotes
+}
+
+const displayVotes = (entryId, votes) => {
+  const totalVotes = document.getElementById(`${entryId}-total-votes`)
+  totalVotes.innerHTML = `total votes: ${votes}`
+}
+
 export {
   attachEmojiFeedback,
   attachThankYouMessage,
   detachEmojiFeedback,
-  attachErrorMessage
+  attachErrorMessage,
+  displayVotes
 }

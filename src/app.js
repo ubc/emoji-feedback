@@ -3,7 +3,8 @@ import {
   attachEmojiFeedback,
   attachThankYouMessage,
   detachEmojiFeedback,
-  attachErrorMessage
+  attachErrorMessage,
+  displayVotes
 } from './domSetup'
 import {
   clearActive,
@@ -25,8 +26,7 @@ const controller = () => {
       feedback: '',
       votes: ''
     },
-    entryId: '',
-    totalVotes: 0
+    entryId: ''
   }
 
   const formTextAreaSetup = entryId => {
@@ -132,7 +132,9 @@ const controller = () => {
     fetch(state.endpoints.votes, {
       ...c.fetchOptions,
       method: 'GET'
-    })
+    }).then(res => {
+      return res.json()
+    }).then(x => x.votes)
 
   const setEntryId = entryId => (state.entryId = entryId)
 
@@ -147,9 +149,10 @@ const controller = () => {
       if (endpoints == null) throw new Error('endpoints must be specified')
       const text = { introText, feedbackTextPrompt, feedbackThankYou }
       setEndpoints(endpoints)
-      attachEmojiFeedback(entryId, emojis, text)
       setEntryId(entryId)
+      attachEmojiFeedback(entryId, emojis, text)
       createFormHandler(entryId)
+      getVotes().then(totalVotes => displayVotes(entryId, totalVotes))
 
       const domEmojis = getEmojisFromDOM(entryId, emojis)
       domEmojis.forEach(emoji => {
