@@ -152,7 +152,9 @@ const controller = () => {
       setEntryId(entryId)
       attachEmojiFeedback(entryId, emojis, text)
       createFormHandler(entryId)
-      getVotes().then(totalVotes => displayVotes(entryId, totalVotes))
+      getVotes()
+        .then(totalVotes => displayVotes(entryId, totalVotes))
+        .catch(e => e)
 
       const domEmojis = getEmojisFromDOM(entryId, emojis)
       domEmojis.forEach(emoji => {
