@@ -78,7 +78,7 @@ describe('Emoji buttons', () => {
     page.on('request', req => {
       if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
-      expect(req.postData()).toEqual(JSON.stringify({ emojis: [{ emojiId: 'entry-superhappy', emojicon: '😁' }] }))
+      expect(JSON.parse(req.postData()).emojis).toEqual([{ emojiId: 'entry-superhappy', emojicon: '😁' }])
       expect(req.method()).toEqual('POST')
     })
     await page.close()
@@ -95,8 +95,11 @@ describe('Emoji buttons', () => {
     page.on('request', req => {
       if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
-      expect(req.postData())
-        .toEqual(JSON.stringify({ emojis: [{ emojiId: 'entry-superhappy', emojicon: '😁' }, { emojiId: 'entry-disappointed', emojicon: '😞' }] }))
+      expect(JSON.parse(req.postData()).emojis)
+        .toEqual([
+          { emojiId: 'entry-superhappy', emojicon: '😁' },
+          { emojiId: 'entry-disappointed', emojicon: '😞' }
+        ])
       expect(req.method()).toEqual('POST')
     })
     await page.close()
@@ -113,7 +116,8 @@ describe('Emoji buttons', () => {
     page.on('request', req => {
       if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
-      expect(req.postData()).toEqual(JSON.stringify({ emojis: [{ emojiId: 'entry-superhappy', emojicon: '😁' }] }))
+      expect(JSON.parse(req.postData()).emojis)
+        .toEqual([{ emojiId: 'entry-superhappy', emojicon: '😁' }])
       expect(req.method()).toEqual('POST')
     })
     await page.close()

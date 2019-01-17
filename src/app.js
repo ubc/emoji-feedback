@@ -102,11 +102,18 @@ const controller = () => {
     state.endpoints.votes = votes
   }
 
-  const submitSelectedEmojis = emojis =>
+  const submitSelectedEmojis = emojis => {
+    const date = new Date()
+    const timestamp = date.getTime()
     fetch(state.endpoints.emoji, {
       ...c.fetchOptions,
-      body: JSON.stringify({ emojis: emojis })
+      body: JSON.stringify({
+        timestamp,
+        emojis: emojis,
+        pageUrl: window.location.href
+      })
     })
+  }
 
   const submitFeedback = text =>
     fetch(state.endpoints.feedback, {
