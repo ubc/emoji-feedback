@@ -1,8 +1,8 @@
 {
-  "name": "emoji-feedback-tool",
+  "name": "@justin0022/emoji-feedback",
   "version": "1.0.0",
   "description": "A simple tool for eliciting feedback via emojis, featuring a feedback form.",
-  "main": "index.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "test:app": "jest --watch -t 'app'",
     "test:ui": "jest --watch -t 'ui",
