@@ -57,7 +57,8 @@ describe('app state', () => {
         feedback: '',
         votes: ''
       },
-      entryId: ''
+      entryId: '',
+      totalVotes: 0
     }
     expect(state).toEqual(defaultState)
   })
@@ -80,7 +81,8 @@ describe('app state', () => {
       emojis: [],
       feedbackText: '',
       endpoints,
-      entryId: 'myEntryId'
+      entryId: 'myEntryId',
+      totalVotes: 0
     }
 
     expect(appState).toEqual(expectedState)
@@ -111,14 +113,16 @@ describe('app state', () => {
       emojis: [],
       feedbackText: '',
       endpoints: endpoints1,
-      entryId: entrypoint1
+      entryId: entrypoint1,
+      totalVotes: 0
     }
 
     const app2ExpectedState = {
       emojis: [],
       feedbackText: '',
       endpoints: endpoints2,
-      entryId: entrypoint2
+      entryId: entrypoint2,
+      totalVotes: 0
     }
     expect(app1ExpectedState).toEqual(app1.getState())
     expect(app2ExpectedState).toEqual(app2.getState())
@@ -145,7 +149,8 @@ describe('emoji', () => {
       emojis: [{ emojiId: `${entrypoint}-${emojis[0].emotion}`, emojicon: emojis[0].emojicon }],
       feedbackText: '',
       endpoints: endpoints,
-      entryId: entrypoint
+      entryId: entrypoint,
+      totalVotes: 0
     }
     expect(app.getState()).toEqual(expectedState)
   })
@@ -155,7 +160,8 @@ describe('emoji', () => {
       emojis: [],
       feedbackText: '',
       endpoints: endpoints,
-      entryId: entrypoint
+      entryId: entrypoint,
+      totalVotes: 0
     }
     expect(app.getState()).toEqual(expectedState)
   })

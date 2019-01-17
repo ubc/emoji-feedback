@@ -23,7 +23,8 @@ const controller = () => {
       feedback: '',
       votes: ''
     },
-    entryId: ''
+    entryId: '',
+    totalVotes: 0
   }
 
   const formTextAreaSetup = entryId => {
