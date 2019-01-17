@@ -28,7 +28,7 @@ These instructions will get you a copy of the project up and running on your loc
 1. To build for production, `npm run build` will output the production-ready, minified, tree-shaken bundle in `/dist`.
 
 ### Usage
-Emoji-Feedback can be installed via `npm`.
+Emoji-Feedback can be installed via `npm`. Since this app requires the DOM, it will not run via Node. I highly recommend using something like Webpack or Rollup to produce a bundle that will be executed by the browser.
 `npm i @justin0022/emoji-feedback`
 ```javascript
 const emojiFeedback = require('@justin0022/emoji-feedback')
@@ -43,14 +43,29 @@ const endpoints = {
 app.init('entry', endpoints, {
   // introText: 'I can customize this!',
   // feedbackTextPrompt: 'Please write down below',
-  // feedbackThankYou: 'Thanks again!'
+  // feedbackThankYou: 'Thanks again!',
+  // emojis:
 })
 ```
-`emojiFeedback` has one method, `init`.
-It takes 3 arguments: `entry`, `endpoints`, `options`
+`emojiFeedback` has one method, `init`. Init takes 3 arguments: `entry`, `endpoints`, `options`
 * `entry` is the HTML id attribute that should be unique to the document. This is the entry point of Emoji Feedback.
 * `endpoints` is an object that contains 3 endpoints `emoji`, `feedback` and `votes`. `emoji` and `feedback` send POST requests that contain the selected emoji(s) and the written feedback in the body of the request, respectively. `votes` sends a GET request for retrieving the number of times students have voted.
-* `options` is an optional object that contains `introText`, `feedbackTextPrompt` and `feedbackThankYou`, which allow for configurations of the text.
+* `options` is an optional object that contains `introText`, `feedbackTextPrompt`, `feedbackThankYou`, which allow for configurations of the text, as well as `emojis`, which can be used to configure the emojis to your liking. For example,
+
+```javascript
+const myConfiguredEmoji = [
+  { emojicon: '💀', emotion: 'skull' },
+  { emojicon: '👻', emotion: 'boo' },
+  { emojicon: '👽', emotion: 'alien' },
+  { emojicon: '🤖', emotion: 'robot' },
+  { emojicon: '💩', emotion: 'poop' }
+]
+app.init('entry', endpoints, {
+   emojis: myConfiguredEmoji
+})
+```
+This results in:
+![Custom Emoji](./_assets/custom-emojis.png)
 
 ### Tests
 To run the tests, first ensure that the application is running locally (`npm start`), then `npm test` will run the Jest unit and UI tests (in Puppeteer's headless mode).
