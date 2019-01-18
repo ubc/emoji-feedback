@@ -29,7 +29,36 @@ const controller = () => {
     entryId: ''
   }
 
-  const formTextAreaSetup = entryId => {
+  const getVotes = () =>
+    fetch(state.endpoints.votes, {
+      ...c.fetchOptions,
+      method: 'GET'
+    }).then(res => {
+      return res.json()
+    }).then(x => x.votes)
+
+  const setEntryId = entryId => (state.entryId = entryId)
+
+  const setEmojiSelection = emoji => {
+    if (state.emojis.map(e => e.emojiId).includes(emoji.id)) {
+      state.emojis = state.emojis.filter(e => e.emojiId !== emoji.id)
+    } else {
+      const emojiElem = document.getElementById(emoji.id)
+      const icon = emojiElem.childNodes[0].innerHTML
+      state.emojis.push({
+        emojiId: emoji.id,
+        emojicon: icon
+      })
+    }
+  }
+
+  const setEndpoints = ({ emoji, feedback, votes }) => {
+    state.endpoints.emoji = emoji
+    state.endpoints.feedback = feedback
+    state.endpoints.votes = votes
+  }
+
+  const setupFormTextArea = entryId => {
     const textarea = getTextArea(entryId)
     textarea.focus()
     textarea.onkeyup = function () {
@@ -69,39 +98,6 @@ const controller = () => {
     submitButton.addEventListener('click', handleSubmitButton)
   }
 
-  const update = emojis => {
-    clearActive(emojis)
-    state.emojis.forEach(({ emojiId }) =>
-      emojis.find(e => e.id === emojiId).classList.add('active')
-    )
-    if (state.emojis.length > 0) {
-      removeFromClass(`${state.entryId}-feedback-form`, 'hidden')
-      submitSelectedEmojis(state.emojis)
-      formTextAreaSetup(state.entryId)
-    } else {
-      addToClass(`${state.entryId}-feedback-form`, 'hidden')
-    }
-  }
-
-  const setEmojiSelection = emoji => {
-    if (state.emojis.map(e => e.emojiId).includes(emoji.id)) {
-      state.emojis = state.emojis.filter(e => e.emojiId !== emoji.id)
-    } else {
-      const emojiElem = document.getElementById(emoji.id)
-      const icon = emojiElem.childNodes[0].innerHTML
-      state.emojis.push({
-        emojiId: emoji.id,
-        emojicon: icon
-      })
-    }
-  }
-
-  const setEndpoints = ({ emoji, feedback, votes }) => {
-    state.endpoints.emoji = emoji
-    state.endpoints.feedback = feedback
-    state.endpoints.votes = votes
-  }
-
   const submitSelectedEmojis = emojis => {
     const date = new Date()
     const timestamp = date.getTime()
@@ -128,24 +124,28 @@ const controller = () => {
     })
   }
 
-  const getVotes = () =>
-    fetch(state.endpoints.votes, {
-      ...c.fetchOptions,
-      method: 'GET'
-    }).then(res => {
-      return res.json()
-    }).then(x => x.votes)
-
-  const setEntryId = entryId => (state.entryId = entryId)
-
   const setupEmojiListeners = (entryId, emojis) => {
     const domEmojis = getEmojisFromDOM(entryId, emojis)
     domEmojis.forEach(emoji => {
       emoji.addEventListener('click', () => {
         setEmojiSelection(emoji)
-        update(domEmojis)
+        updateApp(domEmojis)
       })
     })
+  }
+
+  const updateApp = emojis => {
+    clearActive(emojis)
+    state.emojis.forEach(({ emojiId }) =>
+      emojis.find(e => e.id === emojiId).classList.add('active')
+    )
+    if (state.emojis.length > 0) {
+      removeFromClass(`${state.entryId}-feedback-form`, 'hidden')
+      submitSelectedEmojis(state.emojis)
+      setupFormTextArea(state.entryId)
+    } else {
+      addToClass(`${state.entryId}-feedback-form`, 'hidden')
+    }
   }
 
   return {
