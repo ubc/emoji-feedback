@@ -77,7 +77,7 @@ const controller = () => {
         removeFromClass(`${entryId}-spinner`, 'hidden')
         submitFeedback(state.endpoints.feedback, state.feedbackText)
           .then(res => {
-            console.log(res)
+            // console.log(res)
             addToClass(`${entryId}-spinner`, 'hidden')
             detachEmojiFeedback(entryId)
             if (res.status === 200) {
@@ -134,7 +134,10 @@ const controller = () => {
       setupEmojiListeners(entryId, emojis)
       createFormHandler(entryId)
       getVotes(state.endpoints.votes)
-        .then(totalVotes => displayVotes(entryId, totalVotes))
+        .then(totalVotes => {
+          console.log(totalVotes)
+          displayVotes(entryId, totalVotes)
+        })
         .catch(e => e)
     },
     getState: () => state

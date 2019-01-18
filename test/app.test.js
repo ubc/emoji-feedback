@@ -1,5 +1,7 @@
-/* global describe, test, expect, Event */
+/* global describe, test, expect, Event, jest */
 import controller from '../src/app'
+
+jest.mock('../src/api')
 
 const emojis = [
   { emojicon: '😁', emotion: 'superhappy' },
@@ -139,8 +141,8 @@ describe('emoji', () => {
     const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
     return emojiButtonId1
   }
-  test('clicking an emoji updates the state correctly', async () => {
-    await setupButton().click()
+  test('clicking an emoji updates the state correctly', () => {
+    setupButton().click()
     const expectedState = {
       emojis: [{ emojiId: `${entrypoint}-${emojis[0].emotion}`, emojicon: emojis[0].emojicon }],
       feedbackText: '',
@@ -149,8 +151,8 @@ describe('emoji', () => {
     }
     expect(app.getState()).toEqual(expectedState)
   })
-  test('clicking the same emoji again removes it from selectedEmojis', async () => {
-    await setupButton().click()
+  test('clicking the same emoji again removes it from selectedEmojis', () => {
+    setupButton().click()
     const expectedState = {
       emojis: [],
       feedbackText: '',
@@ -169,12 +171,12 @@ describe('form', () => {
     votes: 'http://localhost:8080/votes'
   }
 
-  test('when textarea is filled out, the application state changes accordingly as well as char counter', async () => {
+  test('when textarea is filled out, the application state changes accordingly as well as char counter',  () => {
     const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints, { emojis })
     const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
-    await emojiButtonId1.click()
+    emojiButtonId1.click()
     const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
     const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
     const sampleText = 'Adding text in here should update state and char counter accordingly'
@@ -189,12 +191,12 @@ describe('form', () => {
     expect(submitButton.classList.contains('ready')).toEqual(true)
   })
 
-  test('when textarea is filled out, then textarea is deleted, the submit button ready class should be removed', async () => {
+  test('when textarea is filled out, then textarea is deleted, the submit button ready class should be removed',  () => {
     const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints, { emojis })
     const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
-    await emojiButtonId1.click()
+    emojiButtonId1.click()
     const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
     const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
     const sampleText = 'hello'
@@ -216,19 +218,19 @@ describe('form', () => {
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints, { emojis })
     const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
-    await emojiButtonId1.click()
+    emojiButtonId1.click()
     const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
     const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
     const sampleText = 'Adding text in here should update state and char counter accordingly'
     textarea.value = sampleText
     textarea.dispatchEvent(new Event('keyup'))
     await submitButton.click()
-    console.log(document)
+    // console.log(document)
     expect(document.getElementById('entry-thank-you-message').innerHTML).toBe('Your feedback has been recorded.')
     // expect(document.getElementById('entry-error-message').innerHTML).toBe('Our servers are having some issues. Please vote again later.')
   })
 
-  // test('when submit button is pressed, the thank you message shows up', async () => {
+  // test('when submit button is pressed, the thank you message shows up',  () => {
   //   const app = controller()
   //   document.body.innerHTML = `<div id=${entrypoint}></div>`
   //   app.init(entrypoint, endpoints, { emojis })
