@@ -66,7 +66,7 @@ describe('app state', () => {
     const entrypoint = 'myEntryId'
     const endpoints = {
       emoji: 'http://localhost:8080/emoji',
-      feedback: 'http://localhost:8080/form',
+      feedback: 'http://localhost:8080/feedback',
       votes: 'http://localhost:8080/votes'
     }
     document.body.innerHTML = `<div id=${entrypoint}></div>`
@@ -91,12 +91,12 @@ describe('app state', () => {
     const entrypoint2 = 'myEntryId2'
     const endpoints1 = {
       emoji: 'http://localhost:8080/emoji',
-      feedback: 'http://localhost:8080/form',
+      feedback: 'http://localhost:8080/feedback',
       votes: 'http://localhost:8080/votes'
     }
     const endpoints2 = {
       emoji: 'http://localhost:8080/emoji1',
-      feedback: 'http://localhost:8080/form2',
+      feedback: 'http://localhost:8080/feedback2',
       votes: 'http://localhost:8080/votes3'
     }
     document.body.innerHTML = `<div id=${entrypoint1}></div><div id=${entrypoint2}></div>`
@@ -165,7 +165,7 @@ describe('form', () => {
   const entrypoint = 'entry'
   const endpoints = {
     emoji: 'http://localhost:8080/emoji',
-    form: 'http://localhost:8080/form',
+    feedback: 'http://localhost:8080/feedback',
     votes: 'http://localhost:8080/votes'
   }
 
@@ -223,6 +223,23 @@ describe('form', () => {
     textarea.value = sampleText
     textarea.dispatchEvent(new Event('keyup'))
     await submitButton.click()
-    expect(document.getElementById('entry-thank-you-message').innerHTML).toBe('Your feedback has been recorded')
+    console.log(document)
+    expect(document.getElementById('entry-thank-you-message').innerHTML).toBe('Your feedback has been recorded.')
+    // expect(document.getElementById('entry-error-message').innerHTML).toBe('Our servers are having some issues. Please vote again later.')
   })
+
+  // test('when submit button is pressed, the thank you message shows up', async () => {
+  //   const app = controller()
+  //   document.body.innerHTML = `<div id=${entrypoint}></div>`
+  //   app.init(entrypoint, endpoints, { emojis })
+  //   const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
+  //   await emojiButtonId1.click()
+  //   const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
+  //   const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
+  //   const sampleText = 'Adding text in here should update state and char counter accordingly'
+  //   textarea.value = sampleText
+  //   textarea.dispatchEvent(new Event('keyup'))
+  //   await submitButton.click()
+  //   expect(document.getElementById('entry-thank-you-message').innerHTML).toBe('Your feedback has been recorded')
+  // })
 })

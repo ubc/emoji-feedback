@@ -1,4 +1,3 @@
-/* global fetch */
 import {
   attachEmojiFeedback,
   attachThankYouMessage,
@@ -14,6 +13,11 @@ import {
   addToClass,
   removeFromClass
 } from './util'
+import {
+  getVotes,
+  submitSelectedEmojis,
+  submitFeedback
+} from './api'
 import * as c from './defaults'
 import css from '../index.css'
 
@@ -28,11 +32,6 @@ const controller = () => {
     },
     entryId: ''
   }
-
-  const getVotes = () => fetch(state.endpoints.votes, {
-    ...c.fetchOptions,
-    method: 'GET'
-  }).then(res => res.json().then(x => x.votes))
 
   const setEntryId = entryId => (state.entryId = entryId)
 
@@ -76,8 +75,9 @@ const controller = () => {
       if (state.feedbackText.length > 0) {
         addToClass(`${entryId}-feedback-form`, 'hidden')
         removeFromClass(`${entryId}-spinner`, 'hidden')
-        submitFeedback(state.feedbackText)
+        submitFeedback(state.endpoints.feedback, state.feedbackText)
           .then(res => {
+            console.log(res)
             addToClass(`${entryId}-spinner`, 'hidden')
             detachEmojiFeedback(entryId)
             if (res.status === 200) {
@@ -93,32 +93,6 @@ const controller = () => {
       }
     }
     submitButton.addEventListener('click', handleSubmitButton)
-  }
-
-  const submitSelectedEmojis = emojis => {
-    const date = new Date()
-    const timestamp = date.getTime()
-    return fetch(state.endpoints.emoji, {
-      ...c.fetchOptions,
-      body: JSON.stringify({
-        timestamp,
-        emojis: emojis,
-        pageUrl: window.location.href
-      })
-    })
-  }
-
-  const submitFeedback = text => {
-    const date = new Date()
-    const timestamp = date.getTime()
-    return fetch(state.endpoints.feedback, {
-      ...c.fetchOptions,
-      body: JSON.stringify({
-        timestamp,
-        pageUrl: window.location.href,
-        feedback: text
-      })
-    })
   }
 
   const setupEmojiListeners = (entryId, emojis) => {
@@ -138,7 +112,7 @@ const controller = () => {
     )
     if (state.emojis.length > 0) {
       removeFromClass(`${state.entryId}-feedback-form`, 'hidden')
-      submitSelectedEmojis(state.emojis)
+      submitSelectedEmojis(state.endpoints.emoji, state.emojis)
       setupFormTextArea(state.entryId)
     } else {
       addToClass(`${state.entryId}-feedback-form`, 'hidden')
@@ -159,7 +133,7 @@ const controller = () => {
       attachEmojiFeedback(entryId, emojis, { introText, feedbackTextPrompt, feedbackThankYou })
       setupEmojiListeners(entryId, emojis)
       createFormHandler(entryId)
-      getVotes()
+      getVotes(state.endpoints.votes)
         .then(totalVotes => displayVotes(entryId, totalVotes))
         .catch(e => e)
     },
