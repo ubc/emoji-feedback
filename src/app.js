@@ -29,13 +29,10 @@ const controller = () => {
     entryId: ''
   }
 
-  const getVotes = () =>
-    fetch(state.endpoints.votes, {
-      ...c.fetchOptions,
-      method: 'GET'
-    }).then(res => {
-      return res.json()
-    }).then(x => x.votes)
+  const getVotes = () => fetch(state.endpoints.votes, {
+    ...c.fetchOptions,
+    method: 'GET'
+  }).then(res => res.json().then(x => x.votes))
 
   const setEntryId = entryId => (state.entryId = entryId)
 
