@@ -60,7 +60,7 @@ const controller = () => {
               attachErrorMessage(entryId)
             }
           })
-          .catch(e => {
+          .catch(() => {
             detachEmojiFeedback(entryId)
             attachErrorMessage(entryId)
           })
@@ -83,7 +83,7 @@ const controller = () => {
     }
   }
 
-  const setSelection = emoji => {
+  const setEmojiSelection = emoji => {
     if (state.emojis.map(e => e.emojiId).includes(emoji.id)) {
       state.emojis = state.emojis.filter(e => e.emojiId !== emoji.id)
     } else {
@@ -138,6 +138,16 @@ const controller = () => {
 
   const setEntryId = entryId => (state.entryId = entryId)
 
+  const setupEmojiListeners = (entryId, emojis) => {
+    const domEmojis = getEmojisFromDOM(entryId, emojis)
+    domEmojis.forEach(emoji => {
+      emoji.addEventListener('click', () => {
+        setEmojiSelection(emoji)
+        update(domEmojis)
+      })
+    })
+  }
+
   return {
     init: (entryId, endpoints, {
       emojis = c.defaultEmojis,
@@ -150,18 +160,11 @@ const controller = () => {
       setEndpoints(endpoints)
       setEntryId(entryId)
       attachEmojiFeedback(entryId, emojis, { introText, feedbackTextPrompt, feedbackThankYou })
+      setupEmojiListeners(entryId, emojis)
       createFormHandler(entryId)
       getVotes()
         .then(totalVotes => displayVotes(entryId, totalVotes))
         .catch(e => e)
-
-      const domEmojis = getEmojisFromDOM(entryId, emojis)
-      domEmojis.forEach(emoji => {
-        emoji.addEventListener('click', () => {
-          setSelection(emoji)
-          update(domEmojis)
-        })
-      })
     },
     getState: () => state
   }
