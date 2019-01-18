@@ -147,10 +147,9 @@ const controller = () => {
     } = {}) => {
       if (entryId == null) throw new Error('entryId must be specified')
       if (endpoints == null) throw new Error('endpoints must be specified')
-      const text = { introText, feedbackTextPrompt, feedbackThankYou }
       setEndpoints(endpoints)
       setEntryId(entryId)
-      attachEmojiFeedback(entryId, emojis, text)
+      attachEmojiFeedback(entryId, emojis, { introText, feedbackTextPrompt, feedbackThankYou })
       createFormHandler(entryId)
       getVotes()
         .then(totalVotes => displayVotes(entryId, totalVotes))
