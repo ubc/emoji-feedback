@@ -134,10 +134,7 @@ const controller = () => {
       setupEmojiListeners(entryId, emojis)
       createFormHandler(entryId)
       getVotes(state.endpoints.votes)
-        .then(totalVotes => {
-          console.log(totalVotes)
-          displayVotes(entryId, totalVotes)
-        })
+        .then(totalVotes => displayVotes(entryId, totalVotes))
         .catch(e => e)
     },
     getState: () => state

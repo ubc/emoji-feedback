@@ -19,13 +19,8 @@ const submitSelectedEmojis = (url, emojis) => {
 }
 
 const submitFeedback = (url, text) => {
-  return fetch(url, {
-    ...c.fetchOptions,
-    body: JSON.stringify({
-      timestamp: 12345678910,
-      pageUrl: window.location.href,
-      feedback: text
-    })
+  return Promise.resolve({
+    status: 200
   })
 }
 
