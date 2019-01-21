@@ -77,7 +77,6 @@ const controller = () => {
         removeFromClass(`${entryId}-spinner`, 'hidden')
         submitFeedback(state.endpoints.feedback, state.feedbackText)
           .then(res => {
-            // console.log(res)
             addToClass(`${entryId}-spinner`, 'hidden')
             detachEmojiFeedback(entryId)
             if (res.status === 200) {
@@ -119,26 +118,27 @@ const controller = () => {
     }
   }
 
-  return {
-    init: (entryId, endpoints, {
-      emojis = c.defaultEmojis,
-      introText = c.introText,
-      feedbackTextPrompt = c.feedbackTextPrompt,
-      feedbackThankYou = c.feedbackThankYou
-    } = {}) => {
-      if (entryId == null) throw new Error('entryId must be specified')
-      if (endpoints == null) throw new Error('endpoints must be specified')
-      setEndpoints(endpoints)
-      setEntryId(entryId)
-      attachEmojiFeedback(entryId, emojis, { introText, feedbackTextPrompt, feedbackThankYou })
-      setupEmojiListeners(entryId, emojis)
-      createFormHandler(entryId)
-      getVotes(state.endpoints.votes)
-        .then(totalVotes => displayVotes(entryId, totalVotes))
-        .catch(e => e)
-    },
-    getState: () => state
+  const init = (entryId, endpoints, {
+    emojis = c.defaultEmojis,
+    introText = c.introText,
+    feedbackTextPrompt = c.feedbackTextPrompt,
+    feedbackThankYou = c.feedbackThankYou
+  } = {}) => {
+    if (entryId == null) throw new Error('entryId must be specified')
+    if (endpoints == null) throw new Error('endpoints must be specified')
+    setEndpoints(endpoints)
+    setEntryId(entryId)
+    attachEmojiFeedback(entryId, emojis, { introText, feedbackTextPrompt, feedbackThankYou })
+    setupEmojiListeners(entryId, emojis)
+    createFormHandler(entryId)
+    getVotes(state.endpoints.votes)
+      .then(totalVotes => displayVotes(entryId, totalVotes))
+      .catch(e => e)
   }
+
+  const getState = () => state
+
+  return Object.freeze({ init, getState })
 }
 
 export default controller
