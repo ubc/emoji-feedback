@@ -171,7 +171,7 @@ describe('form', () => {
     votes: 'http://localhost:8080/votes'
   }
 
-  test('when textarea is filled out, the application state changes accordingly as well as char counter',  () => {
+  test('when textarea is filled out, the application state changes accordingly as well as char counter', () => {
     const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints, { emojis })
@@ -191,7 +191,7 @@ describe('form', () => {
     expect(submitButton.classList.contains('ready')).toEqual(true)
   })
 
-  test('when textarea is filled out, then textarea is deleted, the submit button ready class should be removed',  () => {
+  test('when textarea is filled out, then textarea is deleted, the submit button ready class should be removed', () => {
     const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints, { emojis })

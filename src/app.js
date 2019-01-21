@@ -19,7 +19,7 @@ import {
   submitFeedback
 } from './api'
 import * as c from './defaults'
-import css from '../index.css'
+import '../index.css'
 
 const controller = () => {
   const state = {
