@@ -82,8 +82,8 @@ describe('Emoji buttons', () => {
       expect(jsonRes.emojis).toEqual([{ emojiId: 'entry-superhappy', emojicon: '😁' }])
       expect(jsonRes.pageUrl).toBeDefined()
       expect(req.method()).toEqual('POST')
-      expect(req.method()).toEqual('POST')
     })
+    page.on('response', res => console.log(res))
     await page.close()
   })
   test('clicking multiple emojis create correct API request', async () => {
@@ -120,14 +120,14 @@ describe('Emoji buttons', () => {
     await disappointedButton.click()
     await disappointedButton.click()
     page.on('request', req => {
-      if (req.method() === 'OPTIONS') return
-      expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
-      const jsonRes = JSON.parse(req.postData())
-      expect(jsonRes.emojis)
-        .toEqual([{ emojiId: 'entry-superhappy', emojicon: '😁' }])
-      expect(jsonRes.pageUrl).toBeDefined()
-      expect(req.method()).toEqual('POST')
-      expect(req.method()).toEqual('POST')
+      if (req.url() === 'http://127.0.0.1:5000/emoji') {
+        if (req.method() === 'OPTIONS') return
+        const jsonRes = JSON.parse(req.postData())
+        expect(jsonRes.emojis)
+          .toEqual([{ emojiId: 'entry-superhappy', emojicon: '😁' }])
+        expect(jsonRes.pageUrl).toBeDefined()
+        expect(req.method()).toEqual('POST')
+      }
     })
     await page.close()
   })
