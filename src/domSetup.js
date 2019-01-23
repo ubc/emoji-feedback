@@ -166,7 +166,7 @@ const createErrorMessageWrapper = entryId => {
   const errorMessageWrapper = document.createElement('div')
   errorMessageWrapper.className = 'feedback-submitted-message'
   errorMessageWrapper.classList.add('hidden')
-  errorMessageWrapper.id = `${entryId}-error-message`
+  errorMessageWrapper.id = `${entryId}-error`
 
   const facePalm = createText('🤦')
   facePalm.style.fontSize = '30px'

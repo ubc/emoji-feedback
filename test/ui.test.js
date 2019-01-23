@@ -168,22 +168,22 @@ describe('form', () => {
       page.waitFor('#entry-thank-you-message'),
       page.waitFor('#entry-error-message')
     ])
-    // const thankYouMessage = await page.evaluate(() => {
-    //   const msg = document.getElementById('entry-thank-you-message')
-    //   return msg ? msg.innerHTML : false
-    // })
-    // const errorMessage = await page.evaluate(() => {
-    //   const msg = document.getElementById('entry-error-message')
-    //   return msg ? msg.innerHTML : false
-    // })
-    // if (thankYouMessage) {
-    //   expect(thankYouMessage).toBe('Your feedback has been recorded')
-    //   expect(await page.evaluate(() => document.getElementById('entry-wrapper'))).toBeNull()
-    // }
-    // if (errorMessage) {
-    //   expect(errorMessage).toBe('Our servers are having some issues. Please vote again later.')
-    //   expect(await page.evaluate(() => document.getElementById('entry-wrapper'))).toBeNull()
-    // }
+    const thankYouMessage = await page.evaluate(() => {
+      const msg = document.getElementById('entry-thank-you-message')
+      return msg ? msg.innerHTML : false
+    })
+    const errorMessage = await page.evaluate(() => {
+      const msg = document.getElementById('entry-error-message')
+      return msg ? msg.innerHTML : false
+    })
+    if (thankYouMessage) {
+      expect(thankYouMessage).toBe('Your feedback has been recorded.')
+      expect(await page.evaluate(() => document.getElementById('entry-wrapper'))).toBeNull()
+    }
+    if (errorMessage) {
+      expect(errorMessage).toBe('Our servers are having some issues. Please vote again later.')
+      expect(await page.evaluate(() => document.getElementById('entry-wrapper'))).toBeNull()
+    }
     await page.close()
   })
 })
