@@ -4,7 +4,9 @@ import * as c from './defaults'
 const getVotes = url => fetch(url, {
   ...c.fetchOptions,
   method: 'GET'
-}).then(res => res.json().then(x => x.votes))
+}).then(res => res.json()
+  .then(x => x.votes))
+  .catch(e => e)
 
 const submitSelectedEmojis = (url, emojis) => {
   const date = new Date()

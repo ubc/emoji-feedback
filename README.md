@@ -69,4 +69,5 @@ app.init('entry', endpoints, {
 
 ### Tests
 To run the tests, first ensure that the application is running locally (`npm start`), then `npm test` will run the Jest unit and UI tests (in Puppeteer's headless mode).
+If the app is not running locally, then the UI tests will fail, as they rely on the DOM.
 Code coverage is >90%, and more tests will be added over time.
