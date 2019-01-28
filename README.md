@@ -44,13 +44,19 @@ app.init('entry', endpoints, {
   // introText: 'I can customize this!',
   // feedbackTextPrompt: 'Please write down below',
   // feedbackThankYou: 'Thanks again!',
-  // emojis:
+  // emojis: [
+  //   { emojicon: '💀', emotion: 'skull' },
+  //   { emojicon: '👻', emotion: 'boo' },
+  //   { emojicon: '👽', emotion: 'alien' },
+  //   { emojicon: '🤖', emotion: 'robot' },
+  //   { emojicon: '💩', emotion: 'poop' }
+  // ]
 })
 ```
 `emojiFeedback` has one method, `init`. Init takes 3 arguments: `entry`, `endpoints`, `options`
 * `entry` is the HTML id attribute that should be unique to the document. This is the entry point of Emoji Feedback.
 * `endpoints` is an object that contains 3 endpoints `emoji`, `feedback` and `votes`. `emoji` and `feedback` send POST requests that contain the selected emoji(s) and the written feedback in the body of the request, respectively. `votes` sends a GET request for retrieving the number of times students have voted.
-* `options` is an optional object that contains `introText`, `feedbackTextPrompt`, `feedbackThankYou`, which allow for configurations of the text, as well as `emojis`, which can be used to configure the emojis to your liking. For example,
+* `options` is an *optional* object that contains `introText`, `feedbackTextPrompt`, `feedbackThankYou`, which allow for configurations of the text, as well as `emojis`, which can be used to configure the emojis to your liking. For example,
 
 ```javascript
 const myConfiguredEmoji = [
