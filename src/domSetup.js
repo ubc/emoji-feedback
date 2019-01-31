@@ -115,7 +115,6 @@ const attachEmojiFeedback = (entryId, emojis, text) => {
   })
 
   emojiFeedbackWrapper.appendChild(createTotalVotes(entryId))
-
   emojiFeedbackWrapper.appendChild(createFeedbackForm(entryId, text))
   emojiFeedbackWrapper.appendChild(createSpinner(entryId))
 
@@ -147,6 +146,7 @@ const createThankYouWrapper = entryId => {
   hiFive.style.fontSize = '30px'
   hiFive.style.gridRow = 'row'
   hiFive.style.gridColumn = 'col / span 6'
+
   const thankYou = createText('Your feedback has been recorded.')
   thankYou.id = `${entryId}-thank-you-message`
   thankYou.style.gridRow = 'row 2'
