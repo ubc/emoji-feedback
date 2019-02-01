@@ -13,7 +13,7 @@ const getVotes = url => fetch(url, {
 
 const submitSelectedEmojis = ({ emojis, responses, endpoints, text }) => {
   const date = new Date()
-  const timestamp = date.getTime()
+  const timestamp = date.toISOString()
   const emojicons = emojis.map(({ emojicon }) => emojicon)
   const emotion = emojis.map(({ emotion }) => emotion)
   const selectedEmojis = responses.selectedEmojis
