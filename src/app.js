@@ -22,24 +22,7 @@ import * as c from './defaults'
 import '../index.css'
 
 const controller = () => {
-  const state = {
-    responses: {
-      selectedEmojis: [],
-      writtenFeedback: ''
-    },
-    text: {
-      introText: '',
-      feedbackTextPrompt: '',
-      feedbackThankYou: ''
-    },
-    endpoints: {
-      emoji: '',
-      feedback: '',
-      votes: ''
-    },
-    emojis: [],
-    entryId: ''
-  }
+  const state = c.createDefaultState()
 
   const setState = (entryId,
     { emoji, feedback, votes },

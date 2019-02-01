@@ -1,15 +1,11 @@
 /* global describe, test, expect, Event, jest */
 import controller from '../src/app'
+// import { deepFreeze } from '../src/util'
+import * as c from '../src/defaults'
+
+// const frozenDefaultState = deepFreeze(defaultState)
 
 jest.mock('../src/api')
-
-const emojis = [
-  { emojicon: '😁', emotion: 'superhappy' },
-  { emojicon: '😀', emotion: 'happy' },
-  { emojicon: '😐', emotion: 'indifferent' },
-  { emojicon: '😕', emotion: 'unhappy' },
-  { emojicon: '😞', emotion: 'disappointed' }
-]
 
 describe('app', () => {
   test('should have method: init', () => {
@@ -51,17 +47,7 @@ describe('app state', () => {
   test('getState should return default state', () => {
     const app = controller()
     const state = app.getState()
-    const defaultState = {
-      emojis: [],
-      feedbackText: '',
-      endpoints: {
-        emoji: '',
-        feedback: '',
-        votes: ''
-      },
-      entryId: ''
-    }
-    expect(state).toEqual(defaultState)
+    expect(state).toEqual(c.createDefaultState())
   })
 
   test('entry state should set correctly', () => {
@@ -78,14 +64,17 @@ describe('app state', () => {
 
     const appState = app.getState()
 
-    const expectedState = {
-      emojis: [],
-      feedbackText: '',
+    expect(appState).toEqual({
+      ...c.createDefaultState(),
+      emojis: c.defaultEmojis,
+      entryId: 'myEntryId',
       endpoints,
-      entryId: 'myEntryId'
-    }
-
-    expect(appState).toEqual(expectedState)
+      text: {
+        introText: c.introText,
+        feedbackTextPrompt: c.feedbackTextPrompt,
+        feedbackThankYou: c.feedbackThankYou
+      }
+    })
   })
 
   test('multiple instances of app should not impact each app state', () => {
@@ -105,22 +94,31 @@ describe('app state', () => {
 
     const app1 = controller()
     const app2 = controller()
-
-    app1.init(entrypoint1, endpoints1)
-    app2.init(entrypoint2, endpoints2)
+    app1.init(entrypoint1, endpoints1, {})
+    app2.init(entrypoint2, endpoints2, {})
 
     const app1ExpectedState = {
-      emojis: [],
-      feedbackText: '',
+      ...c.createDefaultState(),
+      emojis: c.defaultEmojis,
+      entryId: entrypoint1,
       endpoints: endpoints1,
-      entryId: entrypoint1
+      text: {
+        introText: c.introText,
+        feedbackTextPrompt: c.feedbackTextPrompt,
+        feedbackThankYou: c.feedbackThankYou
+      }
     }
 
     const app2ExpectedState = {
-      emojis: [],
-      feedbackText: '',
+      ...c.createDefaultState(),
+      emojis: c.defaultEmojis,
       endpoints: endpoints2,
-      entryId: entrypoint2
+      entryId: entrypoint2,
+      text: {
+        introText: c.introText,
+        feedbackTextPrompt: c.feedbackTextPrompt,
+        feedbackThankYou: c.feedbackThankYou
+      }
     }
     expect(app1ExpectedState).toEqual(app1.getState())
     expect(app2ExpectedState).toEqual(app2.getState())
@@ -137,15 +135,24 @@ describe('emoji', () => {
   }
   const setupButton = () => {
     document.body.innerHTML = `<div id=${entrypoint}></div>`
-    app.init(entrypoint, endpoints, { emojis })
-    const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
+    app.init(entrypoint, endpoints, { emojis: c.defaultEmojis })
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${c.defaultEmojis[0].emotion}`)
     return emojiButtonId1
   }
   test('clicking an emoji updates the state correctly', () => {
     setupButton().click()
     const expectedState = {
-      emojis: [{ emojiId: `${entrypoint}-${emojis[0].emotion}`, emojicon: emojis[0].emojicon }],
-      feedbackText: '',
+      ...c.createDefaultState(),
+      emojis: c.defaultEmojis,
+      text: {
+        introText: c.introText,
+        feedbackTextPrompt: c.feedbackTextPrompt,
+        feedbackThankYou: c.feedbackThankYou
+      },
+      responses: {
+        selectedEmojis: [{ emojiId: `${entrypoint}-${c.defaultEmojis[0].emotion}`, emojicon: c.defaultEmojis[0].emojicon }],
+        writtenFeedback: ''
+      },
       endpoints: endpoints,
       entryId: entrypoint
     }
@@ -154,10 +161,15 @@ describe('emoji', () => {
   test('clicking the same emoji again removes it from selectedEmojis', () => {
     setupButton().click()
     const expectedState = {
-      emojis: [],
-      feedbackText: '',
+      ...c.createDefaultState(),
       endpoints: endpoints,
-      entryId: entrypoint
+      entryId: entrypoint,
+      emojis: c.defaultEmojis,
+      text: {
+        introText: c.introText,
+        feedbackTextPrompt: c.feedbackTextPrompt,
+        feedbackThankYou: c.feedbackThankYou
+      }
     }
     expect(app.getState()).toEqual(expectedState)
   })
@@ -174,8 +186,8 @@ describe('form', () => {
   test('when textarea is filled out, the application state changes accordingly as well as char counter', () => {
     const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
-    app.init(entrypoint, endpoints, { emojis })
-    const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
+    app.init(entrypoint, endpoints, { emojis: c.defaultEmojis })
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${c.defaultEmojis[0].emotion}`)
     emojiButtonId1.click()
     const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
     const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
@@ -186,7 +198,7 @@ describe('form', () => {
     textarea.value = sampleText
     textarea.dispatchEvent(new Event('keyup'))
 
-    expect(app.getState().feedbackText).toEqual(sampleText)
+    expect(app.getState().responses.writtenFeedback).toEqual(sampleText)
     expect(charCounter.innerHTML).toEqual(`<span>${sampleText.length}</span>/500`)
     expect(submitButton.classList.contains('ready')).toEqual(true)
   })
@@ -194,8 +206,8 @@ describe('form', () => {
   test('when textarea is filled out, then textarea is deleted, the submit button ready class should be removed', () => {
     const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
-    app.init(entrypoint, endpoints, { emojis })
-    const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
+    app.init(entrypoint, endpoints)
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${c.defaultEmojis[0].emotion}`)
     emojiButtonId1.click()
     const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
     const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
@@ -208,7 +220,7 @@ describe('form', () => {
 
     textarea.value = ''
     textarea.dispatchEvent(new Event('keyup'))
-    expect(app.getState().feedbackText).toEqual('')
+    expect(app.getState().responses.writtenFeedback).toEqual('')
     expect(charCounter.innerHTML).toEqual(`<span>0</span>/500`)
     expect(submitButton.classList.contains('ready')).toEqual(false)
   })
@@ -216,8 +228,8 @@ describe('form', () => {
   test('when submit button is pressed, the thank you message shows up', async () => {
     const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
-    app.init(entrypoint, endpoints, { emojis })
-    const emojiButtonId1 = document.getElementById(`${entrypoint}-${emojis[0].emotion}`)
+    app.init(entrypoint, endpoints)
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${c.defaultEmojis[0].emotion}`)
     emojiButtonId1.click()
     const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
     const submitButton = document.getElementById(`${entrypoint}-feedback-button`)

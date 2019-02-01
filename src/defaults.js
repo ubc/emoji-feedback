@@ -12,9 +12,29 @@ const feedbackTextPrompt = 'Let us know if you have ideas for new features or im
 
 const feedbackThankYou = 'Thank you for your feedback.'
 
+const createDefaultState = () => ({
+  responses: {
+    selectedEmojis: [],
+    writtenFeedback: ''
+  },
+  text: {
+    introText: '',
+    feedbackTextPrompt: '',
+    feedbackThankYou: ''
+  },
+  endpoints: {
+    emoji: '',
+    feedback: '',
+    votes: ''
+  },
+  emojis: [],
+  entryId: ''
+})
+
 export {
   defaultEmojis,
   introText,
   feedbackTextPrompt,
-  feedbackThankYou
+  feedbackThankYou,
+  createDefaultState
 }
