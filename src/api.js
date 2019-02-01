@@ -1,8 +1,13 @@
 /* global fetch */
-import * as c from './defaults'
+
+const fetchOptions = {
+  method: 'POST',
+  mode: 'cors',
+  headers: { 'Content-Type': 'application/json' }
+}
 
 const getVotes = url => fetch(url, {
-  ...c.fetchOptions,
+  ...fetchOptions,
   method: 'GET'
 }).then(res => res.json()
   .then(x => x.votes))
@@ -12,7 +17,7 @@ const submitSelectedEmojis = (url, emojis) => {
   const date = new Date()
   const timestamp = date.getTime()
   return fetch(url, {
-    ...c.fetchOptions,
+    ...fetchOptions,
     body: JSON.stringify({
       timestamp,
       emojis: emojis,
@@ -25,7 +30,7 @@ const submitFeedback = (url, text) => {
   const date = new Date()
   const timestamp = date.getTime()
   return fetch(url, {
-    ...c.fetchOptions,
+    ...fetchOptions,
     body: JSON.stringify({
       timestamp,
       pageUrl: window.location.href,
