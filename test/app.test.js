@@ -7,6 +7,18 @@ import * as c from '../src/defaults'
 
 jest.mock('../src/api')
 
+const createInitialState = () => (
+  {
+    ...c.createDefaultState(),
+    emojis: c.defaultEmojis,
+    text: {
+      introText: c.introText,
+      feedbackTextPrompt: c.feedbackTextPrompt,
+      feedbackThankYou: c.feedbackThankYou
+    }
+  }
+)
+
 describe('app', () => {
   test('should have method: init', () => {
     const app = controller()
@@ -65,15 +77,9 @@ describe('app state', () => {
     const appState = app.getState()
 
     expect(appState).toEqual({
-      ...c.createDefaultState(),
-      emojis: c.defaultEmojis,
-      entryId: 'myEntryId',
+      ...createInitialState(),
       endpoints,
-      text: {
-        introText: c.introText,
-        feedbackTextPrompt: c.feedbackTextPrompt,
-        feedbackThankYou: c.feedbackThankYou
-      }
+      entryId: entrypoint
     })
   })
 
@@ -98,27 +104,15 @@ describe('app state', () => {
     app2.init(entrypoint2, endpoints2, {})
 
     const app1ExpectedState = {
-      ...c.createDefaultState(),
-      emojis: c.defaultEmojis,
+      ...createInitialState(),
       entryId: entrypoint1,
-      endpoints: endpoints1,
-      text: {
-        introText: c.introText,
-        feedbackTextPrompt: c.feedbackTextPrompt,
-        feedbackThankYou: c.feedbackThankYou
-      }
+      endpoints: endpoints1
     }
 
     const app2ExpectedState = {
-      ...c.createDefaultState(),
-      emojis: c.defaultEmojis,
+      ...createInitialState(),
       endpoints: endpoints2,
-      entryId: entrypoint2,
-      text: {
-        introText: c.introText,
-        feedbackTextPrompt: c.feedbackTextPrompt,
-        feedbackThankYou: c.feedbackThankYou
-      }
+      entryId: entrypoint2
     }
     expect(app1ExpectedState).toEqual(app1.getState())
     expect(app2ExpectedState).toEqual(app2.getState())
@@ -142,13 +136,7 @@ describe('emoji', () => {
   test('clicking an emoji updates the state correctly', () => {
     setupButton().click()
     const expectedState = {
-      ...c.createDefaultState(),
-      emojis: c.defaultEmojis,
-      text: {
-        introText: c.introText,
-        feedbackTextPrompt: c.feedbackTextPrompt,
-        feedbackThankYou: c.feedbackThankYou
-      },
+      ...createInitialState(),
       responses: {
         selectedEmojis: [{ emojiId: `${entrypoint}-${c.defaultEmojis[0].emotion}`, emojicon: c.defaultEmojis[0].emojicon }],
         writtenFeedback: ''
@@ -161,15 +149,9 @@ describe('emoji', () => {
   test('clicking the same emoji again removes it from selectedEmojis', () => {
     setupButton().click()
     const expectedState = {
-      ...c.createDefaultState(),
+      ...createInitialState(),
       endpoints: endpoints,
-      entryId: entrypoint,
-      emojis: c.defaultEmojis,
-      text: {
-        introText: c.introText,
-        feedbackTextPrompt: c.feedbackTextPrompt,
-        feedbackThankYou: c.feedbackThankYou
-      }
+      entryId: entrypoint
     }
     expect(app.getState()).toEqual(expectedState)
   })
