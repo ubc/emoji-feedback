@@ -23,35 +23,50 @@ import '../index.css'
 
 const controller = () => {
   const state = {
-    emojis: [],
-    feedbackText: '',
+    responses: {
+      selectedEmojis: [],
+      writtenFeedback: ''
+    },
+    text: {
+      introText: '',
+      feedbackTextPrompt: '',
+      feedbackThankYou: ''
+    },
     endpoints: {
       emoji: '',
       feedback: '',
       votes: ''
     },
+    emojis: [],
     entryId: ''
   }
 
-  const setEntryId = entryId => (state.entryId = entryId)
+  const setState = (entryId,
+    { emoji, feedback, votes },
+    { emojis, introText, feedbackTextPrompt, feedbackThankYou }
+  ) => {
+    state.endpoints.emoji = emoji
+    state.endpoints.feedback = feedback
+    state.endpoints.votes = votes
+    state.entryId = entryId
+    state.text.introText = introText
+    state.text.feedbackTextPrompt = feedbackTextPrompt
+    state.text.feedbackThankYou = feedbackThankYou
+    state.emojis = emojis
+  }
 
   const setEmojiSelection = emoji => {
-    if (state.emojis.map(e => e.emojiId).includes(emoji.id)) {
-      state.emojis = state.emojis.filter(e => e.emojiId !== emoji.id)
+    let selectedEmojis = state.responses.selectedEmojis
+    if (selectedEmojis.map(e => e.emojiId).includes(emoji.id)) {
+      state.responses.selectedEmojis = selectedEmojis.filter(e => e.emojiId !== emoji.id)
     } else {
       const emojiElem = document.getElementById(emoji.id)
       const icon = emojiElem.childNodes[0].innerHTML
-      state.emojis.push({
+      selectedEmojis.push({
         emojiId: emoji.id,
         emojicon: icon
       })
     }
-  }
-
-  const setEndpoints = ({ emoji, feedback, votes }) => {
-    state.endpoints.emoji = emoji
-    state.endpoints.feedback = feedback
-    state.endpoints.votes = votes
   }
 
   const setupFormTextArea = entryId => {
@@ -59,7 +74,7 @@ const controller = () => {
     textarea.focus()
     textarea.onkeyup = function () {
       const chars = this.value.length
-      state.feedbackText = textarea.value
+      state.responses.writtenFeedback = textarea.value
       setTextAreaMaxLength(entryId, chars)
       if (chars > 0) {
         addToClass(`${entryId}-feedback-button`, 'ready')
@@ -72,10 +87,10 @@ const controller = () => {
   const createFormHandler = entryId => {
     const submitButton = document.getElementById(`${entryId}-feedback-button`)
     const handleSubmitButton = () => {
-      if (state.feedbackText.length > 0) {
+      if (state.responses.writtenFeedback.length > 0) {
         addToClass(`${entryId}-feedback-form`, 'hidden')
         removeFromClass(`${entryId}-spinner`, 'hidden')
-        submitFeedback(state.endpoints.feedback, state.feedbackText)
+        submitFeedback(state.endpoints.feedback, state.responses.writtenFeedback)
           .then(res => {
             addToClass(`${entryId}-spinner`, 'hidden')
             detachEmojiFeedback(entryId)
@@ -99,19 +114,20 @@ const controller = () => {
     domEmojis.forEach(emoji => {
       emoji.addEventListener('click', () => {
         setEmojiSelection(emoji)
-        updateApp(domEmojis)
+        update(domEmojis)
       })
     })
   }
 
-  const updateApp = emojis => {
+  const update = emojis => {
+    let selectedEmojis = state.responses.selectedEmojis
     clearActive(emojis)
-    state.emojis.forEach(({ emojiId }) =>
+    selectedEmojis.forEach(({ emojiId }) =>
       emojis.find(e => e.id === emojiId).classList.add('active')
     )
-    if (state.emojis.length > 0) {
+    if (selectedEmojis.length > 0) {
       removeFromClass(`${state.entryId}-feedback-form`, 'hidden')
-      submitSelectedEmojis(state.endpoints.emoji, state.emojis)
+      submitSelectedEmojis(state)
       setupFormTextArea(state.entryId)
     } else {
       addToClass(`${state.entryId}-feedback-form`, 'hidden')
@@ -126,14 +142,13 @@ const controller = () => {
   } = {}) => {
     if (entryId == null) throw new Error('entryId must be specified')
     if (endpoints == null) throw new Error('endpoints must be specified')
-    setEndpoints(endpoints)
-    setEntryId(entryId)
+    setState(entryId, endpoints, { emojis, introText, feedbackTextPrompt, feedbackThankYou })
     attachEmojiFeedback(entryId, emojis, { introText, feedbackTextPrompt, feedbackThankYou })
     setupEmojiListeners(entryId, emojis)
     createFormHandler(entryId)
     getVotes(state.endpoints.votes)
       .then(totalVotes => displayVotes(entryId, totalVotes))
-      .catch(e => e)
+      .catch(e => console.log(`Failed to fetch votes: ${e}`))
   }
 
   const getState = () => state

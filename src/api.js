@@ -9,18 +9,28 @@ const fetchOptions = {
 const getVotes = url => fetch(url, {
   ...fetchOptions,
   method: 'GET'
-}).then(res => res.json()
-  .then(x => x.votes))
-  .catch(e => e)
+}).then(res => res.json().then(x => x.votes))
 
-const submitSelectedEmojis = (url, emojis) => {
+const submitSelectedEmojis = ({ emojis, responses, endpoints, text }) => {
   const date = new Date()
   const timestamp = date.getTime()
-  return fetch(url, {
+  const emojicons = emojis.map(({ emojicon }) => emojicon)
+  const emotion = emojis.map(({ emotion }) => emotion)
+  const selectedEmojis = responses.selectedEmojis
+
+  return fetch(endpoints.emoji, {
     ...fetchOptions,
     body: JSON.stringify({
       timestamp,
-      emojis: emojis,
+      scale: {
+        id: `${window.location.href}`,
+        type: 'MultiselectionScale',
+        question: text.introText,
+        points: 5,
+        itemLabel: emotion,
+        itemValues: emojicons
+      },
+      selection: selectedEmojis.map(({ emojicon }) => emojicon),
       pageUrl: window.location.href
     })
   })

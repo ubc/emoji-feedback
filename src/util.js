@@ -3,9 +3,12 @@ const getTextArea = entryId => document.getElementById(`${entryId}-feedback-text
 const removeActive = emoji => {
   if (emoji.classList.contains('active')) {
     emoji.classList.remove('active')
+    console.log(emoji.classList)
   }
 }
-const clearActive = emojis => emojis.forEach(emoji => removeActive(emoji))
+const clearActive = emojis => {
+  emojis.forEach(emoji => removeActive(emoji))
+}
 
 const getEmojisFromDOM = (entryId, emojis) =>
   emojis.map(({ emotion }) => document.getElementById(`${entryId}-${emotion}`))
