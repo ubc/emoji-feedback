@@ -3,7 +3,6 @@ const getTextArea = entryId => document.getElementById(`${entryId}-feedback-text
 const removeActive = emoji => {
   if (emoji.classList.contains('active')) {
     emoji.classList.remove('active')
-    console.log(emoji.classList)
   }
 }
 const clearActive = emojis => {

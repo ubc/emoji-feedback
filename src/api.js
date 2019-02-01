@@ -27,8 +27,8 @@ const submitSelectedEmojis = ({ emojis, responses, endpoints, text }) => {
         type: 'MultiselectionScale',
         question: text.introText,
         points: 5,
-        itemLabel: emotion,
-        itemValues: emojicons
+        itemLabel: emojicons,
+        itemValues: emotion
       },
       selection: selectedEmojis.map(({ emojicon }) => emojicon),
       pageUrl: window.location.href
