@@ -36,15 +36,16 @@ const submitSelectedEmojis = ({ emojis, responses, endpoints, text }) => {
   })
 }
 
-const submitFeedback = (url, text) => {
+const submitFeedback = ({ endpoints, responses, text }) => {
   const date = new Date()
-  const timestamp = date.getTime()
-  return fetch(url, {
+  const timestamp = date.toISOString()
+  return fetch(endpoints.feedback, {
     ...fetchOptions,
     body: JSON.stringify({
       timestamp,
       pageUrl: window.location.href,
-      feedback: text
+      feedback: responses.writtenFeedback,
+      question: text.feedbackTextPrompt
     })
   })
 }

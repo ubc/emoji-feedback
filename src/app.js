@@ -73,7 +73,7 @@ const controller = () => {
       if (state.responses.writtenFeedback.length > 0) {
         addToClass(`${entryId}-feedback-form`, 'hidden')
         removeFromClass(`${entryId}-spinner`, 'hidden')
-        submitFeedback(state.endpoints.feedback, state.responses.writtenFeedback)
+        submitFeedback(state)
           .then(res => {
             addToClass(`${entryId}-spinner`, 'hidden')
             detachEmojiFeedback(entryId)
