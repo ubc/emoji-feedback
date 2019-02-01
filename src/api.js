@@ -30,7 +30,7 @@ const submitSelectedEmojis = ({ emojis, responses, endpoints, text }) => {
         itemLabel: emojicons,
         itemValues: emotion
       },
-      selection: selectedEmojis.map(({ emojicon }) => emojicon),
+      selection: selectedEmojis.map(({ emotion }) => emotion),
       pageUrl: window.location.href
     })
   })
