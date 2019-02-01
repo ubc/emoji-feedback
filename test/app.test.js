@@ -83,6 +83,37 @@ describe('app state', () => {
     })
   })
 
+  test('text config should work', () => {
+    const entrypoint = 'myEntryId'
+    const endpoints = {
+      emoji: 'http://localhost:8080/emoji',
+      feedback: 'http://localhost:8080/feedback',
+      votes: 'http://localhost:8080/votes'
+    }
+    document.body.innerHTML = `<div id=${entrypoint}></div>`
+
+    const app = controller()
+
+    app.init(entrypoint, endpoints, {
+      introText: 'Hello there!',
+      feedbackTextPrompt: 'Please give us some feedback!',
+      feedbackThankYou: 'Bye for now'
+    })
+
+    const appState = app.getState()
+
+    expect(appState).toEqual({
+      ...createInitialState(),
+      endpoints,
+      entryId: entrypoint,
+      text: {
+        introText: 'Hello there!',
+        feedbackTextPrompt: 'Please give us some feedback!',
+        feedbackThankYou: 'Bye for now'
+      }
+    })
+  })
+
   test('multiple instances of app should not impact each app state', () => {
     const entrypoint1 = 'myEntryId1'
     const entrypoint2 = 'myEntryId2'
