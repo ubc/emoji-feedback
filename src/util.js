@@ -31,21 +31,6 @@ const convertOver1000 = votes => {
   return `${multipleOfThousand}.${roundedToNearestHundred}k`
 }
 
-const deepFreeze = obj => {
-  Object.freeze(obj)
-
-  Object.getOwnPropertyNames(obj).forEach(function (prop) {
-    if (obj.hasOwnProperty(prop) &&
-      obj[prop] !== null &&
-      (typeof obj[prop] === 'object' || typeof obj[prop] === 'function') &&
-      !Object.isFrozen(obj[prop])) {
-      deepFreeze(obj[prop])
-    }
-  })
-
-  return obj
-}
-
 export {
   clearActive,
   getEmojisFromDOM,
@@ -53,6 +38,5 @@ export {
   setTextAreaMaxLength,
   removeFromClass,
   addToClass,
-  convertOver1000,
-  deepFreeze
+  convertOver1000
 }

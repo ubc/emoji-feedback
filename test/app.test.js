@@ -1,9 +1,6 @@
 /* global describe, test, expect, Event, jest */
 import controller from '../src/app'
-// import { deepFreeze } from '../src/util'
 import * as c from '../src/defaults'
-
-// const frozenDefaultState = deepFreeze(defaultState)
 
 jest.mock('../src/api')
 
