@@ -131,19 +131,39 @@ describe('app state', () => {
 
     const app1 = controller()
     const app2 = controller()
-    app1.init(entrypoint1, endpoints1, {})
-    app2.init(entrypoint2, endpoints2, {})
+    const app1Text = {
+      introText: 'Hello there!',
+      feedbackTextPrompt: 'Please give us some feedback!',
+      feedbackThankYou: 'Bye for now'
+    }
+    const app2Text = {
+      introText: 'gerbdf',
+      feedbackTextPrompt: '3qr34tgsgs',
+      feedbackThankYou: 'fsdvcxvx'
+    }
+    const app2Emojis = [
+      { emojicon: '💀', emotion: 'skull' },
+      { emojicon: '👻', emotion: 'boo' },
+      { emojicon: '👽', emotion: 'alien' },
+      { emojicon: '🤖', emotion: 'robot' },
+      { emojicon: '💩', emotion: 'poop' }
+    ]
+    app1.init(entrypoint1, endpoints1, { ...app1Text })
+    app2.init(entrypoint2, endpoints2, { ...app2Text, emojis: app2Emojis })
 
     const app1ExpectedState = {
       ...createInitialState(),
       entryId: entrypoint1,
-      endpoints: endpoints1
+      endpoints: endpoints1,
+      text: app1Text
     }
 
     const app2ExpectedState = {
       ...createInitialState(),
       endpoints: endpoints2,
-      entryId: entrypoint2
+      entryId: entrypoint2,
+      text: app2Text,
+      emojis: app2Emojis
     }
     expect(app1ExpectedState).toEqual(app1.getState())
     expect(app2ExpectedState).toEqual(app2.getState())
