@@ -136,7 +136,12 @@ const controller = () => {
 
   const getState = () => state
 
-  return Object.freeze({ init, getState })
+  const destroy = entryId => {
+    const app = document.getElementById(entryId)
+    app.parentNode.removeChild(app)
+  }
+
+  return Object.freeze({ init, getState, destroy })
 }
 
 export default controller
