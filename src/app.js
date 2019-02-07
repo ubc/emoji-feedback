@@ -137,7 +137,7 @@ const controller = () => {
   const getState = () => state
 
   const destroy = entryId => {
-    const app = document.getElementById(entryId)
+    const app = document.getElementById(`${entryId}-wrapper`)
     app.parentNode.removeChild(app)
   }
 
