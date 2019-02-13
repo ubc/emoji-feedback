@@ -5,7 +5,7 @@
 
 # Emoji-Feedback 💀 👻 👽 🤖 💩 (in active development)
 
-[Working Prototype](https://jsfiddle.net/justin0022/pd4oczva/18/)
+[Working Prototype](https://jsfiddle.net/justin0022/pd4oczva/18/) | [Example of integration into dashboard (click "GIVE FEEDBACK" button)](https://justin0022.github.io/dashboard/)
 ![GIF of App](./_assets/emoji-feedback.gif)
 
 A delightful tool for eliciting feedback via emojis, featuring a feedback form. 0 dependencies, written in pure vanilla JavaScript.
