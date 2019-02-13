@@ -46,7 +46,7 @@ const createTextArea = entryId => {
   textarea.style.width = '100%'
   textarea.style.border = '1px solid #c8d6e5'
   textarea.style.fontSize = '14px;'
-  textarea.style.height = '130px'
+  textarea.style.height = '80px'
   textarea.style.webkitBorderRadius = '5px'
   textarea.style.MozBorderRadius = '5px'
   textarea.style.borderRadius = '5px'
@@ -85,7 +85,7 @@ const createFeedbackForm = (entryId, text) => {
 
   const submitButton = createButtonWithId(entryId, 'feedback-button')
   submitButton.classList.add('feedback-button')
-  submitButton.appendChild(createText('Submit feedback'))
+  submitButton.appendChild(createText('Submit'))
 
   feedbackForm.appendChild(feedbackText)
   feedbackForm.appendChild(feedbackTextOptional)

@@ -13,5 +13,3 @@ app.init('entry', endpoints, {
   // feedbackTextPrompt: 'Please write down below',
   // feedbackThankYou: 'Thanks again!'
 })
-
-app.destroy('entry')
