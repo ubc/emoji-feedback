@@ -10,7 +10,10 @@ const clearActive = emojis => {
 }
 
 const getEmojisFromDOM = (entryId, emojis) =>
-  emojis.map(({ emotion }) => document.getElementById(`${entryId}-${emotion}`))
+  emojis.map(({ emotion }) => {
+    const sanitizedEmotion = emotion.replace(/\s+/g, '-')
+    return document.getElementById(`${entryId}-${sanitizedEmotion}`)
+  })
 
 const setTextAreaMaxLength = (entryId, chars) =>
   (document.getElementById(`${entryId}-maxlength-enforcer`).innerHTML = `<span>${chars}</span>/500`)

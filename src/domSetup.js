@@ -24,7 +24,8 @@ const createText = text => {
 
 const createButtonWithId = (entryId, id) => {
   const button = document.createElement('div')
-  button.id = `${entryId}-${id}`
+  const sanitizedId = id.replace(/\s+/g, '-')
+  button.id = `${entryId}-${sanitizedId}`
   button.className = 'button'
   return button
 }
@@ -108,7 +109,9 @@ const attachEmojiFeedback = (entryId, emojis, text) => {
     emojiButton.style.gridRow = 'row 2'
     emojiButton.style.gridColumn = `col ${i + 1} / span 1`
     emojiButton.dataset.balloon = emotion
-    emojiButton.dataset.balloonPos = 'down'
+    if (i === emojis.length - 1) {
+      emojiButton.dataset.balloonPos = 'down-right'
+    } else emojiButton.dataset.balloonPos = 'down-left'
     const emojiSpan = createEmojiSpan(emojicon, emotion)
     emojiButton.appendChild(emojiSpan)
     emojiFeedbackWrapper.appendChild(emojiButton)
