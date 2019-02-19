@@ -1,9 +1,9 @@
 const defaultEmojis = [
-  { emojicon: '😁', emotion: 'superhappy' },
-  { emojicon: '😀', emotion: 'happy' },
-  { emojicon: '😐', emotion: 'indifferent' },
-  { emojicon: '😕', emotion: 'unhappy' },
-  { emojicon: '😞', emotion: 'disappointed' }
+  { emojicon: '😁', emotion: 'beaming face with smiling eyes' },
+  { emojicon: '😀', emotion: 'grinning face' },
+  { emojicon: '😐', emotion: 'neutral face' },
+  { emojicon: '😕', emotion: 'confused face' },
+  { emojicon: '😞', emotion: 'disappointed face' }
 ]
 
 const introText = 'How do you feel about this graph?'

@@ -140,10 +140,10 @@ describe('app state', () => {
     }
     const app2Emojis = [
       { emojicon: '💀', emotion: 'skull' },
-      { emojicon: '👻', emotion: 'boo' },
+      { emojicon: '👻', emotion: 'ghost' },
       { emojicon: '👽', emotion: 'alien' },
       { emojicon: '🤖', emotion: 'robot' },
-      { emojicon: '💩', emotion: 'poop' }
+      { emojicon: '💩', emotion: 'pile of poo' }
     ]
     app1.init(entrypoint1, endpoints1, { ...app1Text })
     app2.init(entrypoint2, endpoints2, { ...app2Text, emojis: app2Emojis })
@@ -178,15 +178,17 @@ describe('emoji', () => {
   const setupButton = () => {
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints, { emojis: c.defaultEmojis })
-    const emojiButtonId1 = document.getElementById(`${entrypoint}-${c.defaultEmojis[0].emotion}`)
+    const sanitizedEmotion = c.defaultEmojis[0].emotion.replace(/\s+/g, '-')
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${sanitizedEmotion}`)
     return emojiButtonId1
   }
   test('clicking an emoji updates the state correctly', () => {
     setupButton().click()
+    const sanitizedEmotion = c.defaultEmojis[0].emotion.replace(/\s+/g, '-')
     const expectedState = {
       ...createInitialState(),
       responses: {
-        selectedEmojis: [{ emojiId: `${entrypoint}-${c.defaultEmojis[0].emotion}`, emojicon: c.defaultEmojis[0].emojicon }],
+        selectedEmojis: [{ emojiId: `${entrypoint}-${sanitizedEmotion}`, emojicon: c.defaultEmojis[0].emojicon }],
         writtenFeedback: ''
       },
       endpoints: endpoints,
@@ -217,7 +219,8 @@ describe('form', () => {
     const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints, { emojis: c.defaultEmojis })
-    const emojiButtonId1 = document.getElementById(`${entrypoint}-${c.defaultEmojis[0].emotion}`)
+    const sanitizedEmotion = c.defaultEmojis[0].emotion.replace(/\s+/g, '-')
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${sanitizedEmotion}`)
     emojiButtonId1.click()
     const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
     const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
@@ -237,7 +240,8 @@ describe('form', () => {
     const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints)
-    const emojiButtonId1 = document.getElementById(`${entrypoint}-${c.defaultEmojis[0].emotion}`)
+    const sanitizedEmotion = c.defaultEmojis[0].emotion.replace(/\s+/g, '-')
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${sanitizedEmotion}`)
     emojiButtonId1.click()
     const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
     const submitButton = document.getElementById(`${entrypoint}-feedback-button`)
@@ -259,7 +263,8 @@ describe('form', () => {
     const app = controller()
     document.body.innerHTML = `<div id=${entrypoint}></div>`
     app.init(entrypoint, endpoints)
-    const emojiButtonId1 = document.getElementById(`${entrypoint}-${c.defaultEmojis[0].emotion}`)
+    const sanitizedEmotion = c.defaultEmojis[0].emotion.replace(/\s+/g, '-')
+    const emojiButtonId1 = document.getElementById(`${entrypoint}-${sanitizedEmotion}`)
     emojiButtonId1.click()
     const textarea = document.getElementById(`${entrypoint}-feedback-textarea`)
     const submitButton = document.getElementById(`${entrypoint}-feedback-button`)

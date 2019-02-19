@@ -28,7 +28,7 @@ const getClass = elementHandle => page.evaluate(elem => elem.getAttribute('class
 describe('Emoji buttons', () => {
   test('exist', async () => {
     await page.goto(APP)
-    let buttonIds = ['entry-superhappy', 'entry-happy', 'entry-indifferent', 'entry-unhappy', 'entry-disappointed']
+    let buttonIds = ['entry-beaming-face-with-smiling-eyes', 'entry-grinning-face', 'entry-neutral-face', 'entry-confused-face', 'entry-disappointed-face']
     const buttons = await page
       .evaluate(buttonIds => buttonIds.map(id => document.getElementById(id).id), buttonIds)
     expect(buttons.length).toBe(5)
@@ -37,7 +37,7 @@ describe('Emoji buttons', () => {
 
   test('on click, active class added to emoji button and form appears', async () => {
     await page.goto(APP)
-    const happyButton = await page.$('#entry-superhappy')
+    const happyButton = await page.$('#entry-beaming-face-with-smiling-eyes')
     const form = await page.$('#entry-feedback-form')
     expect(await getClass(happyButton)).toBe('button')
     expect(await getClass(form)).toBe('feedback-form hidden')
@@ -52,7 +52,7 @@ describe('Emoji buttons', () => {
   })
   test('clicking multiple emoji buttons work as expected', async () => {
     await page.goto(APP)
-    let buttonIds = ['entry-superhappy', 'entry-happy', 'entry-indifferent', 'entry-unhappy', 'entry-disappointed']
+    let buttonIds = ['entry-beaming-face-with-smiling-eyes', 'entry-grinning-face', 'entry-neutral-face', 'entry-confused-face', 'entry-disappointed-face']
     const buttons = await Promise.all(buttonIds.map(id => page.$(`#${id}`)))
     let buttonClasses = await Promise.all(buttons.map(button => getClass(button)))
     const unclickedButtonClasses = ['button', 'button', 'button', 'button', 'button']
@@ -73,13 +73,13 @@ describe('Emoji buttons', () => {
   })
   test('clicking emoji creates API request', async () => {
     await page.goto(APP)
-    const happyButton = await page.$('#entry-superhappy')
+    const happyButton = await page.$('#entry-beaming-face-with-smiling-eyes')
     await happyButton.click()
     page.on('request', req => {
       if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
       const jsonRes = JSON.parse(req.postData())
-      expect(jsonRes.emojis).toEqual([{ emojiId: 'entry-superhappy', emojicon: '😁' }])
+      expect(jsonRes.emojis).toEqual([{ emojiId: 'entry-beaming-face-with-smiling-eyes', emojicon: '😁' }])
       expect(jsonRes.pageUrl).toBeDefined()
       expect(req.method()).toEqual('POST')
     })
@@ -91,8 +91,8 @@ describe('Emoji buttons', () => {
     page = await browser.newPage()
     await page.setViewport({ width, height })
     await page.goto(APP)
-    const happyButton = await page.$('#entry-superhappy')
-    const disappointedButton = await page.$('#entry-disappointed')
+    const happyButton = await page.$('#entry-beaming-face-with-smiling-eyes')
+    const disappointedButton = await page.$('#entry-disappointed-face')
     await happyButton.click()
     await disappointedButton.click()
     page.on('request', req => {
@@ -101,8 +101,8 @@ describe('Emoji buttons', () => {
       const jsonRes = JSON.parse(req.postData())
       expect(jsonRes.emojis)
         .toEqual([
-          { emojiId: 'entry-superhappy', emojicon: '😁' },
-          { emojiId: 'entry-disappointed', emojicon: '😞' }
+          { emojiId: 'entry-beaming-face-with-smiling-eyes', emojicon: '😁' },
+          { emojiId: 'entry-disappointed-face', emojicon: '😞' }
         ])
       expect(jsonRes.timestamp).toBeDefined()
       expect(jsonRes.pageUrl).toBeDefined()
@@ -114,8 +114,8 @@ describe('Emoji buttons', () => {
     page = await browser.newPage()
     await page.setViewport({ width, height })
     await page.goto(APP)
-    const happyButton = await page.$('#entry-superhappy')
-    const disappointedButton = await page.$('#entry-disappointed')
+    const happyButton = await page.$('#entry-beaming-face-with-smiling-eyes')
+    const disappointedButton = await page.$('#entry-disappointed-face')
     await happyButton.click()
     await disappointedButton.click()
     await disappointedButton.click()
@@ -124,7 +124,7 @@ describe('Emoji buttons', () => {
         if (req.method() === 'OPTIONS') return
         const jsonRes = JSON.parse(req.postData())
         expect(jsonRes.emojis)
-          .toEqual([{ emojiId: 'entry-superhappy', emojicon: '😁' }])
+          .toEqual([{ emojiId: 'entry-beaming-face-with-smiling-eyes', emojicon: '😁' }])
         expect(jsonRes.pageUrl).toBeDefined()
         expect(req.method()).toEqual('POST')
       }
@@ -138,7 +138,7 @@ describe('form', () => {
     page = await browser.newPage()
     await page.setViewport({ width, height })
     await page.goto(APP)
-    const happyButton = await page.$('#entry-superhappy')
+    const happyButton = await page.$('#entry-beaming-face-with-smiling-eyes')
     await happyButton.click()
     const form = await page.$('#entry-feedback-textarea')
     const submitButton = await page.$('#entry-feedback-button')
@@ -158,7 +158,7 @@ describe('form', () => {
       }
     })
     await page.goto(APP)
-    const happyButton = await page.$('#entry-superhappy')
+    const happyButton = await page.$('#entry-beaming-face-with-smiling-eyes')
     await happyButton.click()
     const form = await page.$('#entry-feedback-textarea')
     const submitButton = await page.$('#entry-feedback-button')

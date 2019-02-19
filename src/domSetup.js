@@ -24,7 +24,8 @@ const createText = text => {
 
 const createButtonWithId = (entryId, id) => {
   const button = document.createElement('div')
-  button.id = `${entryId}-${id}`
+  const sanitizedId = id.replace(/\s+/g, '-')
+  button.id = `${entryId}-${sanitizedId}`
   button.className = 'button'
   return button
 }
