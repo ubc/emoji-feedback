@@ -41,16 +41,16 @@ const endpoints = {
 }
 
 app.init('entry', endpoints, {
-  // introText: 'I can customize this!',
-  // feedbackTextPrompt: 'Please write down below',
-  // feedbackThankYou: 'Thanks again!',
-  // emojis: [
-  //   { emojicon: '💀', emotion: 'skull' },
-  //   { emojicon: '👻', emotion: 'ghost' },
-  //   { emojicon: '👽', emotion: 'alien' },
-  //   { emojicon: '🤖', emotion: 'robot' },
-  //   { emojicon: '💩', emotion: 'pile of poo' }
-  // ]
+  introText: 'I can customize this!',
+  feedbackTextPrompt: 'Please write down below',
+  feedbackThankYou: 'Thanks again!',
+  emojis: [
+    { emojicon: '💀', emotion: 'skull' },
+    { emojicon: '👻', emotion: 'ghost' },
+    { emojicon: '👽', emotion: 'alien' },
+    { emojicon: '🤖', emotion: 'robot' },
+    { emojicon: '💩', emotion: 'pile of poo' }
+  ]
 })
 ```
 `emojiFeedback` has one method, `init`. Init takes 3 arguments: `entry`, `endpoints`, `options`
