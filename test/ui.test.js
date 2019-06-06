@@ -1,6 +1,7 @@
 /* global describe, test, beforeAll, afterAll, expect */
 
 import puppeteer from 'puppeteer'
+import 'babel-polyfill'
 
 const APP = 'http://localhost:8080/'
 

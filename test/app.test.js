@@ -1,5 +1,6 @@
 /* global describe, test, expect, Event, jest */
 import controller from '../src/app'
+import 'babel-polyfill'
 import * as c from '../src/defaults'
 
 jest.mock('../src/api')
