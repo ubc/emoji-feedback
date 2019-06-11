@@ -26,12 +26,16 @@ const controller = () => {
 
   const setState = (entryId,
     { emoji, feedback, votes },
+    { object, questionId, scaleId },
     { emojis, introText, feedbackTextPrompt, feedbackThankYou }
   ) => {
     state.endpoints.emoji = emoji
     state.endpoints.feedback = feedback
     state.endpoints.votes = votes
     state.entryId = entryId
+    state.caliper.object = object
+    state.caliper.questionId = questionId
+    state.caliper.scaleId = scaleId
     state.text.introText = introText
     state.text.feedbackTextPrompt = feedbackTextPrompt
     state.text.feedbackThankYou = feedbackThankYou
@@ -47,7 +51,8 @@ const controller = () => {
       const icon = emojiElem.childNodes[0].innerHTML
       selectedEmojis.push({
         emojiId: emoji.id,
-        emojicon: icon
+        emojicon: icon,
+        emotion: emoji.dataset.emotion
       })
     }
   }
@@ -117,7 +122,7 @@ const controller = () => {
     }
   }
 
-  const init = (entryId, endpoints, {
+  const init = (entryId, endpoints, caliper, {
     emojis = c.defaultEmojis,
     introText = c.introText,
     feedbackTextPrompt = c.feedbackTextPrompt,
@@ -125,7 +130,8 @@ const controller = () => {
   } = {}) => {
     if (entryId == null) throw new Error('entryId must be specified')
     if (endpoints == null) throw new Error('endpoints must be specified')
-    setState(entryId, endpoints, { emojis, introText, feedbackTextPrompt, feedbackThankYou })
+    if (caliper == null) throw new Error('caliper must be specified')
+    setState(entryId, endpoints, caliper, { emojis, introText, feedbackTextPrompt, feedbackThankYou })
     attachEmojiFeedback(entryId, emojis, { introText, feedbackTextPrompt, feedbackThankYou })
     setupEmojiListeners(entryId, emojis)
     createFormHandler(entryId)

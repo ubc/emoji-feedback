@@ -11,41 +11,50 @@ const getVotes = url => fetch(url, {
   method: 'GET'
 }).then(res => res.json().then(x => x.votes))
 
-const submitSelectedEmojis = ({ emojis, responses, endpoints, text }) => {
+const submitSelectedEmojis = ({ emojis, responses, endpoints, text, caliper }) => {
   const date = new Date()
   const timestamp = date.toISOString()
   const emojicons = emojis.map(({ emojicon }) => emojicon)
   const emotion = emojis.map(({ emotion }) => emotion)
   const selectedEmojis = responses.selectedEmojis
 
+  const question = {
+    id: caliper.questionId,
+    type: 'RatingScaleQuestion',
+    questionPosed: text.introText,
+    scale: {
+      id: caliper.scaleId,
+      type: 'MultiselectScale',
+      scalePoints: emojicons.length,
+      itemLabels: emojicons,
+      itemValues: emotion,
+      isOrderedSelection: false,
+      minSelections: 1,
+      maxSelections: emojicons.length
+    }
+  }
+
   return fetch(endpoints.emoji, {
     ...fetchOptions,
     body: JSON.stringify({
-      timestamp,
-      scale: {
-        id: `${window.location.href}`,
-        type: 'MultiselectionScale',
-        question: text.introText,
-        points: 5,
-        itemLabel: emojicons,
-        itemValues: emotion
-      },
-      selections: selectedEmojis.map(({ emojicon }) => emojicon),
-      pageUrl: window.location.href
+      eventTime: timestamp,
+      object: caliper.object,
+      question: question,
+      selections: selectedEmojis.map(({ emotion }) => emotion)
     })
   })
 }
 
-const submitFeedback = ({ endpoints, responses, text }) => {
+const submitFeedback = ({ endpoints, responses, text, caliper }) => {
   const date = new Date()
   const timestamp = date.toISOString()
   return fetch(endpoints.feedback, {
     ...fetchOptions,
     body: JSON.stringify({
-      timestamp,
-      pageUrl: window.location.href,
+      eventTime: timestamp,
+      object: caliper.object,
       feedback: responses.writtenFeedback,
-      question: text.feedbackTextPrompt
+      questionText: text.feedbackTextPrompt
     })
   })
 }

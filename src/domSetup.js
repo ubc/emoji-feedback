@@ -108,6 +108,7 @@ const attachEmojiFeedback = (entryId, emojis, text) => {
     const emojiButton = createButtonWithId(entryId, emotion)
     emojiButton.style.gridRow = 'row 2'
     emojiButton.style.gridColumn = `col ${i + 1} / span 1`
+    emojiButton.dataset.emotion = emotion
     emojiButton.dataset.balloon = emotion
     if (i === emojis.length - 1) {
       emojiButton.dataset.balloonPos = 'down-right'

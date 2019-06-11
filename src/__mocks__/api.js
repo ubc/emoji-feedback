@@ -7,13 +7,36 @@ const getVotes = url => {
   })
 }
 
-const submitSelectedEmojis = (url, emojis) => {
-  return fetch(url, {
+const submitSelectedEmojis = ({ emojis, responses, endpoints, text, caliper }) => {
+  const date = new Date()
+  const timestamp = date.toISOString()
+  const emojicons = emojis.map(({ emojicon }) => emojicon)
+  const emotion = emojis.map(({ emotion }) => emotion)
+  const selectedEmojis = responses.selectedEmojis
+
+  const question = {
+    id: caliper.questionId,
+    type: 'RatingScaleQuestion',
+    questionPosed: text.introText,
+    scale: {
+    id: caliper.scaleId,
+    type: 'MultiselectScale',
+    scalePoints: emojicons.length,
+    itemLabels: emojicons,
+    itemValues: emotion,
+    isOrderedSelection: false,
+    minSelections: 1,
+    maxSelections: emojicons.length
+    }
+  }
+
+  return fetch(endpoints.emoji, {
     ...c.fetchOptions,
     body: JSON.stringify({
-      timestamp: 12345678910,
-      emojis: emojis,
-      pageUrl: 'http://localhost:8080/'
+      eventTime: timestamp,
+      object: caliper.object,
+      question: question,
+      selections: selectedEmojis.map(({ emotion }) => emotion)
     })
   })
 }

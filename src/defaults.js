@@ -27,6 +27,11 @@ const createDefaultState = () => ({
     feedback: '',
     votes: ''
   },
+  caliper: {
+    object: '',
+    questionId: '',
+    scaleId: ''
+  },
   emojis: [],
   entryId: ''
 })

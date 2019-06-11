@@ -80,8 +80,11 @@ describe('Emoji buttons', () => {
       if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
       const jsonRes = JSON.parse(req.postData())
-      expect(jsonRes.emojis).toEqual([{ emojiId: 'entry-beaming-face-with-smiling-eyes', emojicon: '😁' }])
-      expect(jsonRes.pageUrl).toBeDefined()
+      expect(jsonRes.selections)
+        .toEqual([ 'beaming face with smiling eyes' ])
+      expect(jsonRes.eventTime).toBeDefined()
+      expect(jsonRes.object).toBeDefined()
+      expect(jsonRes.question).toBeDefined()
       expect(req.method()).toEqual('POST')
     })
     page.on('response', res => console.log(res))
@@ -100,13 +103,11 @@ describe('Emoji buttons', () => {
       if (req.method() === 'OPTIONS') return
       expect(req.url()).toEqual(`${API_BASE_URL}emoji`)
       const jsonRes = JSON.parse(req.postData())
-      expect(jsonRes.emojis)
-        .toEqual([
-          { emojiId: 'entry-beaming-face-with-smiling-eyes', emojicon: '😁' },
-          { emojiId: 'entry-disappointed-face', emojicon: '😞' }
-        ])
-      expect(jsonRes.timestamp).toBeDefined()
-      expect(jsonRes.pageUrl).toBeDefined()
+      expect(jsonRes.selections)
+        .toEqual([ 'beaming face with smiling eyes', 'disappointed face' ])
+      expect(jsonRes.eventTime).toBeDefined()
+      expect(jsonRes.object).toBeDefined()
+      expect(jsonRes.question).toBeDefined()
       expect(req.method()).toEqual('POST')
     })
     await page.close()
@@ -124,9 +125,11 @@ describe('Emoji buttons', () => {
       if (req.url() === 'http://127.0.0.1:5000/emoji') {
         if (req.method() === 'OPTIONS') return
         const jsonRes = JSON.parse(req.postData())
-        expect(jsonRes.emojis)
-          .toEqual([{ emojiId: 'entry-beaming-face-with-smiling-eyes', emojicon: '😁' }])
-        expect(jsonRes.pageUrl).toBeDefined()
+        expect(jsonRes.selections)
+          .toEqual([ 'beaming face with smiling eyes' ])
+        expect(jsonRes.eventTime).toBeDefined()
+        expect(jsonRes.object).toBeDefined()
+        expect(jsonRes.question).toBeDefined()
         expect(req.method()).toEqual('POST')
       }
     })
